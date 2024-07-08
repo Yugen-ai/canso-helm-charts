@@ -1,0 +1,269 @@
+karpenter:
+  ## @param nameOverride String to override partial name passed in helm install command
+  ##
+  nameOverride: "canso-karpenter"
+  ## @param fullnameOverride String to override full name passed in helm install command
+  ##
+  fullnameOverride: ""
+  ## @param additionalLabels Additional labels to add into metadata.
+  ##
+  additionalLabels: {}
+  ## @param additionalAnnotations Additional annotations to add into metadata.
+  ##
+  additionalAnnotations: {}
+  ## @param imagePullPolicy Image pull policy for Docker images.
+  ##
+  imagePullPolicy: IfNotPresent
+  ## @param imagePullSecrets Image pull secrets for Docker images.
+  ##
+  imagePullSecrets: []
+
+  ####################################################
+  ################ Service Account
+  ####################################################
+
+  ## @section serviceAccount Service account configuration
+  serviceAccount:
+    ## @param serviceAccount.create Specifies whether a ServiceAccount should be created.
+    ##
+    create: true
+    ## @param serviceAccount.name The name of the ServiceAccount to use.
+    ##
+    name: "karpenter"
+    ## @param serviceAccount.annotations Additional annotations for the ServiceAccount.
+    ##
+    annotations: {}
+
+  ## @param additionalClusterRoleRules Additional rules to add into the ClusterRole.
+  ##
+  additionalClusterRoleRules: []
+
+  ## @section serviceMonitor Service monitor configuration
+  serviceMonitor:
+    ## @param serviceMonitor.enabled Specifies whether a ServiceMonitor should be created.
+    ##
+    enabled: false
+    ## @param serviceMonitor.additionalLabels Additional labels for the ServiceMonitor.
+    ##
+    additionalLabels: {}
+    ## @param serviceMonitor.endpointConfig Endpoint configuration for the ServiceMonitor.
+    ##
+    endpointConfig: {}
+
+  ## @param replicas Number of replicas for the Karpenter controller.
+  ##
+  replicas: 2
+  ## @param revisionHistoryLimit The number of old ReplicaSets to retain to allow rollback.
+  ##
+  revisionHistoryLimit: 10
+
+  ## @param strategy Rolling update configuration parameters.
+  ##
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+
+  ## @param podLabels Additional labels for the Karpenter pod.
+  ##
+  podLabels: {}
+  ## @param podAnnotations Additional annotations for the Karpenter pod.
+  ##
+  podAnnotations: {}
+
+  ## @param podDisruptionBudget Pod disruption budget configuration.
+  ##
+  podDisruptionBudget:
+    name: karpenter
+    maxUnavailable: 1
+  ## @param priorityClassName PriorityClass name for the pod.
+  ##
+  priorityClassName: system-cluster-critical
+
+  ## @param terminationGracePeriodSeconds Override the default termination grace period for the pod.
+  ##
+  terminationGracePeriodSeconds:
+
+  ## @param hostNetwork Bind the pod to the host network (required when using a custom CNI).
+  ##
+  hostNetwork: false
+  ## @param dnsPolicy Configure the DNS Policy for the pod.
+  ##
+  dnsPolicy: Default
+
+  ## @param dnsConfig Configure DNS Config for the pod.
+  ##
+  dnsConfig: {}
+
+  ## @param nodeSelector Node selectors to schedule the pod to nodes with labels.
+  ##
+  nodeSelector:
+    kubernetes.io/os: linux
+
+  ## @param affinity Affinity rules for scheduling the pod.
+  ##
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: karpenter.sh/nodepool
+                operator: DoesNotExist
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - topologyKey: "kubernetes.io/hostname"
+
+  ## @param topologySpreadConstraints Topology spread constraints to increase controller resilience by distributing pods across zones.
+  ##
+  topologySpreadConstraints:
+    - maxSkew: 1
+      topologyKey: topology.kubernetes.io/zone
+      whenUnsatisfiable: ScheduleAnyway
+
+  ## @param tolerations Tolerations to allow the pod to be scheduled to nodes with taints.
+  ##
+  tolerations:
+    - key: CriticalAddonsOnly
+      operator: Exists
+
+  ## @param extraVolumes Additional volumes for the pod.
+  ##
+  extraVolumes: []
+  ## @section controller Karpenter controller configuration
+  controller:
+    ## @param controller.image Image configuration for the controller
+    image:
+      ## @param controller.image.repository Repository path to the controller image.
+      ##
+      repository: public.ecr.aws/karpenter/controller
+      ## @param controller.image.tag Tag of the controller image.
+      ##
+      tag: v0.33.1
+      ## @param controller.image.digest SHA256 digest of the controller image.
+      ##
+      digest: sha256:7f484951baf70d1574d6408be3947a3ca5f54463c2d1f29993b492e7e916ef11
+
+    ## @param controller.env Additional environment variables for the controller pod.
+    ##
+    env: []
+
+    ## @param controller.envFrom Additional environment variables from config map or secret.
+    ##
+    envFrom: []
+
+    ## @param controller.resources Resources for the controller pod.
+    ##
+    resources: {}
+
+    ## @param controller.extraVolumeMounts Additional volumeMounts for the controller pod.
+    ##
+    extraVolumeMounts: []
+
+    ## @param controller.sidecarContainer Additional sidecar container configuration for the controller pod.
+    ##
+    sidecarContainer: []
+    ## @param controller.sidecarVolumeMounts Additional volume mounts for the sidecar container.
+    ##
+    sidecarVolumeMounts: []
+    ## @param controller.metrics Metrics configuration for the controller pod.
+    metrics:
+      ## @param controller.metrics.port The container port to use for metrics.
+      ##
+      port: 8000
+
+    ## @param controller.healthProbe Health probe configuration for the controller pod.
+    healthProbe:
+      ## @param controller.healthProbe.port The container port to use for the http health probe.
+      ##
+      port: 8081
+
+  ## @section webhook Webhook configuration
+  webhook:
+    ## @param webhook.enabled Whether to enable the webhooks and webhook permissions.
+    ##
+    enabled: false
+    ## @param webhook.port The container port to use for the webhook.
+    ##
+    port: 8443
+    ## @param webhook.metrics Metrics configuration for the webhook.
+    metrics:
+      ## @param webhook.metrics.port The container port to use for webhook metrics.
+      ##
+      port: 8001
+
+  ## @param logLevel Global log level, defaults to 'info'
+  ##
+  logLevel: info
+
+  ## @param logConfig Log configuration (Deprecated: Logging configuration will be dropped by v1, use logLevel instead)
+  ##
+  logConfig:
+    ## @param logConfig.enabled Whether to enable provisioning and mounting the log ConfigMap.
+    ##
+    enabled: false
+    ## @param logConfig.outputPaths Log output paths - defaults to stdout only.
+    ##
+    outputPaths:
+      - stdout
+    ## @param logConfig.errorOutputPaths Log error output paths - defaults to stderr only.
+    ##
+    errorOutputPaths:
+      - stderr
+    ## @param logConfig.logEncoding Log encoding - defaults to json - must be one of 'json', 'console'
+    ##
+    logEncoding: json
+    ## @param logConfig.logLevel Component-based log configuration
+    logLevel:
+      ## @param logConfig.logLevel.global Global log level, defaults to 'info'.
+      ##
+      global: info
+      ## @param logConfig.logLevel.controller Controller log level, defaults to 'info'.
+      ##
+      controller: info
+      ## @param logConfig.logLevel.webhook Webhook log level, defaults to 'error'.
+      ##
+      webhook: error
+
+  ## @section settings Global settings to configure Karpenter
+  settings:
+    ## @param settings.batchMaxDuration The maximum length of a batch window.
+    ##
+    batchMaxDuration: 10s
+
+    ## @param settings.batchIdleDuration The maximum amount of time with no new ending pods that if exceeded ends the current batching window.
+    ##
+    batchIdleDuration: 1s
+
+    ## @param settings.assumeRoleARN Role to assume for calling AWS services.
+    ##
+    assumeRoleARN: ""
+
+    ## @param settings.assumeRoleDuration Duration of assumed credentials in minutes. Default value is 15 minutes. Not used unless assumeRoleARN set.
+    ##
+    assumeRoleDuration: 15m
+
+        ## @param settings.clusterCABundle Cluster CA bundle for TLS configuration of provisioned nodes. If not set, this is taken from the controller's TLS configuration for the API server.
+    clusterCABundle: ""
+
+    ## @param settings.clusterName Cluster name.
+    clusterName: ""
+
+    ## @param settings.clusterEndpoint Cluster endpoint. If not set, will be discovered during startup (EKS only).
+    clusterEndpoint: ""
+
+    ## @param settings.isolatedVPC If true, assume AWS services without a VPC endpoint cannot be reached. This also disables look-ups to the AWS pricing endpoint.
+    isolatedVPC: false
+
+    ## @param settings.vmMemoryOverheadPercent The VM memory overhead as a percent, subtracted from total memory for all instance types.
+    vmMemoryOverheadPercent: 0.075
+
+    ## @param settings.interruptionQueue Name of the SQS queue to use for interruption handling. If not specified, interruption handling is disabled. Enabling requires additional permissions on the controller service account, as outlined in the documentation.
+    interruptionQueue: ""
+
+    ## @param settings.reservedENIs Number of reserved ENIs not included in max-pods or kube-reserved calculations. Often used in VPC CNI custom networking.
+    reservedENIs: "0"
+
+    ## @section settings.featureGates Feature gate configuration values. Feature gates follow the same graduation process and requirements as in Kubernetes.
+    featureGates:
+      ## @param settings.featureGates.drift Enable/disable the drift disruption method to watch for drift between deployed nodes and the desired state set in nodepools and nodeclasses. Drift is in BETA and enabled by default.
+      drift: true
+

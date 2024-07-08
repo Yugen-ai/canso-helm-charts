@@ -4,7 +4,7 @@
 ## @section spec
 spec:
   ## @param service_name Service name
-  service_name: &service_name "conso-workflow-orchestrator"
+  service_name: &service_name "canso-workflow-orchestrator"
   ## @param namespace Namespace for deployment
   namespace: airflow
 
@@ -60,7 +60,7 @@ nameOverride: "conso-workflow-orchestrator"
 
 ## @param fullNameOverride Override the full name of the service
 ##
-fullnameOverride: "conso-workflow-orchestrator-v0.0.2"
+fullnameOverride: ""
 
 ## @param podAnnotation Annotations to be added to the deploymetn pods
 ##

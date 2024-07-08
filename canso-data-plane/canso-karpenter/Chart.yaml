@@ -1,0 +1,10 @@
+apiVersion: v2
+name: canso-karpenter
+description: A Helm chart for Kubernetes
+type: application
+version: 0.0.2
+appVersion: "0.0.1"
+dependencies:
+  - name: karpenter
+    version: "v0.33.1"
+    repository: oci://public.ecr.aws/karpenter
