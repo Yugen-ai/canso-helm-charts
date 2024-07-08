@@ -1,0 +1,10 @@
+## Mandatory values for the Canso Agent Helm. If not provided, helm will fail with a 
+## `Error: execution error at ...` message.
+## The goal of this file to be a central place to have a single source of truth for
+## all values mandatorily needed by the Helm.
+
+{{- $_ := required "tenantName is a required value" .Values.config.tenantName}}
+{{- $_ := required "tenantID is a required value" .Values.config.tenantID}}
+{{- $_ := required "deployment_sqs_url is a required value" .Values.config.deployment_sqs_url}}
+{{- $_ := required "notification_sqs_url is a required value" .Values.config.notification_sqs_url}}
+{{- $_ := required "sqs_region is a required value" .Values.config.sqs_region}}

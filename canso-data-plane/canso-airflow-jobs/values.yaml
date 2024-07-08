@@ -1,0 +1,134 @@
+####################################################
+###### Canso Airflow Jobs Configs
+####################################################
+
+## @secion Canso Airflow Jobs
+cansoAirflowJobs:
+  ## @param cansoAirflowJobs.enabled Boolean flag to enable Canso Airflow Jobs
+  ##
+  enabled: true
+
+####################################################
+###### Namespace Configs for Canso Batch Jobs
+####################################################
+
+## @secion Namespace configurationa
+namespace:
+  ## @param namespace.enabled Boolean flag to create namespace
+  ##
+  enabled: true
+  ## @param namespace.name Name of the namespace for Airflow jobs.
+  ##
+  name: canso-airflow-jobs
+
+####################################################
+############### Airflow Namespace
+####################################################
+
+## @section Namespace where Airflow is deployed
+airflowNamespace: airflow
+
+####################################################
+########### Pod Admin Role Configurations
+####################################################
+
+## @section Pod Admin Role Configurations
+pod_admin_role:
+  ## @param pod_admin_role.enabled Boolean Flag to enable Pod Admin role
+  ##
+  enabled: true
+  ## @param pod_admin_role.name Name of the pod admin role for Airflow jobs.
+  ##
+  name: pod-admin-role
+
+####################################################
+################ Pod Role Configurations
+####################################################
+
+## @section Pod Role Configurations
+podRole:
+  ## @param podRole.enabled Boolean Flag to enable Pod role
+  ##
+  enabled: true
+  ## @param podRole.name Name of the pod role for Airflow jobs.
+  ##
+  name: pod-role
+
+####################################################
+########### Service Account Configurations
+####################################################
+
+## @section Service Account Configurations
+serviceAccount:
+  ## @param serviceAccount.enabled Boolean Flag to create Service account
+  ##
+  enabled: true
+  ## @param serviceAccount.name Name of the service account for Airflow jobs.
+  ##
+  name: airflow-jobs-sa
+  ## @param serviceAccount.role_arn Service Account Role ARN
+  ##
+  ## TODO: remove role_arns from the chart before publishing, add to required.yaml
+  role_arn: ""
+
+####################################################
+######### Spark Role Binding Configurations
+####################################################
+
+## @section Spark Role Binding Configurations
+sparkRolebinding:
+  ## @param sparkRolebinding.enabled Flag to enable Spark Role Binding. Strongly advised to not change the value.
+  ##
+  enabled: true
+  ## @param sparkRolebinding.name Name of the Spark role binding.
+  ##
+  name: spark-airflow-rolebinding
+  ## @param sparkRolebinding.serviceAccount_name Name of the <TODO - to be updated>.
+  ##
+  serviceAccount_name: default
+
+####################################################
+######### Pod Role Binding Configurations
+####################################################
+
+
+## @section Pod Role Binding Configurations
+podRoleBinding:
+  ## @param podRoleBinding.enabled Flag to enable POD Role Binding. Strongly advised to not change the value.
+  ##
+  enabled: true
+  ## @param podRoleBinding.name Name of the pod role binding.
+  ##
+  name: pod-role-binding
+  ## @param podRoleBinding.serviceAccount_name Name of the service account for pod role binding.
+  ##
+  serviceAccount_name: airflow-sa
+
+####################################################
+########## External Secrets Configurations
+####################################################
+
+## @section External Secrets Configurations
+external_secret:
+  enabled: true
+  ## @param external_secret.name name of the external secret
+  ##
+  name: canso-image-pull-secrets
+  ## @param external_secret.secretKey key of the kubernetes secret
+  ##
+  secretKey: .dockerconfigjson
+  ## @param external_secret.remoteRefKey name of the AWS secret
+  ##
+  remoteRefKey: stage/dockerhub
+  ## @param external_secret.remoteRefProperty key of the secret in secrets manager
+  ##
+  remoteRefProperty: dockerhub
+  ## @param external_secret.remoteRefProperty name of the target kubernetes secret
+  ##
+  targetName: docker-secret-cred
+  ## @param external_secret.remoteRefProperty type of the target kubernetes secret
+  ##
+  targetType: kubernetes.io/dockerconfigjson
+  ## @param external_secret.remoteRefProperty name of the ClusterSecret Role
+  ##
+  clusterSecretRole: secretstore-by-role

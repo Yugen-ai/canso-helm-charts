@@ -1,0 +1,13 @@
+{{- if .Values.cansoAirflowJobs.enabled }}
+{{- if .Values.pod_admin_role.enabled }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ .Values.pod_admin_role.name }}
+  namespace: {{ .Values.namespace.name }}
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["create", "delete", "get", "list", "patch", "watch", "deletecollection"]
+{{- end }}
+{{- end }}
