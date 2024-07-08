@@ -8,10 +8,10 @@
 
 # Default configurations
 config:
-  ## @param tenantName Name Assigned to the Tenant
+  ## @param config.tenantName Name Assigned to the Tenant
   ##
   tenantName: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team for value)
-  ## @param tenantID Unique ID assigned to the Tenant
+  ## @param config.tenantID Unique ID assigned to the Tenant
   ##
   tenantID: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
   ## @param config.deployment_sqs_url deployment sqs url in Control Plane. Generated during Tenant onboarding.
@@ -78,10 +78,10 @@ cansoAgent:
     targetport: 5001
   ## @section Secret Store Ref configurations
   secretStoreRef:
-    ## @param secretStoreRef.name Name of the Secret Store resource to fetch the ExternalSecret data
+    ## @param cansoAgent.secretStoreRef.name Name of the Secret Store resource to fetch the ExternalSecret data
     ##
     name: "secretstore-by-role"
-    ## @param secretStoreRef.kind Kind of the SecretStore resource (SecretStore or ClusterSecretStore). Strongly advised not to change the default value below.
+    ## @param cansoAgent.secretStoreRef.kind Kind of the SecretStore resource (SecretStore or ClusterSecretStore). Strongly advised not to change the default value below.
     ##
     kind: ClusterSecretStore
   ## @section External secret configurations
@@ -201,7 +201,7 @@ cansoAgent:
     ## @param cansoAgent.deployment.enableEnv Whether environment variables are enabled
     ##
     enableEnv: true
-    ## @section Environment Variables Configurations from secret keys
+    ## @skip cansoAgent.deployment.envSecretKeys Environment Variables Configurations from secret keys
     ##
     envSecretKeys:
       - name: AIRFLOW_USERNAME
@@ -240,7 +240,7 @@ cansoAgent:
   #         - abc
   #         - def
 
-  # @param cansoAgent.nodeSelector Parameters to select for scheduling of pod on a node
+  ## @param cansoAgent.nodeSelector Parameters to select for scheduling of pod on a node
   ##
   nodeSelector: {}
   ## @param cansoAgent.priorityClassName PriorityClass name for the pod

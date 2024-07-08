@@ -25,7 +25,7 @@ namespace:
 ############### Airflow Namespace
 ####################################################
 
-## @section Namespace where Airflow is deployed
+## @param airflowNamespace where Airflow is deployed
 airflowNamespace: airflow
 
 ####################################################
@@ -110,6 +110,9 @@ podRoleBinding:
 
 ## @section External Secrets Configurations
 external_secret:
+
+  ## @param external_secret.enabled Flag to enable External Secrets
+  ##
   enabled: true
   ## @param external_secret.name name of the external secret
   ##
@@ -123,12 +126,12 @@ external_secret:
   ## @param external_secret.remoteRefProperty key of the secret in secrets manager
   ##
   remoteRefProperty: dockerhub
-  ## @param external_secret.remoteRefProperty name of the target kubernetes secret
+  ## @param external_secret.targetName name of the target kubernetes secret
   ##
   targetName: docker-secret-cred
-  ## @param external_secret.remoteRefProperty type of the target kubernetes secret
+  ## @param external_secret.targetType type of the target kubernetes secret
   ##
   targetType: kubernetes.io/dockerconfigjson
-  ## @param external_secret.remoteRefProperty name of the ClusterSecret Role
+  ## @param external_secret.clusterSecretRole name of the ClusterSecret Role
   ##
   clusterSecretRole: secretstore-by-role
