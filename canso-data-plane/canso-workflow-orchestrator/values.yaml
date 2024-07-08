@@ -4,7 +4,7 @@
 ## @section spec
 spec:
   ## @param service_name Service name
-  service_name: &service_name "canso-workflow-orchestrator"
+  service_name: &service_name "canso-workflow-orchestrator" 
   ## @param namespace Namespace for deployment
   namespace: airflow
 
