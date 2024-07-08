@@ -1,0 +1,24 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "online-feature-service.name" . }}-ing
+  namespace: {{ .Values.spec.namespace }}
+  labels:
+    app: {{ include "online-feature-service.name" . }}
+  annotations:
+    {{- toYaml .Values.ingress.annotations | nindent 4 }}
+spec:
+  ingressClassName: {{ .Values.ingress.ingressClassName }}
+  rules:
+    - host: {{  .Values.ingress.host }}
+      http:
+        paths:
+          - backend:
+              service:
+                name: {{ include "online-feature-service.name" . }}
+                port:
+                  number: 80
+            path: {{ .Values.ingress.path }}
+            pathType: {{ .Values.ingress.pathType }}
+{{- end }}
