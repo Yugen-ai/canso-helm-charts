@@ -68,7 +68,7 @@ karpenter:
   ## @param karpenter.nodeRoleArn Role ARN for Karpenter node.
   ##
   nodeRoleArn: "" # THIS VALUE IS MANDATORY
-  # nodeRoleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_NODE_ROLE_NAME
+  # nodeRoleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
 
 
 ####################################################
@@ -110,7 +110,7 @@ aws:
     ## @param aws.awsEbsCsiDriver.roleArn Role ARN for AWS EBS CSI Driver.
     ##
     roleArn: "" # THIS VALUE IS MANDATORY
-    # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_NODE_ROLE_NAME
+    # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
     
   ## @subsection awsEfsCsiDriver parameters
   awsEfsCsiDriver:
@@ -121,7 +121,7 @@ aws:
     ## @param aws.awsEfsCsiDriver.roleArn Role ARN for AWS EFS CSI Driver.
     ##
     roleArn: "" # THIS VALUE IS MANDATORY
-    # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_NODE_ROLE_NAME
+    # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
     
   ## @subsection awsLoadBalancerController parameters
   awsLoadBalancerController:
@@ -131,7 +131,7 @@ aws:
     ## @param aws.awsLoadBalancerController.roleArn Role ARN for AWS Load Balancer Controller
     ##
     roleArn: "" # THIS VALUE IS MANDATORY
-    # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_NODE_ROLE_NAME
+    # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
 
   ## @subsection awsACK parameters
   awsACK:
@@ -153,7 +153,8 @@ externalSecrets:
   serviceaccount:
     ## @param externalSecrets.serviceaccount.roleArn arn Role ARN for External Secrets service account.
     ##
-    roleArn: arn:aws:iam::REPLACE_WITH_ACCOUNT_ID:role/REPLACE_WITH_EXTERNAL_SECRETS_IRSA_ROLE_NAME
+    roleArn: "" # THIS VALUE IS MANDATORY
+    # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
     ## @param externalSecrets.serviceaccount.name Name of the service account for External Secrets.
     ##
     name: external-secrets-sa
@@ -162,7 +163,7 @@ externalSecrets:
   clusterSecretStore:
     ## @param externalSecrets.clusterSecretStore.region AWS Region for AWS Secrets Manager.
     ##
-    region: SECRET_STORE_REGION
+    region: "" # THIS VALUE IS MANDATORY
 
 ####################################################
 ##################### EFS Configs
@@ -181,7 +182,7 @@ efsStorageClass:
   reclaimPolicy: Retain
   ## @param efsStorageClass.fileSystemId File System ID for the EFS Storage Class.
   ##
-  fileSystemId: EFS_FILE_SYSTEM_ID
+  fileSystemId: "" # THIS VALUE IS MANDATORY
   
 ####################################################
 ################# Priority Class
@@ -440,7 +441,9 @@ cansoAgent:
 ## @section Roles
 roles:
   ## @param roles.S3role S3 Role for Canso Agent
-  s3role: "arn:aws:iam::ACCOUNT_ID:role/IAM_ROLE_NAME"
+  s3role: "" # THIS VALUE IS MANDATORY
+  # s3role: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
+  
 
 ####################################################
 ############ Nginx Ingress Controller
@@ -466,7 +469,7 @@ ingress:
   env: []
   ## @param ingress.auth_pass The basic auth password for the Network Load balancer
   ## Do not Change
-  auth_pass: $apr1$IYG9bEux$xw8CgNhoha.oE/xzZcdXR/
+  auth_pass: $apr1$IYG9bEux$xw8CgNhoha.oE/xzZcdXR/ # WARNING: CRITICAL VALUE - DO NOT CHANGE
 
   master:
     enabled: true
