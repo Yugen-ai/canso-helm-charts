@@ -1,4 +1,4 @@
-# Default values for helm-jerry.
+# Default values for canso-workflow-orchestrator.
 # Declare variables to be passed into your templates.
 
 ## @section spec

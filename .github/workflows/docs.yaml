@@ -19,21 +19,17 @@ jobs:
         with:
           ref: ${{github.event.pull_request.head.ref}}
           repository: ${{github.event.pull_request.head.repo.full_name}}
-      - name: Execute readme-generator-for-helm
-        env:
-          DIFF_URL: "${{github.event.pull_request.diff_url}}"
-          TEMP_FILE: "${{runner.temp}}/pr-${{github.event.number}}.diff"
+          
+      - name: Generate READMEs for All Charts
         run: |
-          # This request doesn't consume API calls.
-          curl -Lkso $TEMP_FILE $DIFF_URL
-          files_changed="$(sed -nr 's/[\-\+]{3} [ab]\/(.*)/\1/p' $TEMP_FILE | sort | uniq)"
-          echo "$files_changed"
-          # Adding || true to avoid "Process exited with code 1" errors
-          charts_dirs_changed="$(echo "$files_changed" | xargs dirname | grep -o "canso-data-plane/[^/]*" | sort | uniq || true)"
-          for chart in ${charts_dirs_changed}; do
-            echo "Updating README.md for ${chart}"
-            readme-generator --values "${chart}/values.yaml" --readme "${chart}/README.md" --schema "/tmp/schema.json"
+          charts_dirs=$(find canso-data-plane -maxdepth 1 -type d)
+          for chart in ${charts_dirs}; do
+            if [[ -f "${chart}/Chart.yaml" ]]; then # Check if it's a valid chart directory
+              echo "Updating README.md for ${chart}"
+              readme-generator --values "${chart}/values.yaml" --readme "${chart}/README.md" --schema "/tmp/schema.json"
+            fi
           done
+
       - name: Configure Git and push changes
         run: |
             if git status -s | grep canso-data-plane; then
