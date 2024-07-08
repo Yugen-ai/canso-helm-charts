@@ -9,7 +9,7 @@ spec:
   namespace: airflow
 
 
-## @param replicaCount Number of replicas
+## @param replicaCount Number of replicas for the deployment
 replicaCount: 1
 
 ## @section image
