@@ -10,7 +10,7 @@ createProject: true
 ####################################################
 
 ## @section Default Configs
-## @param clusterName Name of the AWS EKS cluster.
+## @param clusterName Name of the AWS EKS cluster. 
 ##
 clusterName: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP
 ## @param clusterEndpoint Endpoint URL of the AWS EKS cluster.
