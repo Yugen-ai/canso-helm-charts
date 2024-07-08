@@ -1,6 +1,6 @@
 ## @section ArgoCD Configs
 ##
-argocdProject: canso-appsets
+argocdProject: canso-appsets # WARNING: CRITICAL VALUE - DO NOT CHANGE
 
 ## @param createProject Create the ArgoCD project.
 createProject: true
@@ -12,21 +12,19 @@ createProject: true
 ## @section Default Configs
 ## @param clusterName Name of the AWS EKS cluster.
 ##
-clusterName: "canso-dataplane-cluster"
+clusterName: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP
 ## @param clusterEndpoint Endpoint URL of the AWS EKS cluster.
 ##
-clusterEndpoint: "https://REPLACE_WITH_CLUSTER_ENDPOINT"
+clusterEndpoint: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP
 ## @param tenantName Name Assigned to the Tenant
 ##
-tenantName: TENANT_NAME
+tenantName: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team for value)
 ## @param tenantID Unique ID assigned to the Tenant
 ##
-tenantID: TENANT_ID
+tenantID: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
 ## @param awsRegion AWS Region of the cluster
 ##
-awsRegion: EKS_CLUSER_REGION
-## @section Control Plane Configs
-##
+awsRegion: "" # THIS VALUE IS MANDATORY
 
 ####################################################
 ############### Control Plane Configs
@@ -36,13 +34,13 @@ awsRegion: EKS_CLUSER_REGION
 cansoControlPlane:
   ## @param config.deployment_sqs_url deployment sqs url in Control Plane. Generated during Tenant onboarding.
   ##
-  deployment_sqs_url: "https://REPLACE_WITH_ACTUAL_URL"
+  deployment_sqs_url: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
   ## @param config.notification_sqs_url notification sqs url in Control Plane. Generated during Tenant onboarding.
   ##
-  notification_sqs_url: "https://REPLACE_WITH_ACTUAL_URL"
+  notification_sqs_url: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
   ## @param config.sqs_region region for sqs url in Control Plane. Generated during Tenant onboarding.
   ##
-  sqs_region: "some-aws-region"
+  sqs_region: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
 
 ####################################################
 ############### Tolerations & Affinity
@@ -65,10 +63,12 @@ karpenter:
   enabled: true
   ## @param karpenter.roleArn Role ARN for Karpenter.
   ##
-  roleArn: "arn:aws:iam::ACCOUNT_ID:role/IAM_ROLE_NAME"
+  roleArn: "" # THIS VALUE IS MANDATORY
+  # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
   ## @param karpenter.nodeRoleArn Role ARN for Karpenter node.
   ##
-  nodeRoleArn: "arn:aws:iam::ACCOUNT_ID:role/IAM_ROLE_NAME"
+  nodeRoleArn: "" # THIS VALUE IS MANDATORY
+  # nodeRoleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_NODE_ROLE_NAME
 
 
 ####################################################
@@ -109,7 +109,8 @@ aws:
     enabled: true
     ## @param aws.awsEbsCsiDriver.roleArn Role ARN for AWS EBS CSI Driver.
     ##
-    roleArn: "arn:aws:iam::ACCOUNT_ID:role/IAM_ROLE_NAME"
+    roleArn: "" # THIS VALUE IS MANDATORY
+    # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_NODE_ROLE_NAME
     
   ## @subsection awsEfsCsiDriver parameters
   awsEfsCsiDriver:
@@ -119,7 +120,8 @@ aws:
     enabled: true
     ## @param aws.awsEfsCsiDriver.roleArn Role ARN for AWS EFS CSI Driver.
     ##
-    roleArn: "arn:aws:iam::ACCOUNT_ID:role/IAM_ROLE_NAME"
+    roleArn: "" # THIS VALUE IS MANDATORY
+    # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_NODE_ROLE_NAME
     
   ## @subsection awsLoadBalancerController parameters
   awsLoadBalancerController:
@@ -128,21 +130,9 @@ aws:
     enabled: true
     ## @param aws.awsLoadBalancerController.roleArn Role ARN for AWS Load Balancer Controller
     ##
-    roleArn: "arn:aws:iam::ACCOUNT_ID:role/IAM_ROLE_NAME"
+    roleArn: "" # THIS VALUE IS MANDATORY
+    # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_NODE_ROLE_NAME
 
-  ## @subsection awsS3Controller parameters
-  awsS3Controller:
-    ## @param aws.awsS3Controller.enabled Flag to enable AWS S3 Controller
-    ##
-    enabled: true
-    # TODO - Install CRDs separately (not supported by default)
-    # awsS3Buckets:
-    #   airflowLogs: canso-airflow-logs
-    #   materialisedFeatures: canso-ml-features
-    #   artifacts: canso-ml-artifacts
-    #   lifecycle:
-    #     enabled: false
-    # glacierTransitionDays: 120
   ## @subsection awsACK parameters
   awsACK:
     ## @param aws.awsS3Controller.enabled Flag to enable AWS ACK
