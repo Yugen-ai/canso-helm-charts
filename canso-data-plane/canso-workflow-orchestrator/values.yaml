@@ -56,7 +56,7 @@ imagePullSecrets:
 
 ## @param nameOverride Override the name of the service
 ##
-nameOverride: "conso-workflow-orchestrator"
+nameOverride: "canso-workflow-orchestrator"
 
 ## @param fullNameOverride Override the full name of the service
 ##

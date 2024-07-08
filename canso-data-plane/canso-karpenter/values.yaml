@@ -99,6 +99,11 @@ karpenter:
   nodeSelector:
     kubernetes.io/os: linux
 
+
+  ####################################################
+  ################ Affinity
+  ####################################################
+
   ## @param affinity Affinity rules for scheduling the pod.
   ##
   affinity:
@@ -128,6 +133,12 @@ karpenter:
   ## @param extraVolumes Additional volumes for the pod.
   ##
   extraVolumes: []
+
+
+  ####################################################
+  ################ Controller
+  ####################################################
+
   ## @section controller Karpenter controller configuration
   controller:
     ## @param controller.image Image configuration for the controller
@@ -193,6 +204,11 @@ karpenter:
   ## @param logLevel Global log level, defaults to 'info'
   ##
   logLevel: info
+
+
+  ####################################################
+  ################ Log Config
+  ####################################################
 
   ## @param logConfig Log configuration (Deprecated: Logging configuration will be dropped by v1, use logLevel instead)
   ##
