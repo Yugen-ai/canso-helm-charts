@@ -1,0 +1,16 @@
+{{- if .Values.cansoAgent.enabled -}}
+{{- if .Values.cansoAgent.clusterRoleBinding.enabled }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "canso-agent.fullname" . }}
+subjects:
+- kind: ServiceAccount
+  name: {{ include "canso-agent.serviceAccountName" . }}
+  namespace: {{ .Release.Namespace }} 
+roleRef:
+  kind: ClusterRole
+  name:  {{ include "canso-agent.fullname" . }}
+  apiGroup: rbac.authorization.k8s.io
+{{- end }}
+{{- end}}

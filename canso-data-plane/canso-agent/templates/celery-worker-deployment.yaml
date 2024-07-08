@@ -1,0 +1,27 @@
+{{- if .Values.cansoAgent.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "canso-agent-celery.fullname" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "canso-agent-celery.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "canso-agent-celery.fullname" . }}
+    spec:
+      serviceAccountName: {{ include "canso-agent.serviceAccountName" . }}
+      containers:
+      - name: {{ include "canso-agent-celery.fullname" . }}
+        image: {{ .Values.cansoAgent.deployment.image.repository }}:{{ .Values.cansoAgent.deployment.image.tag }}
+        imagePullPolicy: {{ .Values.cansoAgent.deployment.image.pullPolicy }}
+        command: ["/bin/sh", "-c"]
+        args: ["cd src && celery -A celery_app worker --loglevel=info"]
+       {{- if .Values.cansoAgent.external_secret.enabled }}
+      imagePullSecrets:
+        - name: {{ .Values.cansoAgent.external_secret.target_secret_name }}
+      {{- end }}
+{{- end }}

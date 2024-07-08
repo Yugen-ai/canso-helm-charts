@@ -1,0 +1,17 @@
+{{- if .Values.cansoAirflowJobs.enabled }}
+{{- if .Values.sparkRolebinding.enabled }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Values.sparkRolebinding.name }}
+  namespace: {{ .Values.namespace.name }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ .Values.pod_admin_role.name }}
+subjects:
+- kind: ServiceAccount
+  name: {{ .Values.sparkRolebinding.serviceAccount_name }}
+  namespace: {{ .Values.namespace.name }}
+{{- end }}
+{{- end }}

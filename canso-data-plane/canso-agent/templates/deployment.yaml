@@ -1,0 +1,95 @@
+{{- if .Values.cansoAgent.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "canso-agent.fullname" . }}
+  labels:
+    {{- include "canso-agent.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.cansoAgent.autoscaling.enabled }}
+  replicas: 1
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "canso-agent.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        'consul.hashicorp.com/connect-inject': 'false'
+      labels:
+       {{- include "canso-agent.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ include "canso-agent.fullname" . }}
+        image: {{ .Values.cansoAgent.deployment.image.repository }}:{{ .Values.cansoAgent.deployment.image.tag | default .Chart.AppVersion }}
+        imagePullPolicy: {{ .Values.cansoAgent.deployment.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.cansoAgent.service.targetport }}
+        {{- if .Values.cansoAgent.livenessProbe.enabled }}
+        livenessProbe:
+          {{- toYaml .Values.cansoAgent.livenessProbe | nindent 12 }}
+        {{- end }}
+        {{- if .Values.cansoAgent.readinessProbe.enabled }}
+        readinessProbe:
+          {{- toYaml .Values.cansoAgent.readinessProbe | nindent 12 }}
+        {{- end }}
+        volumeMounts:
+            {{- toYaml .Values.cansoAgent.extraVolumeMounts | nindent 12 }}
+        resources:
+          {{- toYaml .Values.cansoAgent.deployment.resources | nindent 10 }}
+        {{- if .Values.cansoAgent.deployment.enableEnv }}
+        env:
+          - name: TENANT_NAME
+            value:  {{ .Values.config.tenantName | quote }}
+          - name: TENANT_ID
+            value:  {{ .Values.config.tenantID | quote }}
+          - name: DEPLOYMENT_QUEUE_URL
+            value: {{ .Values.config.deployment_sqs_url }}
+          - name: NOTIFICATION_QUEUE_URL
+            value: {{ .Values.config.notification_sqs_url }}
+          - name: SQS_REGION
+            value: {{ .Values.config.sqs_region }}
+
+          {{- range .Values.cansoAgent.deployment.env }}
+          - name: {{ .name }}
+            value: {{ .value | quote }}
+          {{- end }}
+          
+          {{- range .Values.cansoAgent.deployment.envSecretKeys }}
+          - name: {{ .name }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .secret_name }}
+                key: {{ .key }}
+          {{- end }}
+        {{- end }}
+        {{- if .Values.cansoAgent.deployment.enableEnvSecrets }}
+        envFrom:
+          {{- range .Values.cansoAgent.deployment.secrets }}
+          - secretRef:
+              name: {{ .name }}
+          {{- end }}
+        {{- end }}
+      serviceAccountName: {{ include "canso-agent.serviceAccountName" . }}
+      {{- with .Values.cansoAgent.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.cansoAgent.external_secret.enabled }}
+      imagePullSecrets:
+        - name: {{ .Values.cansoAgent.external_secret.target_secret_name }}
+      {{- end }}
+      volumes:
+        {{- toYaml .Values.cansoAgent.extraVolumes | nindent 8 }}
+      {{- with .Values.cansoAgent.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.cansoAgent.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.cansoAgent.priorityClassName }}
+      priorityClassName: {{ . | quote }}
+      {{- end}}
+{{- end}}

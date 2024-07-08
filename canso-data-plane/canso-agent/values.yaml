@@ -1,0 +1,278 @@
+# Default values for platform-dev-agent Helm chart.
+# This file contains YAML-formatted configurations to be passed into Helm templates.
+
+
+####################################################
+################ Default Configs
+####################################################
+
+# Default configurations
+config:
+  ## @param config.tenantName Name Assigned to the Tenant
+  tenantName: yugen-internal
+  ## @param config.tenantID Unique ID assigned to the Tenant
+  tenantID: abc-123-xyz
+  ## @param config.deployment_sqs_url deployment sqs url in Control Plane. Generated
+  ## during the first time Tenant onboarding flow.
+  deployment_sqs_url: "https://REPLACE_WITH_ACTUAL_URL"
+  ## @param config.notification_sqs_url notification sqs url in Control Plane. Generated
+  ## during the first time Tenant onboarding flow.
+  notification_sqs_url: "https://REPLACE_WITH_ACTUAL_URL"
+  ## @param config.sqs_region region for sqs url in Control Plane. Generated
+  ## during the first time Tenant onboarding flow.
+  sqs_region: "some-aws-region"
+
+
+####################################################
+### Secrets (Dependencies to carry out Deploys)
+####################################################
+
+## @section airflowDeploySecret configuration
+airflowDeploySecret:
+  ## @param airflowDeploySecret.name Name of the Secret. Strongly recommend to not change name.
+  ##
+  name: &airflowDeploySecretName airflow-admin-secret
+  ## @param airflowDeploySecret.username Username for Airflow (used to login to Airflow's Web UI)
+  ##
+  username: admin
+  ## @param airflowDeploySecret.password Password for Airflow (used to login to Airflow's Web UI)
+  ##
+  password: password
+
+####################################################
+################ Canso Agent Configs
+####################################################
+
+## @section Default specifications for the deployment
+## @section Canso Agent Configuration
+cansoAgent:
+  ## @param cansoAgent.enabled Bool value to deploy Canso Agent
+  ##
+  enabled: true
+  ## @section Service Account Configuration
+  serviceAccount:
+    ## @param cansoAgent.serviceAccount.create Bool to enable serviceAccount creation
+    ##
+    create: true
+    ## @param cansoAgent.serviceAccount.annotations Annotations for the service account
+    ##
+    annotations: {}
+    ## @param cansoAgent.serviceAccount.name Name of the serviceAccount to use. Automatically created from helpers
+    ## 
+    name: ""
+  ## @section Service Configuration
+  service:
+    ## @param cansoAgent.service.annotations Annotations to add to the canso-agent service
+    ##   
+    annotations: {}
+    ## @param cansoAgent.service.labels Labels to add to the canso-agent service
+    ##     
+    labels: {}
+    ## @param cansoAgent.service.clusterIP Cluster IP for canso-agent service
+    ## 
+    clusterIP: ""
+    ## @param cansoAgent.service.targetport Target port for the service
+    ##
+    targetport: 5001
+  ## @section Secret Store Ref configurations
+  secretStoreRef:
+    ## @param secretStoreRef.name Name of the Secret Store resource to fetch the ExternalSecret data
+    ##
+    name: "secretstore-by-role"
+    ## @param secretStoreRef.kind Kind of the SecretStore resource (SecretStore or ClusterSecretStore). Strongly advised not to change the default value below.
+    ##
+    kind: ClusterSecretStore
+  ## @section External secret configurations
+  external_secret:
+    ## @param cansoAgent.external_secret.enabled Enable external secret
+    ##
+    enabled: true
+    ## @param cansoAgent.external_secret.name The name of the secret that will be created
+    ##
+    name: docker-secret-cred-dev-agent
+    ## @param cansoAgent.external_secret.target_secret_name The name of the secret stored in AWS Secrets Manager
+    ##
+    target_secret_name: docker-secret-cred-dev-agent
+    ## @param cansoAgent.external_secret.target_secret_type The type of the secret stored in the external secrets store
+    ##
+    target_secret_type: kubernetes.io/dockerconfigjson
+    ## @param cansoAgent.external_secret.target_secret_name_key The key within the secret in the external secrets store that holds the Docker configuration JSON.
+    ##
+    target_secret_name_key: .dockerconfigjson
+    ## @param cansoAgent.external_secret.aws_secret_name The path to the secret in AWS Secrets Manager that contains the Docker credentials
+    ##
+    aws_secret_name: stage/dockerhub
+    ## @param cansoAgent.external_secret.aws_secret_key The key within the secret in AWS Secrets Manager that contains the Docker credentials.
+    ##
+    aws_secret_key: dockerhub
+    ## @section Readiness Probe Configurations
+  readinessProbe:
+    ## @param cansoAgent.readinessProbe.enabled  Specifies if the readiness probe is enabled
+    ##
+    enabled: false
+    ## @param cansoAgent.readinessProbe.initialDelaySeconds  Number of seconds after the container has started before readiness probes are initiated
+    ##
+    initialDelaySeconds: 120
+    ## @param cansoAgent.readinessProbe.periodSeconds  How often to perform the probe
+    ##
+    periodSeconds: 10
+    ## @param cansoAgent.readinessProbe.timeoutSeconds  Number of seconds after which the probe times out
+    ##
+    timeoutSeconds: 20
+    ## @param cansoAgent.readinessProbe.successThreshold Success threshold for readiness probe
+    ##
+    successThreshold: 1
+    ## @param cansoAgent.readinessProbe.failureThreshold  Minimum consecutive failures for the probe to be considered failed
+    ##
+    failureThreshold: 6
+    ## @param cansoAgent.readinessProbe.path  The path for the readiness probe
+    ##
+    path: /health
+    ## @param cansoAgent.readinessProbe.port  The port to use for the probe
+    ##
+    port: http
+  ## @section Liveness Probe Configurations
+  livenessProbe:
+    ## @param cansoAgent.livenessProbe.enabled Specifies if the liveness probe is enabled
+    ##
+    enabled: false
+    ## @param cansoAgent.livenessProbe.initialDelaySeconds Number of seconds after the container has started before liveness probes are initiated
+    ##
+    initialDelaySeconds: 120
+    ## @param cansoAgent.livenessProbe.periodSeconds How often to perform the probe
+    ##
+    periodSeconds: 10
+    ## @param cansoAgent.livenessProbe.timeoutSeconds Number of seconds after which the probe times out
+    ##
+    timeoutSeconds: 20
+    ## @param cansoAgent.livenessProbe.successThreshold Success threshold for liveness probe
+    ##
+    successThreshold: 1
+    ## @param cansoAgent.livenessProbe.failureThreshold Minimum consecutive failures for the probe to be considered failed
+    ##
+    failureThreshold: 6
+    ## @param cansoAgent.livenessProbe.path  The path for the liveness probe
+    ##
+    path: /health
+    ## @param cansoAgent.livenessProbe.port  The port to use for the probe
+    ##
+    port: http
+  ## @section Deployment Configurations
+  deployment:
+    ## @section Image Configuration  
+    image:
+      ## @param cansoAgent.deployment.image.repository repository for the image
+      ##
+      repository: shaktimaanbot/dev-agent-image
+      ## @param cansoAgent.deployment.image.pullPolicy Pull policy for the image
+      ##
+      pullPolicy: Always
+      ## @param cansoAgent.deployment.image.tag Tag for the image
+      ##
+      tag: v0.0.1-python-3.8-slim
+    ## @section resources configuration
+    resources:
+      ## @section resources limits configuration
+      ##
+      limits:
+        ## @param cansoAgent.deployment.resources.limits.cpu CPU limits for the Canso Agent container. Strongly recommend to not decrease.
+        ##
+        cpu: 800m
+        ## @param cansoAgent.deployment.resources.limits.memory Memory limits for the Canso Agent container. Strongly recommend to not decrease.
+        ##
+        memory: 512Mi
+        ## @param cansoAgent.deployment.resources.limits.ephemeral-storage Ephemeral storage limits for the Canso Agent container. Strongly recommend to not decrease.
+        ##
+        ephemeral-storage: 512Mi
+      ## @section resources requests configuration
+      ##
+      requests:
+        ## @param cansoAgent.deployment.resources.requests.cpu CPU requests for the Canso Agent container. Strongly recommend to not decrease.
+        ##
+        cpu: 500m
+        ## @param cansoAgent.deployment.resources.requests.memory Memory requests for the Canso Agent container. Strongly recommend to not decrease.
+        ##
+        memory: 256Mi
+        ## @param cansoAgent.deployment.resources.requests.ephemeral-storage Ephemeral storage requests for the Canso Agent container. Strongly recommend to not decrease.
+        ##
+        ephemeral-storage: 256Mi
+    ## @param cansoAgent.deployment.enableEnv Whether environment variables are enabled
+    ##
+    enableEnv: true
+    ## @section Environment Variables Configurations from secret keys
+    ##
+    envSecretKeys:
+      - name: AIRFLOW_USERNAME
+        secret_name: *airflowDeploySecretName
+        key: username # Do not change
+      - name: AIRFLOW_PASSWORD
+        secret_name: *airflowDeploySecretName
+        key: password # Do not change
+    ## @param cansoAgent.deployment.enableEnvSecrets Whether environment secrets are enabled
+    ##
+    enableEnvSecrets: false
+  ## @section Autoscaling Configuration
+  ##
+  autoscaling:
+    ## @param cansoAgent.autoscaling.enabled autoscaling is enabled
+    ##
+    enabled: false
+  ## @param cansoAgent.tolerations Taints that pod can tolerate
+  ##
+  tolerations: []
+  # - key: "key"
+  #   operator: "Equal"
+  #   value: "value"
+  #   effect: "NoSchedule"
+
+  ## @param cansoAgent.affinity Affinity rules for pod scheduling on a node
+  ##  
+  affinity: {}
+  # nodeAffinity:
+  #   requiredDuringSchedulingIgnoredDuringExecution:
+  #     nodeSelectorTerms:
+  #     - matchExpressions:
+  #       - key: mykey
+  #         operator: In
+  #         values:
+  #         - abc
+  #         - def
+
+  # @param cansoAgent.nodeSelector Parameters to select for scheduling of pod on a node
+  ##
+  nodeSelector: {}
+  ## @param cansoAgent.priorityClassName PriorityClass name for the pod
+  ##
+  priorityClassName: system-cluster-critical
+  ## @param cansoAgent.extraVolumes Extra volume for the agent's container
+  ##
+  extraVolumes: []
+  ## @param cansoAgent.extraVolumeMounts Extra volume mount the agent's container
+  ##
+  extraVolumeMounts: []
+  ## @section Cluster Role Binding
+  clusterRoleBinding:
+    ## @param cansoAgent.clusterRoleBinding.enabled Whether cluster role binding is enabled
+    enabled: true
+  ## @section Cluster Role
+  clusterRole:
+    ## @param cansoAgent.clusterRole.enabled Whether cluster role is enabled
+    enabled: true
+
+
+####################################################
+################ Name Override Configs
+####################################################
+
+## @param nameOverride String to override partial name passed in helm install command
+##
+nameOverride: ""
+
+
+####################################################
+################ FullName Override Configs
+####################################################
+
+## @param fullnameOverride String to override full name passed in helm install command
+##
+fullnameOverride: "canso-agent"
