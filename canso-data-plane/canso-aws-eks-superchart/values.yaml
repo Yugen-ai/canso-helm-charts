@@ -1,5 +1,8 @@
 ## @section ArgoCD Configs
 ##
+
+## @param argocdProject ArgoCD project name.
+##
 argocdProject: canso-appsets # WARNING: CRITICAL VALUE - DO NOT CHANGE
 
 ## @param createProject Create the ArgoCD project.
@@ -32,13 +35,13 @@ awsRegion: "" # THIS VALUE IS MANDATORY
 
 ## @section Control Plane Configs
 cansoControlPlane:
-  ## @param config.deployment_sqs_url deployment sqs url in Control Plane. Generated during Tenant onboarding.
+  ## @param cansoControlPlane.deployment_sqs_url deployment sqs url in Control Plane. Generated during Tenant onboarding.
   ##
   deployment_sqs_url: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
-  ## @param config.notification_sqs_url notification sqs url in Control Plane. Generated during Tenant onboarding.
+  ## @param cansoControlPlane.notification_sqs_url notification sqs url in Control Plane. Generated during Tenant onboarding.
   ##
   notification_sqs_url: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
-  ## @param config.sqs_region region for sqs url in Control Plane. Generated during Tenant onboarding.
+  ## @param cansoControlPlane.sqs_region region for sqs url in Control Plane. Generated during Tenant onboarding.
   ##
   sqs_region: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
 
@@ -46,10 +49,10 @@ cansoControlPlane:
 ############### Tolerations & Affinity
 ####################################################
 
-## @section Tolerations
+## @param tolerations Tolerations for the deployment.
 tolerations: {}
 
-## @section Affinity
+## @param affinity Affinity for the deployment.
 affinity: {}
 
 ####################################################
@@ -87,6 +90,7 @@ statsd:
 
 ## @section Canso Image Pull Secrets
 canso:
+  ## @skip canso.imagePullSecrets Image pull secrets for Canso dataplane
   imagePullSecrets:
     - name: canso-image-pull-secrets
       secretKey: .dockerconfigjson # key of the kubernetes secret
@@ -135,7 +139,7 @@ aws:
 
   ## @subsection awsACK parameters
   awsACK:
-    ## @param aws.awsS3Controller.enabled Flag to enable AWS ACK
+    ## @param aws.awsACK.enabled Flag to enable AWS ACK
     ##
     enabled: true
 
@@ -308,13 +312,13 @@ airflow:
 
   ## @subsection airflow.pvc for creating a pvc with the same storage class as efsStorageClass installed
   pvc:
-    ## @param airflow_config.airflow_pvc.enabled Flag to enable the creation of a PVC
+    ## @param airflow.pvc.enabled Flag to enable the creation of a PVC
     ##
     enabled: true
-    ## @param airflow_config.airflow_pvc.name Name of the PersistentVolumeClaim (PVC)
+    ## @param airflow.pvc.name Name of the PersistentVolumeClaim (PVC)
     ##
     name: airflow-pvc
-    ## @param airflow_config.airflow_pvc.storage Size of the storage for the PVC
+    ## @param airflow.pvc.storage Size of the storage for the PVC
     storage: 1Gi
 
   ## @subsection airflow.user for creating a user for airflow
@@ -440,7 +444,7 @@ cansoAgent:
 
 ## @section Roles
 roles:
-  ## @param roles.S3role S3 Role for Canso Agent
+  ## @param roles.s3role S3 Role for Canso Agent
   s3role: "" # THIS VALUE IS MANDATORY
   # s3role: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
   
@@ -461,7 +465,7 @@ ingress:
   ## @param ingress.tolerations The tolerations of the Ingress Controller pods
   ##
   tolerations: []
-  ## @param cansoAgent.affinity The affinity of the Ingress Controller pods
+  ## @param ingress.affinity The affinity of the Ingress Controller pods
   ## 
   affinity: {}
   ## @param ingress.env The additional environment variables to be set on the Ingress Controller pods
@@ -471,10 +475,12 @@ ingress:
   ## Do not Change
   auth_pass: $apr1$IYG9bEux$xw8CgNhoha.oE/xzZcdXR/ # WARNING: CRITICAL VALUE - DO NOT CHANGE
 
+  ## @param ingress.master.enabled Flag for creating ingress controller master
+  ##
   master:
     enabled: true
 
-  ## @param ingress.services The Ingress Controller configuration for canso services
+  ## @skip ingress.services The Ingress Controller configuration for canso services
   ##
   services:
   - serviceName: airflow-web         
