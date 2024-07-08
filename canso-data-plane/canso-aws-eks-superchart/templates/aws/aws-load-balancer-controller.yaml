@@ -1,0 +1,47 @@
+{{- if .Values.aws.awsLoadBalancerController.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: aws-load-balancer-controller
+  namespace: argocd
+  annotations:
+    helm.sh/hook: pre-install, pre-upgrade
+    helm.sh/hook-weight: "-20"
+    argocd.argoproj.io/sync-wave: "-6"
+  labels:
+    canso.ai/product-component: "infra-dependencies"
+    canso.ai/part-of: "superchart"
+    canso.ai/infra-component: "aws-load-balancer-controller"
+    canso.ai/infra-tag: "1000"
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: {{ .Values.clusterName }}
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: aws-load-balancer-controller
+    spec:
+      project: default
+      destination:
+        namespace: aws-load-balancer-controller
+        server: 'https://kubernetes.default.svc'
+      source:
+        repoURL: "https://aws.github.io/eks-charts"
+        targetRevision: 1.8.0
+        chart: aws-load-balancer-controller
+        helm:
+          values: |-
+            clusterName: {{ .Values.clusterName | quote }}
+            region: {{ .Values.awsRegion }}
+            serviceAccount:
+              annotations:
+                eks.amazonaws.com/role-arn: {{ .Values.aws.awsLoadBalancerController.roleArn }}
+      syncPolicy:
+        automated: { }
+        syncOptions:
+          - RespectIgnoreDifferences=true
+          - CreateNamespace=true
+          - ServerSideApply=true
+{{- end }}

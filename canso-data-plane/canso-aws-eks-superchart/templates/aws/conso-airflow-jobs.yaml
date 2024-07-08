@@ -1,0 +1,73 @@
+{{- if .Values.cansoAirflowJobs.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: canso-airflow-jobs
+  namespace: argocd
+  annotations:  
+    argocd.argoproj.io/sync-wave: "2"
+  labels:
+    canso.ai/product-component: "jobs"
+    canso.ai/part-of: "superchart"
+    canso.ai/infra-component: "canso-airflow-jobs"
+    canso.ai/infra-tag: "1000"
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: {{ .Values.clusterName }}
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: "canso-airflow-jobs"
+    spec:
+      project: {{ .Values.argocdProject }}
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: {{ .Values.cansoAirflowJobs.namespace }}
+      sources:
+      - repoURL: 'https://yugen-ai.github.io/platform-helm-chart/canso-airflow-jobs'
+        targetRevision: "0.1.0"
+        chart: canso-airflow-jobs
+        releaseName: canso-airflow-jobs
+        helm:
+          values: |
+            cansoAirflowJobs:
+              enabled: true
+            namespace:
+              enabled: false ## namesace will be created by argocd
+              name: {{ .Values.cansoAirflowJobs.namespace }}
+
+            airflowNamespace: {{ .Values.airflow.namespace }}
+
+            serviceAccount:
+              enabled: true
+              name: airflow-jobs-sa
+              role_arn: {{ .Values.airflow.roleArn}} ## Uses same roleArn as airflow
+
+
+            podRoleBinding:
+              enabled: true
+              name: pod-role-binding
+              serviceAccount_name: {{ .Values.airflow.serviceAccountName }}
+
+            external_secret:
+              enabled: true
+              name: canso-image-pull-secrets
+              secretKey: {{ (index .Values.canso.imagePullSecrets 0).secretKey }}
+              remoteRefKey: {{ (index .Values.canso.imagePullSecrets 0).remoteRefKey }}
+              remoteRefProperty: {{ (index .Values.canso.imagePullSecrets 0).remoteRefProperty }}
+              targetName: {{ (index .Values.canso.imagePullSecrets 0).targetName }}
+              clusterSecretRole: {{ (index .Values.canso.imagePullSecrets 0).clusterSecretRole }}
+
+      syncPolicy:
+        automated:
+          prune: true
+          allowEmpty: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+  syncPolicy:
+    preserveResourcesOnDeletion: false
+
+{{- end}}

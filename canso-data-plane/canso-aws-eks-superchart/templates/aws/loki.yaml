@@ -1,0 +1,59 @@
+{{- if .Values.loki.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: loki
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+  labels:
+    canso.ai/product-component: "infra-dependencies"
+    canso.ai/part-of: "superchart"
+    canso.ai/infra-component: "grafana"
+    canso.ai/infra-tag: "1000"
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: {{ .Values.clusterName }}
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: "loki"
+    spec:
+      project: {{ .Values.argocdProject }}
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: loki
+      sources:
+      - repoURL: 'https://grafana.github.io/helm-charts'
+        targetRevision: "2.10.1"
+        chart: loki-stack
+        helm:
+          releaseName: loki
+          values: |
+            loki:
+              enabled: true
+              config:
+                auth_enabled: false
+                {{- if .Values.tolerations }}
+                tolerations:
+                  {{ toYaml .Values.tolerations | nindent 14 }}
+                {{- end }}
+                {{- if .Values.affinity }}
+                affinity:
+                  {{ toYaml .Values.affinity | nindent 14 }}
+                {{- end }}
+            promtail:
+              enabled: true
+              priorityClassName: {{ .Values.priorityClass.name }}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          #- ServerSideApply=true
+  syncPolicy:
+    preserveResourcesOnDeletion: true
+{{- end }}

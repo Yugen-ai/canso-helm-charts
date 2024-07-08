@@ -1,0 +1,57 @@
+{{- if .Values.onlineFS.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: "online-fs"
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+  labels:
+    canso.ai/product-component: "app-deployments"
+    canso.ai/part-of: "superchart"
+    canso.ai/app-name: "online-fs"
+    canso.ai/infra-tag: "1001"
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: {{.Values.clusterName }}
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: online-fs
+    spec:
+      project: {{ .Values.argocdProject }}  
+      destination:
+        namespace: online-fs
+        server: https://kubernetes.default.svc
+      source:
+        repoURL: 'https://yugen-ai.github.io/platform-helm-chart/online-fs-v2'
+        targetRevision: "0.0.1"
+        chart: online-fs-v2
+        helm:
+          values: |
+            external_secret:
+              enabled: {{ .Values.onlineFS.external_secret.enabled }}
+              cluster_secret_role: {{ (index .Values.canso.imagePullSecrets 0).clusterSecretRole }}
+              target_secret_name: &image_pull_secret_name {{ (index .Values.canso.imagePullSecrets 0).targetName }}
+              target_secret_name_key: {{ (index .Values.canso.imagePullSecrets 0).secretKey }}
+              aws_secret_name: {{ (index .Values.canso.imagePullSecrets 0).remoteRefKey }}
+              aws_secret_key: {{ (index .Values.canso.imagePullSecrets 0).remoteRefProperty }}
+
+            deployment:
+              replicaCount: {{ .Values.onlineFS.deployment.replicaCount }}
+              image:
+                tag:  {{ .Values.onlineFS.deployment.image.tag }}
+                
+            ingress:
+              enabled: {{ .Values.onlineFS.ingress.enabled }}
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+{{- end}}

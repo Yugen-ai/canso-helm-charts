@@ -1,0 +1,57 @@
+{{- if .Values.cansoAgent.enabled -}}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: canso-agent
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+  labels:
+    canso.ai/product-component: "canso-apps"
+    canso.ai/part-of: "superchart"
+    canso.ai/infra-component: "dataplane-agents"
+    canso.ai/infra-tag: "1002"
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: {{ .Values.clusterName }}
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: canso-agent
+    spec:
+      project: {{ .Values.argocdProject }}
+      destination:
+        namespace: canso-dataplane
+        server: https://kubernetes.default.svc
+      source:
+        repoURL: 'https://yugen-ai.github.io/platform-helm-chart/canso-agent'
+        chart: canso-agent
+        targetRevision: 0.1.2
+        helm:
+          values: |-
+            config:
+              tenantName: {{ .Values.tenantName }}
+              tenantID: {{ .Values.tenantID }}
+              deployment_sqs_url: {{ .Values.cansoControlPlane.deployment_sqs_url }}
+              notification_sqs_url: {{ .Values.cansoControlPlane.notification_sqs_url }}
+              sqs_region: {{ .Values.cansoControlPlane.sqs_region }}          
+            cansoAgent:
+              enabled: true
+              {{- with .Values.cansoAgent.tolerations }}
+              tolerations:
+                {{ toYaml . | nindent 12 }}
+              {{- end }}
+              {{- with .Values.cansoAgent.affinity }}
+              affinity:
+                {{ toYaml . | nindent 12 }}
+              {{- end }}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+{{- end }}

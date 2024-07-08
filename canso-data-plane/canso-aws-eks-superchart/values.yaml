@@ -1,0 +1,520 @@
+## @section ArgoCD Configs
+##
+argocdProject: canso-appsets # WARNING: CRITICAL VALUE - DO NOT CHANGE
+
+## @param createProject Create the ArgoCD project.
+createProject: true
+
+####################################################
+################# Default Configs
+####################################################
+
+## @section Default Configs
+## @param clusterName Name of the AWS EKS cluster.
+##
+clusterName: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP
+## @param clusterEndpoint Endpoint URL of the AWS EKS cluster.
+##
+clusterEndpoint: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP
+## @param tenantName Name Assigned to the Tenant
+##
+tenantName: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team for value)
+## @param tenantID Unique ID assigned to the Tenant
+##
+tenantID: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
+## @param awsRegion AWS Region of the cluster
+##
+awsRegion: "" # THIS VALUE IS MANDATORY
+
+####################################################
+############### Control Plane Configs
+####################################################
+
+## @section Control Plane Configs
+cansoControlPlane:
+  ## @param config.deployment_sqs_url deployment sqs url in Control Plane. Generated during Tenant onboarding.
+  ##
+  deployment_sqs_url: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
+  ## @param config.notification_sqs_url notification sqs url in Control Plane. Generated during Tenant onboarding.
+  ##
+  notification_sqs_url: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
+  ## @param config.sqs_region region for sqs url in Control Plane. Generated during Tenant onboarding.
+  ##
+  sqs_region: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
+
+####################################################
+############### Tolerations & Affinity
+####################################################
+
+## @section Tolerations
+tolerations: {}
+
+## @section Affinity
+affinity: {}
+
+####################################################
+############### Karpenter Configs
+####################################################
+
+## @section Karpenter Configs
+karpenter:
+  ## @param karpenter.enabled Flag to enable Karpenter.
+  ##
+  enabled: true
+  ## @param karpenter.roleArn Role ARN for Karpenter.
+  ##
+  roleArn: "" # THIS VALUE IS MANDATORY
+  # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
+  ## @param karpenter.nodeRoleArn Role ARN for Karpenter node.
+  ##
+  nodeRoleArn: "" # THIS VALUE IS MANDATORY
+  # nodeRoleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
+
+
+####################################################
+############### StatsD Configs (For Airflow)
+####################################################
+
+## @section StatsD Configs
+statsd:
+  ## @param statsd.enabled Flag to enable StatsD.
+  ##
+  enabled: true
+
+####################################################
+############### Canso Images Pull Secrets
+####################################################
+
+## @section Canso Image Pull Secrets
+canso:
+  imagePullSecrets:
+    - name: canso-image-pull-secrets
+      secretKey: .dockerconfigjson # key of the kubernetes secret
+      remoteRefKey: stage/dockerhub # name of AWS secret
+      remoteRefProperty: dockerhub # key of the secret in secrets manager
+      targetName: docker-secret-cred # name of kubernetes secret
+      targetType: kubernetes.io/dockerconfigjson
+      clusterSecretRole: secretstore-by-role # name of the ClusterSecret Role
+
+####################################################
+##################### AWS Configs
+####################################################
+
+## @section AWS Configs
+aws:
+  ## @subsection awsEbsCsiDriver parameters
+  awsEbsCsiDriver:
+    ## @param aws.awsEbsCsiDriver.enabled Flag to enable AWS EBS CSI Driver.
+    ##
+    enabled: true
+    ## @param aws.awsEbsCsiDriver.roleArn Role ARN for AWS EBS CSI Driver.
+    ##
+    roleArn: "" # THIS VALUE IS MANDATORY
+    # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
+    
+  ## @subsection awsEfsCsiDriver parameters
+  awsEfsCsiDriver:
+
+    ## @param aws.awsEfsCsiDriver.enabled Flag to enable AWS EFS CSI Driver.
+    ##
+    enabled: true
+    ## @param aws.awsEfsCsiDriver.roleArn Role ARN for AWS EFS CSI Driver.
+    ##
+    roleArn: "" # THIS VALUE IS MANDATORY
+    # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
+    
+  ## @subsection awsLoadBalancerController parameters
+  awsLoadBalancerController:
+    ## @param aws.awsLoadBalancerController.enabled Flag to enable AWS Load Balancer Controller
+    ##
+    enabled: true
+    ## @param aws.awsLoadBalancerController.roleArn Role ARN for AWS Load Balancer Controller
+    ##
+    roleArn: "" # THIS VALUE IS MANDATORY
+    # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
+
+  ## @subsection awsACK parameters
+  awsACK:
+    ## @param aws.awsS3Controller.enabled Flag to enable AWS ACK
+    ##
+    enabled: true
+
+####################################################
+##################### External Secrets
+####################################################
+
+## @section External Secrets
+externalSecrets:
+  ## @param externalSecrets.enabled Flag to enable External Secrets
+  ##
+  enabled: true
+
+  ## @subsection externalSecrets.serviceaccount parameters
+  serviceaccount:
+    ## @param externalSecrets.serviceaccount.roleArn arn Role ARN for External Secrets service account.
+    ##
+    roleArn: "" # THIS VALUE IS MANDATORY
+    # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
+    ## @param externalSecrets.serviceaccount.name Name of the service account for External Secrets.
+    ##
+    name: external-secrets-sa
+    
+  ## @subsection externalSecrets.clusterSecretStore parameters
+  clusterSecretStore:
+    ## @param externalSecrets.clusterSecretStore.region AWS Region for AWS Secrets Manager.
+    ##
+    region: "" # THIS VALUE IS MANDATORY
+
+####################################################
+##################### EFS Configs
+####################################################
+
+## @section EFS Configs
+efsStorageClass:
+  ## @param efsStorageClass.enabled Flag to enable EFS Storage Class.
+  ##
+  enabled: true
+  ## @param efsStorageClass.name Name of the EFS Storage Class.
+  ##
+  name: efs-sc
+  ## @param efsStorageClass.reclaimPolicy Reclaim policy for the EFS Storage Class.
+  ##
+  reclaimPolicy: Retain
+  ## @param efsStorageClass.fileSystemId File System ID for the EFS Storage Class.
+  ##
+  fileSystemId: "" # THIS VALUE IS MANDATORY
+  
+####################################################
+################# Priority Class
+####################################################
+
+## @section Priority Class Configurations
+priorityClass:
+  ## @param priorityClass.enabled Flag to enable Priority Class.
+  ##
+  enabled: true
+  ## @param priorityClass.name Name of the Priority Class.
+  ##
+  name: high-priority
+
+####################################################
+####################### Prometheus
+####################################################
+
+## @section Prometheus Configurations
+prometheus:
+  ## @param prometheus.enabled Flag to enable Prometheus.
+  ##
+  enabled: true
+
+####################################################
+####################### Loki
+####################################################
+
+## @section Loki Configurations
+loki:
+  ## @param loki.enabled Flag to enable Loki.
+  ##
+  enabled: true
+
+####################################################
+####################### Grafana
+####################################################
+
+## @section Grafana Configurations
+grafana:
+  ## @param grafana.enabled Flag to enable Grafana.
+  ##
+  enabled: true
+  ## @param grafana.persistenceSize Persistence size for Grafana.
+  ##
+  persistenceSize: 10Gi
+  ## @param grafana.adminPassword Admin password for Grafana.
+  ##
+  adminPassword: admin@123
+  ## @param grafana.adminUser Admin username for Grafana.
+  ##
+  adminUser: admin
+  
+
+####################################################
+################## Spark Operator
+####################################################
+
+## @section Spark Operator Configurations
+sparkOperator:
+
+  ## @param sparkOperator.enabled Flag to enable Spark Operator.
+  ##
+  enabled: true
+  # -- Ingress URL format.
+  # Requires the UI service to be enabled by setting `uiService.enable` to true.
+  # `uiService.enable` is set to true by default, see permalink below -
+  # https://github.com/kubeflow/spark-operator/blob/5ce3dbacff76bba364055b9b786110f1a4ab3174/charts/spark-operator-chart/values.yaml#L67-L69
+  ## @param sparkOperator.ingressUrlFormat Ingress URL format.
+  ##
+  ingressUrlFormat: ""
+  #"{{ .appName }}.tenant1.domain.com"
+  ## @param sparkOperator.nodeSelector Node labels for pod assignment
+  ##
+  nodeSelector: {}
+  ## @param sparkOperator.tolerations List of node taints to tolerate
+  ##
+  tolerations: []
+  ## @param sparkOperator.affinity Affinity for pod assignment
+  ##
+  affinity: {}
+  ## @param sparkOperator.podAnnotations Additional annotations to add to the pod
+  ##
+  podAnnotations: {}
+  ## @param sparkOperator.podLabels Additional labels to add to the pod
+  ##
+  podLabels: {}
+  # resources -- Pod resource requests and limits
+  # Note, that each job submission will spawn a JVM within the Spark Operator Pod using "/usr/local/openjdk-11/bin/java -Xmx128m".
+  # Kubernetes may kill these Java processes at will to enforce resource limits. When that happens, you will see the following error:
+  # 'failed to run spark-submit for SparkApplication [...]: signal: killed' - when this happens, you may want to increase memory limits.
+  ## @param sparkOperator.resources Pod resource requests and limits
+  ##
+  resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 300Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 300Mi
+
+####################################################
+################## Airflow
+####################################################
+
+## @section Airflow
+airflow:
+  ## @param airflow.enabled Flag to enable Airflow.
+  ##
+  enabled: true
+  ## @param airflow.namespace Namespace where Airflow will be deployed.
+  ##
+  namespace: airflow
+  ## @param airflow.roleArn Rolearn of the irsa role created for the airflow installation   
+  ##
+  roleArn: "arn:aws:iam::ACCOUNT_ID:role/IAM_ROLE_NAME"
+  ## @param airflow.serviceAccountName Name of the service account to be created by the airflow chart with above roleArn
+  ##
+  serviceAccountName: "airflow-sa"
+  ## @param airflow.remoteLogBaseFolder S3 bucket path where logs will be stored
+  ##
+  remoteLogBaseFolder: "s3://canso-logging/airflow/logs"
+
+  ## @subsection airflow.pvc for creating a pvc with the same storage class as efsStorageClass installed
+  pvc:
+    ## @param airflow_config.airflow_pvc.enabled Flag to enable the creation of a PVC
+    ##
+    enabled: true
+    ## @param airflow_config.airflow_pvc.name Name of the PersistentVolumeClaim (PVC)
+    ##
+    name: airflow-pvc
+    ## @param airflow_config.airflow_pvc.storage Size of the storage for the PVC
+    storage: 1Gi
+
+  ## @subsection airflow.user for creating a user for airflow
+  user:
+    ## @param airflow.user.enabled Flag to enable the creation of a user for Airflow
+    ##
+    enabled: true
+    ## @param airflow.user.username Username for Airflow.
+    ##
+    username: admin
+    ## @param airflow.user.password Password for Airflow.
+    ##
+    password: admin#airflow@123
+    
+
+####################################################
+################## Jerry
+####################################################
+
+## @section Jerry
+jerry:
+  ## @param jerry.enabled Flag to enable Jerry.
+  ##
+  enabled: true
+
+  ## @subsection jerry.external_secret 
+  external_secret:
+    ## @param jerry.external_secret.enabled Flag to enable the creation of a secret in the same namespace as jerry
+    ##
+    enabled: true 
+
+  ## @subsection jerry.image 
+  image:
+    ## @param jerry.image.tag Tag of the Jerry image.
+    ##
+    tag: "v1.0.4"
+    
+  ## @subsection jerry.service 
+  service:
+    ## @param jerry.service.type Type of the service for Jerry.
+    ##
+    type: NodePort
+    ## @param jerry.service.port Port of the service for Jerry.
+    ##
+    port: 3000
+  
+  ## @subsection jerry.deployment 
+  readinessProbe:
+    ## @param jerry.readinessProbe.enabled Flag to enable readiness probe for Jerry.
+    enabled: false
+    
+  ## @subsection jerry.livenessProbe 
+  livenessProbe:
+    ## @param jerry.livenessProbe.enabled Flag to enable liveness probe for Jerry.
+    enabled: false
+    
+
+####################################################
+################# Online Feature Service
+####################################################
+
+## @section Online Feature Service
+onlineFS:
+  ## @param onlineFS.enabled Flag to enable Online Feature Store.
+  ##
+  enabled: true
+  
+  ## @subsection onlineFS.external_secret
+  external_secret:
+    ## @param onlineFS.external_secret.enabled Flag to enable the creation of an external secret 
+    enabled: true
+
+  ## @subsection onlineFS.image
+  deployment:
+    ## @param onlineFS.deployment.replicaCount Number of replicas for Online Feature Store deployment.
+    ##
+    replicaCount: 1
+    
+    image:
+      ## @param onlineFS.deployment.image.tag Tag of the Online Feature Store image.
+      ##
+      tag: v0.0.1
+
+  ingress:
+    ## @param onlineFS.ingress.enabled Flag to enable ingress for Online Feature Store.
+    enabled: false
+    
+
+####################################################
+###########  Airflow Jobs
+####################################################
+
+## @section Airflow Jobs
+cansoAirflowJobs:  
+
+  ## @param cansoAirflowJobs.enabled Flag to enable airflow jobs.
+  ##
+  enabled: true
+
+  ## @param cansoAirflowJobs.namespace Namespace for airflow jobs.
+  ##
+  namespace: canso-airflow-jobs
+
+####################################################
+############ Canso Agent Configs
+####################################################
+
+## @section cansoAgent configuration
+cansoAgent:
+  ## @param cansoAgent.enabled Boolean Flag to deploy Canso Agent
+  ##
+  enabled: true
+  ## @param cansoAgent.tolerations Taints that pod can tolerate
+  ##
+  tolerations: []
+  ## @param cansoAgent.affinity Affinity rules for pod scheduling on a node
+  ##  
+  affinity: {}
+
+####################################################
+############ Roles
+####################################################
+
+## @section Roles
+roles:
+  ## @param roles.S3role S3 Role for Canso Agent
+  s3role: "" # THIS VALUE IS MANDATORY
+  # s3role: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
+  
+
+####################################################
+############ Nginx Ingress Controller
+####################################################
+
+## For the official Documentation, see link below
+## https://github.com/nginxinc/kubernetes-ingress/blob/main/charts/nginx-ingress/README.md#configuration
+ingress:
+  ## @param ingress.enabled Boolean Flag to deploy Canso Agent
+  ##
+  enabled: true
+  ## @param ingress.nodeSelector The node selector for pod assignment for the Ingress Controller pods
+  ##
+  nodeSelector: {}
+  ## @param ingress.tolerations The tolerations of the Ingress Controller pods
+  ##
+  tolerations: []
+  ## @param cansoAgent.affinity The affinity of the Ingress Controller pods
+  ## 
+  affinity: {}
+  ## @param ingress.env The additional environment variables to be set on the Ingress Controller pods
+  ##
+  env: []
+  ## @param ingress.auth_pass The basic auth password for the Network Load balancer
+  ## Do not Change
+  auth_pass: $apr1$IYG9bEux$xw8CgNhoha.oE/xzZcdXR/ # WARNING: CRITICAL VALUE - DO NOT CHANGE
+
+  master:
+    enabled: true
+
+  ## @param ingress.services The Ingress Controller configuration for canso services
+  ##
+  services:
+  - serviceName: airflow-web         
+    namespace: airflow
+    host: "*.com"               
+    path: "/airflow"
+    servicePort: 8080
+    annotations: {}
+  - serviceName: online-fs       
+    namespace: online-fs
+    host: "*.com"               
+    path: "/online-fs/"
+    servicePort: 80
+    annotations: 
+      nginx.org/rewrites: "serviceName=online-fs rewrite=/"
+  - serviceName: grafana       
+    namespace: grafana
+    host: "*.com"               
+    path: "/grafana/"
+    servicePort: 80
+    annotations: 
+      nginx.org/rewrites: "serviceName=grafana rewrite=/"
+  - serviceName: prometheus-server       
+    namespace: prometheus
+    host: "*.com"               
+    path: "/prometheus/"
+    servicePort: 80
+    annotations: 
+      nginx.org/rewrites: "serviceName=prometheus-server rewrite=/"
+  - serviceName: argocd-server       
+    namespace: argocd
+    host: "*.com"               
+    path: "/argocd/"
+    servicePort: 80
+    annotations: 
+      nginx.org/rewrites: "serviceName=argocd-server rewrite=/"
+  - serviceName: canso-agent       
+    namespace: canso-dataplane
+    host: "*.com"               
+    path: "/canso-agent/"
+    servicePort: 80
+    annotations: 
+      nginx.org/rewrites: "serviceName=canso-agent rewrite=/"

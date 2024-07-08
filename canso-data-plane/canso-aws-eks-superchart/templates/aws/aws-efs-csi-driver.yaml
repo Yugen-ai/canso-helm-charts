@@ -1,0 +1,61 @@
+{{- if .Values.aws.awsEfsCsiDriver.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: aws-efs-csi-driver
+  namespace: argocd
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "-18"
+    argocd.argoproj.io/sync-wave: "-4"
+  labels:
+    canso.ai/product-component: "infra-dependencies"
+    canso.ai/part-of: "superchart"
+    canso.ai/infra-component: "aws-efs-csi-driver"
+    canso.ai/infra-tag: "1000"
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: {{ .Values.clusterName }}
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: "aws-efs-csi-driver"
+    spec:
+      project: {{ .Values.argocdProject }}
+      destination:
+        namespace: efs-driver
+        server: 'https://kubernetes.default.svc'
+      source:
+        repoURL: https://kubernetes-sigs.github.io/aws-efs-csi-driver
+        targetRevision: 2.5.3
+        chart: aws-efs-csi-driver
+        helm:
+          releaseName: aws-efs-csi-driver
+          values: |-
+            image:
+              repository: amazon/aws-efs-csi-driver
+              tag: "v1.7.3"
+              pullPolicy: IfNotPresent
+            controller:
+              create: true
+              serviceAccount:
+                create: true
+                name: efs-csi-driver-sa
+                annotations:
+                  eks.amazonaws.com/role-arn: {{ .Values.aws.awsEfsCsiDriver.roleArn }}
+              tags:
+                volume-type: efs
+                yugen/managed: "true"
+              tolerations:
+                - key: CriticalAddonsOnly
+                  operator: Exists
+                - key: efs.csi.aws.com/agent-not-ready
+                  operator: Exists
+      syncPolicy:
+        automated: { }
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+{{- end }}
