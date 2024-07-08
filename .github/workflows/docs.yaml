@@ -26,8 +26,10 @@ jobs:
         run: |
           # This request doesn't consume API calls.
           curl -Lkso $TEMP_FILE $DIFF_URL
+          echo $TEMP_FILE
+          echo $DIFF_URL
           files_changed="$(sed -nr 's/[\-\+]{3} [ab]\/(.*)/\1/p' $TEMP_FILE | sort | uniq)"
-          echo "$files_changed"
+          echo $files_changed
           # Adding || true to avoid "Process exited with code 1" errors
           charts_dirs_changed="$(echo "$files_changed" | xargs -n1 dirname | grep -o "canso-data-plane/[^/]*" | sort | uniq || true)"
           for chart in ${charts_dirs_changed}; do
