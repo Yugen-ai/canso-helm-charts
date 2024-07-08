@@ -1,0 +1,186 @@
+{{- if .Values.airflow.pvc.enabled }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: airflow
+  labels:
+    canso.ai/product-component: "jobs"
+    canso.ai/part-of: "superchart"
+    canso.ai/infra-component: "airflow"
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "-5"
+{{- end }}
+
+---
+
+{{- if .Values.airflow.pvc.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.airflow.pvc.name }}
+  namespace: {{ .Values.airflow.namespace }}
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: {{ .Values.airflow.pvc.storage }}
+  storageClassName: {{ .Values.efsStorageClass.name }}
+{{- end }}
+
+---
+
+{{- if .Values.airflow.user.enabled }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: airflow-admin-secret
+  namespace: {{ .Values.airflow.namespace }}
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "-3"
+type: Opaque
+data:
+  username: {{ .Values.airflow.user.username | b64enc | quote }}
+  password: {{ .Values.airflow.user.password | b64enc | quote }}
+{{- end }}
+
+---
+
+{{- if .Values.airflow.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: airflow
+  namespace: argocd
+  annotations:  
+    argocd.argoproj.io/sync-wave: "2"
+  labels:
+    canso.ai/product-component: "infra-monitoring"
+    canso.ai/part-of: "superchart"
+    canso.ai/infra-component: "airflow"
+    canso.ai/infra-tag: "1000"
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: {{ .Values.clusterName }}
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: "airflow"
+    spec:
+      project: {{ .Values.argocdProject }}
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: {{ .Values.airflow.namespace }}
+      sources:
+      - repoURL: 'https://airflow-helm.github.io/charts'
+        targetRevision: "8.6.1"
+        chart: airflow
+        releaseName: airflow
+        helm:
+          values: |
+            airflow:
+              users:
+                - username: admin
+                  password: ${AIRFLOW_PASSWORD}
+                  role: Admin
+                  email: yugen.airflow@example.com
+                  firstName: admin
+                  lastName: admin
+              usersTemplates:
+                AIRFLOW_PASSWORD:
+                  kind: secret
+                  name: airflow-admin-secret
+                  key: password
+              usersUpdate: true
+              config:
+                AIRFLOW__LOGGING__REMOTE_LOGGING: "True"
+                AIRFLOW__LOGGING__REMOTE_BASE_LOG_FOLDER: {{ .Values.airflow.remoteLogBaseFolder }}
+                AIRFLOW__API__AUTH_BACKEND: "airflow.api.auth.backend.basic_auth"
+                AIRFLOW__METRICS__STATSD_ON: True
+                AIRFLOW__METRICS__STATSD_PORT: 9125
+                AIRFLOW__METRICS__STATSD_HOST: statsd-prometheus-statsd-exporter.statsd.svc.cluster.local
+                AIRFLOW__METRICS__STATSD_PREFIX: airflow
+                AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL: "60"
+                AIRFLOW__SCHEDULER__MIN_FILE_PROCESS_INTERVAL: "60"
+                AIRFLOW__SCHEDULER__SCHEDULER_HEALTH_CHECK_THRESHOLD: "240"
+                AIRFLOW__CORE__DAG_FILE_PROCESSOR_TIMEOUT: "240"
+                AIRFLOW__CORE__KILLED_TASK_CLEANUP_TIME: "180"
+              executor: KubernetesExecutor
+              image:
+                pullPolicy: Always
+                repository: shaktimaanbot/airflow_image_cncf
+                tag: v1
+              users:
+              - email: admin@example.com
+                firstName: admin
+                lastName: admin
+                password: admin
+                role: Admin
+                username: admin
+            dags:
+              persistence:
+                accessMode: ReadWriteMany
+                enabled: true
+                storageClass: {{ .Values.efsStorageClass.name }} 
+                existingClaim: {{ .Values.airflow.pvc.name }}
+            flower:
+              enabled: false
+            scheduler:
+              replicas: 1
+              resources:
+                limits:
+                  memory: 1.25Gi
+                requests:
+                  memory: 1.1Gi
+            web:
+              livenessProbe:
+                enabled: false
+              readinessProbe:
+                enabled: false
+              replicas: 1
+              resources:
+                limits:
+                  memory: 1.65Gi
+                requests:
+                  memory: 1.1Gi
+              service:
+                type: NodePort
+            redis:
+              enabled: false
+            postgresql:
+              enabled: true
+            workers:
+              enabled: false
+            serviceAccount:
+              create: true
+              name: {{ .Values.airflow.serviceAccountName }}
+              annotations: 
+                eks.amazonaws.com/role-arn: {{ .Values.airflow.roleArn }}
+            # externalDatabase:
+            #   type: postgres
+            #   host: 
+            #   port: 5432
+            #   user: postgres
+            #   ## (username - option 2) a Kubernetes secret in your airflow namespace
+            #   #userSecret: "airflow-cluster1-database-credentials"
+            #   #userSecretKey: "username"
+            #   ## (password - option 1) a plain-text helm value
+            #   password: 
+            #   ## (password - option 2) a Kubernetes secret in your airflow namespace
+            #   #passwordSecret: "airflow-cluster1-database-credentials"
+            #   #passwordSecretKey: "password"
+      syncPolicy:
+        automated:
+          prune: true
+          allowEmpty: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+  syncPolicy:
+    preserveResourcesOnDeletion: false
+
+{{- end}}

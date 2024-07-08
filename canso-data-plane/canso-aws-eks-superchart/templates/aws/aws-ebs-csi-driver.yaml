@@ -1,0 +1,56 @@
+{{- if .Values.aws.awsEbsCsiDriver.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: aws-ebs-csi-driver
+  namespace: argocd
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "-18"
+    argocd.argoproj.io/sync-wave: "-4"
+  labels:
+    canso.ai/product-component: "infra-dependencies"
+    canso.ai/part-of: "superchart"
+    canso.ai/infra-component: "aws-ebs-csi-driver"
+    canso.ai/infra-tag: "1000"
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: {{ .Values.clusterName }}
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: "aws-ebs-csi-driver"
+    spec:
+      project: {{ .Values.argocdProject }}
+      destination:
+        namespace: ebs-driver
+        server: 'https://kubernetes.default.svc'
+      source:
+        repoURL: "https://charts.deliveryhero.io"
+        targetRevision: "2.17.1"
+        chart: aws-ebs-csi-driver
+        helm:
+          releaseName: aws-ebs-csi-driver
+          values: |-
+            image:
+              image:
+              pullPolicy: IfNotPresent
+              repository: public.ecr.aws/ebs-csi-driver/aws-ebs-csi-driver
+              tag: ""
+            node:
+              tolerateAllTaints: true
+            controller:
+              serviceAccount:
+                name: ebs-csi-driver-sa
+                annotations:
+                  eks.amazonaws.com/role-arn: {{ .Values.aws.awsEbsCsiDriver.roleArn }}
+              extraVolumeTags:
+                volume-type: csi-ebs
+                yugen/managed: "true"
+      syncPolicy:
+        automated: { }
+        syncOptions:
+          - CreateNamespace=true
+{{- end }}

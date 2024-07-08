@@ -1,0 +1,98 @@
+{{- if .Values.sparkOperator.enabled }}
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: spark-streaming-jobs
+  labels:
+    canso.ai/product-component: "jobs"
+    canso.ai/part-of: "superchart"
+    canso.ai/infra-component: "spark-operator-reqs"
+
+---
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: spark-streaming-ml-jobs
+  labels:
+    canso.ai/product-component: "jobs"
+    canso.ai/part-of: "superchart"
+    canso.ai/infra-component: "spark-operator-reqs"
+
+---
+
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: spark-operator
+  namespace: argocd
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "-18"
+    argocd.argoproj.io/sync-wave: "-3"
+  labels:
+    canso.ai/product-component: "jobs"
+    canso.ai/part-of: "superchart"
+    canso.ai/infra-component: "spark-operator"
+    canso.ai/infra-tag: "1001"
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: {{ .Values.clusterName }}
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: spark-operator
+    spec:
+      project: default
+      destination:
+        namespace: spark-operator
+        server: https://kubernetes.default.svc
+      source:
+        repoURL: https://github.com/kubeflow/spark-operator
+        path: charts/spark-operator-chart
+        targetRevision:
+        helm:
+          values: |-
+            sparkJobNamespaces:
+              - spark-streaming-jobs
+              - spark-streaming-ml-jobs
+            
+            {{- if .Values.sparkOperator.ingressUrlFormat }}
+            ingressUrlFormat: {{ .Values.sparkOperator.ingressUrlFormat }}
+            {{- end }}
+
+            {{- if .Values.sparkOperator.nodeSelector }}
+            nodeSelector: {{ .Values.sparkOperator.nodeSelector }}
+            {{- end }}
+
+            {{- if .Values.sparkOperator.tolerations }}
+            tolerations: {{ .Values.sparkOperator.tolerations }}
+            {{- end}}
+            
+            {{- if .Values.sparkOperator.affinity }}
+            affinity: {{ .Values.sparkOperator.affinity }}
+            {{- end}}
+            
+            {{- if .Values.sparkOperator.podAnnotations }}
+            podAnnotations: {{ .Values.sparkOperator.podAnnotations }}
+            {{- end}}
+            
+            {{- if .Values.sparkOperator.podLabels }}
+            podLabels: {{ .Values.sparkOperator.podLabels }}
+            {{- end}}
+
+            {{- if .Values.sparkOperator.resources }}
+            resources: {{ .Values.sparkOperator.resources }}
+            {{- end}}
+
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+          - ServerSideApply=true
+{{- end }}

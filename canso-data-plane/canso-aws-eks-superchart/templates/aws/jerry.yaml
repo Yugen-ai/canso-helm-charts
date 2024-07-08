@@ -1,0 +1,61 @@
+{{- if .Values.jerry.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: jerry
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+    helm.sh/hook-weight: "-19"
+  labels:
+    canso.ai/product-component: "app-deployments"
+    canso.ai/part-of: "superchart"
+    canso.ai/app-name: "jerry"
+    canso.ai/infra-tag: "1001"
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: {{.Values.clusterName }}
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: jerry
+    spec:
+      project: {{ .Values.argocdProject }}  
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: airflow
+      sources:
+      - repoURL: 'https://yugen-ai.github.io/platform-helm-chart/jerry-v2'
+        targetRevision: "0.0.1"
+        chart: jerry-v2
+        helm:
+          releaseName: "jerry"
+          values: |
+            replicaCount: 1
+            image:
+              tag: {{ .Values.jerry.image.tag }}
+            external_secret:
+              enabled: true
+              cluster_secret_role: {{ (index .Values.canso.imagePullSecrets 0).clusterSecretRole }}
+              target_secret_name: {{ (index .Values.canso.imagePullSecrets 0).targetName }}
+              target_secret_name_key: {{ (index .Values.canso.imagePullSecrets 0).secretKey }}
+              aws_secret_name: {{ (index .Values.canso.imagePullSecrets 0).remoteRefKey }}
+              aws_secret_key: {{ (index .Values.canso.imagePullSecrets 0).remoteRefProperty }}
+            service:
+              type:  {{ .Values.jerry.service.type }}
+              port: {{ .Values.jerry.service.port }}
+            imagePullSecrets:
+            - name:  {{ (index .Values.canso.imagePullSecrets 0).targetName }}
+            readinessProbe:
+              enabled:  {{ .Values.jerry.readinessProbe.enabled }}
+            livenessProbe:
+              enabled:  {{ .Values.jerry.livenessProbe.enabled }}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - ServerSideApply=true
+{{- end}}

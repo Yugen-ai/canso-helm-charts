@@ -1,0 +1,87 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: nginx-ingress
+  labels:
+    canso.ai/product-component: "jobs"
+    canso.ai/part-of: "superchart"
+    canso.ai/infra-component: "nginx-ingress"
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "-20"
+    argocd.argoproj.io/sync-wave: "-5"
+{{- end }}
+
+---
+
+{{- if .Values.ingress.enabled }}
+kind: Secret
+metadata:
+  name: cred
+  namespace: nginx-ingress
+apiVersion: v1
+type: nginx.org/htpasswd
+stringData:
+  htpasswd: |
+    canso:{{ .Values.ingress.auth_pass }}
+{{- end }}
+---
+
+{{- if .Values.ingress.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx-ingress-controller
+  namespace: argocd
+  annotations:
+    helm.sh/hook: pre-install, pre-upgrade
+    helm.sh/hook-weight: "-19"
+    argocd.argoproj.io/sync-wave: "-5"
+  labels:
+    canso.ai/product-component: "infra-dependencies"
+    canso.ai/part-of: "superchart"
+    canso.ai/infra-component: "ingress-controller"
+    canso.ai/infra-tag: "1000"
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: {{ .Values.clusterName }}
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: nginx-ingress-controller
+    spec:
+      project: {{ .Values.argocdProject }}
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: nginx-ingress
+      source:
+        repoURL: ghcr.io/nginxinc/charts
+        chart: nginx-ingress
+        targetRevision: 1.3.0
+        helm:
+          values: |-
+            controller:
+              kind: daemonset
+              service:
+                annotations:
+                  service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+              {{- with .Values.ingress }}
+              nodeSelector:
+                {{ toYaml .nodeSelector | indent 8 }}
+              tolerations:
+                {{ toYaml .tolerations | indent 8 }}
+              affinity:
+                {{ toYaml .affinity | indent 8 }}
+              env:
+                {{ toYaml .env | indent 8 }}
+            {{- end }}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - ServerSideApply=true
+{{- end }}

@@ -1,0 +1,57 @@
+{{- if .Values.karpenter.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: karpenter
+  namespace: argocd
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "-19"
+    argocd.argoproj.io/sync-wave: "-5"
+  labels:
+    canso.ai/product-component: "infra-dependencies"
+    canso.ai/part-of: "superchart"
+    canso.ai/infra-component: "grafana"
+    canso.ai/infra-tag: "1000"
+spec:
+  generators:
+  - list:
+      elements:
+      - cluster: {{ .Values.clusterName }}
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: "karpenter"
+    spec:
+      project: {{ .Values.argocdProject }}
+      destination:
+        namespace: karpenter
+        server: 'https://kubernetes.default.svc'
+      source:
+        repoURL: https://yugen-ai.github.io/platform-helm-chart/karpenter
+        targetRevision: 0.0.1
+        chart: karpenter
+        helm:
+          releaseName: karpenter
+          values: |-
+            "karpenter":
+              imagePullPolicy: Always
+              serviceAccount:
+                create: true
+                name: karpenter
+                annotations:
+                  eks.amazonaws.com/role-arn: {{ .Values.karpenter.roleArn }}
+              settings:
+                clusterName: {{ .Values.clusterName }}
+                clusterEndpoint: {{ .Values.clusterEndpoint }}
+              controller:
+                image:
+                  repository: public.ecr.aws/karpenter/controller
+                  tag: v0.33.1
+                  digest: sha256:7f484951baf70d1574d6408be3947a3ca5f54463c2d1f29993b492e7e916ef11
+              dnsPolicy: Default
+      syncPolicy:
+        automated: { }
+        syncOptions:
+          - CreateNamespace=true
+{{- end }}
