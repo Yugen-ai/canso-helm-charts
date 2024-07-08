@@ -201,7 +201,7 @@ cansoAgent:
     ## @param cansoAgent.deployment.enableEnv Whether environment variables are enabled
     ##
     enableEnv: true
-    ## @skip Environment Variables Configurations from secret keys
+    ## @skip cansoAgent.deployment.envSecretKeys Environment Variables Configurations from secret keys
     ##
     envSecretKeys:
       - name: AIRFLOW_USERNAME
