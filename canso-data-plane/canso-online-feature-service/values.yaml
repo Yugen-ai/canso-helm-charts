@@ -6,7 +6,7 @@ spec:
 ## @param nameOverride Override the name of the service
 nameOverride: "canso-online-feature"
 
-## @param fullNameOverride Override the full name of the service
+## @param fullnameOverride Override the full name of the service
 fullnameOverride: "canso-online-feature-service"
 
 ##############################################################################################
@@ -33,10 +33,10 @@ external_secret:
   ## @param external_secret.target_secret_name_key The key within the secret in the external secrets store that holds the Docker configuration JSON.
   ##
   target_secret_name_key: .dockerconfigjson
-  ## @param external_Secret.aws_secret_name The path to the secret in AWS Secrets Manager that contains the Docker credentials
+  ## @param external_secret.aws_secret_name The path to the secret in AWS Secrets Manager that contains the Docker credentials
   ##
   aws_secret_name: stage/dockerhub
-  ## @param external_Secret.aws_secret_key The key within the secret in AWS Secrets Manager that contains the Docker credentials.
+  ## @param external_secret.aws_secret_key The key within the secret in AWS Secrets Manager that contains the Docker credentials.
   ##
   aws_secret_key: dockerhub
 
@@ -47,26 +47,28 @@ external_secret:
 ## @section Deployment 
 deployment:
 
-  ## @subsection imagepullsecrets
+  ## @subsection ImagePullSecrets
   ImagePullSecrets:
-    ## @param deployment.imagepullsecrets.enabled Enable the creation of the secret
+    ## @param deployment.ImagePullSecrets.enabled Enable the creation of the secret
     ##
     enabled: true
-    ## @param deployment.imagepullsecrets.private_registry_secret The name of the secret created by external secrets
+    ## @param deployment.ImagePullSecrets.private_registry_secret The name of the secret created by external secrets
     ##
     private_registry_secret: *image_pull_secret_name
 
   ## @param deployment.replicaCount Number of replicas to deploy
   replicaCount: 2
 
+  ## @section deployment.image 
   image:
     ## @param deployment.image.repository The image repository
     repository: shaktimaanbot/feature-retrieval-server
     ## @param deployment.image.pullPolicy Image pull policy
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
+    ## @param deployment.image.tag Overrides the image tag whose default is the chart appVersion.
     tag: v0.0.1
-  ## @param deployment.resources The resources requests and limits for the container.
+
+  ## @skip deployment.resources The resources requests and limits for the container.
   resources:
     limits:
       cpu: "400m"
@@ -79,11 +81,14 @@ deployment:
   ## @param deployment.enableEnvSecrets Enable the environment variables from secrets
   enableEnvSecrets: false
 
-## @param autoscaling Enable autoscaling for deployment pods
+## @section autoscaling 
 autoscaling:
+  ## @param autoscaling.enabled enable autoscaling for the pods
   enabled: false
-## @param taint Enable taint for deployment pods
+
+## @section taint 
 taint:
+  ## @param taint.enabled enabletaint for deployment pods
   enabled: false
 
 ##############################################################################################
@@ -116,7 +121,7 @@ ingress:
   pathType: Prefix
   ## @param ingress.ingressClassName The ingress class name 
   ingressClassName: alb
-  ## @param ingress.annotations The annotations for the ingress
+  ## @skip ingress.annotations The annotations for the ingress
   annotations:
     alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
     alb.ingress.kubernetes.io/certificate-arn: '' 

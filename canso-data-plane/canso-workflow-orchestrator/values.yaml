@@ -3,9 +3,9 @@
 
 ## @section spec
 spec:
-  ## @param service_name Service name
+  ## @param spec.service_name Service name
   service_name: &service_name "canso-workflow-orchestrator"
-  ## @param namespace Namespace for deployment
+  ## @param spec.namespace Namespace for deployment
   namespace: airflow
 
 
@@ -14,10 +14,10 @@ replicaCount: 1
 
 ## @section image
 image:
-  ## @param repository Image repository
+  ## @param image.repository Image repository
   ##
   repository: shaktimaanbot/jerry-image
-  ## @param pullPolicy Image pull policy
+  ## @param image.pullPolicy Image pull policy
   ##
   pullPolicy: Always
   ## @param image.tag Overrides the image tag whose default is the chart appVersion
@@ -29,6 +29,8 @@ external_secret:
   ## @param external_secret.enabled Enable external secret
   ##
   enabled: true
+  ## @param external_secret.cluster_secret_role Name of Cluster secret role created in the cluster
+  ##
   cluster_secret_role: secretstore-by-role
   ## @param external_secret.name The name of the secret that will be created
   ##
@@ -49,7 +51,7 @@ external_secret:
   ##
   aws_secret_key: dockerhub
 
-## @param imagePullSecrets Docker registry secret names as an array
+## @skip imagePullSecrets Docker registry secret names as an array
 ##
 imagePullSecrets:
   - name:  *image_pull_secret_name
@@ -58,15 +60,15 @@ imagePullSecrets:
 ##
 nameOverride: "canso-workflow-orchestrator"
 
-## @param fullNameOverride Override the full name of the service
+## @param fullnameOverride Override the full name of the service
 ##
 fullnameOverride: ""
 
-## @param podAnnotation Annotations to be added to the deploymetn pods
+## @param podAnnotations Annotations to be added to the deploymetn pods
 ##
 podAnnotations: {}
 
-## @param persistentVolumeClaim Use an existing PVC to provide persistence for the volume
+## @subsection persistentVolumeClaim Use an existing PVC to provide persistence for the volume
 persistentVolumeClaim:
   ## @param persistentVolumeClaim.existingClaim Write in existing PVC
   existingClaim: airflow-pvc
@@ -146,7 +148,7 @@ tolerations: []
 ##
 affinity: {}
 
-## @param redinessProbe Readiness probe configuration
+## @skip readinessProbe Readiness probe configuration
 ##
 readinessProbe:
     enabled: false 
@@ -157,7 +159,7 @@ readinessProbe:
     path: /healthz
     port: http
 
-## @param livenessProbe Liveness probe configuration
+## @skip livenessProbe Liveness probe configuration
 ##
 livenessProbe:
   enabled: false 
