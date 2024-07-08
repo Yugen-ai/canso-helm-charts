@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ include "online-feature-service.name" . }}
+  name: {{ include "online-feature-service.name" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.deployment.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app: {{ include "online-feature-service.name" . }}
+  template:
+    metadata:
+      annotations:
+        'consul.hashicorp.com/connect-inject': 'false'
+      labels:
+        app: {{ include "online-feature-service.name" . }}
+    spec:
+      {{- if .Values.taint.enabled }}
+      nodeSelector:
+        {{- toYaml .Values.taint.nodeSelector | nindent 8 }}
+      tolerations:
+      - effect: {{ .Values.taint.tolerations.effect }}
+        key: {{ .Values.taint.tolerations.key }}
+        operator: {{ .Values.taint.tolerations.operator }}
+        value: {{ .Values.taint.tolerations.value }}
+      {{- end }}
+      containers:
+      - name: {{ include "online-feature-service.name" . }}
+        image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
+        ports:
+        - containerPort: {{ .Values.service.targetport }}
+        resources:
+          {{- toYaml .Values.deployment.resources | nindent 10 }}
+        {{- if .Values.deployment.enableEnv }}
+        env:
+          {{- range .Values.deployment.env }}
+          - name: {{ .name }}
+            value: {{ .value | quote }}
+          {{- end }}
+        {{- end }}
+        {{- if .Values.deployment.enableEnvSecrets }}
+        envFrom:
+          {{- range .Values.deployment.secrets }}
+          - secretRef:
+              name: {{ .name }}
+          {{- end }}
+        {{- end }}
+        {{- if .Values.deployment.ImagePullSecrets.enabled }}
+      imagePullSecrets:
+        - name: {{ .Values.deployment.ImagePullSecrets.private_registry_secret }}
+        {{- end }}
+
