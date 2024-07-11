@@ -287,6 +287,10 @@ sparkOperator:
   # requests:
   #   cpu: 100m
   #   memory: 300Mi
+  ## @param sparkOperator.roleArn Role ARN to use for AWS EKS
+  ##
+  roleArn: "" #THIS VALUE IS MANDATORY
+  # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
 
 ####################################################
 ################## Airflow
@@ -437,6 +441,10 @@ cansoAgent:
   ## @param cansoAgent.affinity Affinity rules for pod scheduling on a node
   ##  
   affinity: {}
+  ## @param cansoAgent.roleArn roleArn name of the irsa role for the agent
+  ##
+  roleArn: "" #THIS VALUE IS MANDATORY
+  # roleArn: eks.amazonaws.com/role-arn: arn:aws:iam::AWS_ACCOUNT_ID:role/IAM_ROLE_NAME
 
 ####################################################
 ############ Roles
