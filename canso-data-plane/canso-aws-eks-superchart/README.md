@@ -114,6 +114,7 @@
 | `sparkOperator.podAnnotations`   | Additional annotations to add to the pod | `{}`   |
 | `sparkOperator.podLabels`        | Additional labels to add to the pod      | `{}`   |
 | `sparkOperator.resources`        | Pod resource requests and limits         | `{}`   |
+| `sparkOperator.roleArn`          | Role ARN to use for AWS EKS              | `""`   |
 
 ### Airflow
 
@@ -167,6 +168,7 @@
 | `cansoAgent.enabled`     | Boolean Flag to deploy Canso Agent          | `true` |
 | `cansoAgent.tolerations` | Taints that pod can tolerate                | `[]`   |
 | `cansoAgent.affinity`    | Affinity rules for pod scheduling on a node | `{}`   |
+| `cansoAgent.roleArn`     | roleArn name of the irsa role for the agent | `""`   |
 
 ### Roles
 

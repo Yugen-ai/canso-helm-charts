@@ -39,7 +39,11 @@ spec:
               sqs_region: {{ .Values.cansoControlPlane.sqs_region }}          
             cansoAgent:
               enabled: true
-              {{- with .Values.cansoAgent.tolerations }}
+              serviceAccount:
+                create: true
+                annotations:
+                  eks.amazonaws.com/role-arn: {{ .Values.cansoAgent.roleArn }}
+              {{- with .Values.cansoAgent.tolerations }}    
               tolerations:
                 {{ toYaml . | nindent 12 }}
               {{- end }}

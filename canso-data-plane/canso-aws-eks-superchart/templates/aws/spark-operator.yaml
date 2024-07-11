@@ -59,7 +59,11 @@ spec:
             sparkJobNamespaces:
               - spark-streaming-jobs
               - spark-streaming-ml-jobs
-            
+            serviceAccounts:
+              spark:
+                create: true
+                annotations: 
+                  eks.amazonaws.com/role-arn : {{ .Values.sparkOperator.roleArn }}
             {{- if .Values.sparkOperator.ingressUrlFormat }}
             ingressUrlFormat: {{ .Values.sparkOperator.ingressUrlFormat }}
             {{- end }}
