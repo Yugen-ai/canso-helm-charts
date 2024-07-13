@@ -171,7 +171,7 @@ cansoAgent:
       pullPolicy: Always
       ## @param cansoAgent.deployment.image.tag Tag for the image
       ##
-      tag: v0.0.1-python-3.8-slim
+      tag: v0.0.5-python-3.8-slim@sha256:xxxxxx # SHA TO BE UPDATED
     ## @section resources configuration
     resources:
       ## @section resources limits configuration

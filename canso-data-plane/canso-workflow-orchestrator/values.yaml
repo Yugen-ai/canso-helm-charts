@@ -22,7 +22,7 @@ image:
   pullPolicy: Always
   ## @param image.tag Overrides the image tag whose default is the chart appVersion
   ##
-  tag: "v1.0.4"
+  tag: "v1.0.4@sha256:xxxx" # SHA TO BE UPDATED
 
 ## @section external_secret
 external_secret:

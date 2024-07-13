@@ -66,7 +66,7 @@ deployment:
     ## @param deployment.image.pullPolicy Image pull policy
     pullPolicy: IfNotPresent
     ## @param deployment.image.tag Overrides the image tag whose default is the chart appVersion.
-    tag: v0.0.1
+    tag: v0.0.1@sha256:xxxxxx # SHA TO BE ADDED, Github workflow to be added in Platform Services as well.
 
   ## @skip deployment.resources The resources requests and limits for the container.
   resources:
