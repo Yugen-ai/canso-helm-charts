@@ -14,7 +14,7 @@
 | ------------------ | ------------------------------------------------------------- | --------------------------- |
 | `image.repository` | Image repository                                              | `shaktimaanbot/jerry-image` |
 | `image.pullPolicy` | Image pull policy                                             | `Always`                    |
-| `image.tag`        | Overrides the image tag whose default is the chart appVersion | `v1.0.4`                    |
+| `image.tag`        | Overrides the image tag whose default is the chart appVersion | `v1.0.4@sha256:xxxx`        |
 
 ### external_secret
 

@@ -84,11 +84,11 @@
 
 ### Image Configuration  
 
-| Name                                     | Description               | Value                           |
-| ---------------------------------------- | ------------------------- | ------------------------------- |
-| `cansoAgent.deployment.image.repository` | repository for the image  | `shaktimaanbot/dev-agent-image` |
-| `cansoAgent.deployment.image.pullPolicy` | Pull policy for the image | `Always`                        |
-| `cansoAgent.deployment.image.tag`        | Tag for the image         | `v0.0.1-python-3.8-slim`        |
+| Name                                     | Description               | Value                                  |
+| ---------------------------------------- | ------------------------- | -------------------------------------- |
+| `cansoAgent.deployment.image.repository` | repository for the image  | `shaktimaanbot/dev-agent-image`        |
+| `cansoAgent.deployment.image.pullPolicy` | Pull policy for the image | `Always`                               |
+| `cansoAgent.deployment.image.tag`        | Tag for the image         | `v0.0.5-python-3.8-slim@sha256:xxxxxx` |
 
 ### resources configuration
 

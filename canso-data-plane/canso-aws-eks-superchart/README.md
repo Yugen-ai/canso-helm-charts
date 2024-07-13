@@ -134,25 +134,25 @@
 
 ### Jerry
 
-| Name                            | Description                                                            | Value      |
-| ------------------------------- | ---------------------------------------------------------------------- | ---------- |
-| `jerry.enabled`                 | Flag to enable Jerry.                                                  | `true`     |
-| `jerry.external_secret.enabled` | Flag to enable the creation of a secret in the same namespace as jerry | `true`     |
-| `jerry.image.tag`               | Tag of the Jerry image.                                                | `v1.0.4`   |
-| `jerry.service.type`            | Type of the service for Jerry.                                         | `NodePort` |
-| `jerry.service.port`            | Port of the service for Jerry.                                         | `3000`     |
-| `jerry.readinessProbe.enabled`  | Flag to enable readiness probe for Jerry.                              | `false`    |
-| `jerry.livenessProbe.enabled`   | Flag to enable liveness probe for Jerry.                               | `false`    |
+| Name                            | Description                                                            | Value                |
+| ------------------------------- | ---------------------------------------------------------------------- | -------------------- |
+| `jerry.enabled`                 | Flag to enable Jerry.                                                  | `true`               |
+| `jerry.external_secret.enabled` | Flag to enable the creation of a secret in the same namespace as jerry | `true`               |
+| `jerry.image.tag`               | Tag of the Jerry image.                                                | `v1.0.4@sha256:xxxx` |
+| `jerry.service.type`            | Type of the service for Jerry.                                         | `NodePort`           |
+| `jerry.service.port`            | Port of the service for Jerry.                                         | `3000`               |
+| `jerry.readinessProbe.enabled`  | Flag to enable readiness probe for Jerry.                              | `false`              |
+| `jerry.livenessProbe.enabled`   | Flag to enable liveness probe for Jerry.                               | `false`              |
 
 ### Online Feature Service
 
-| Name                               | Description                                             | Value    |
-| ---------------------------------- | ------------------------------------------------------- | -------- |
-| `onlineFS.enabled`                 | Flag to enable Online Feature Store.                    | `true`   |
-| `onlineFS.external_secret.enabled` | Flag to enable the creation of an external secret       | `true`   |
-| `onlineFS.deployment.replicaCount` | Number of replicas for Online Feature Store deployment. | `1`      |
-| `onlineFS.deployment.image.tag`    | Tag of the Online Feature Store image.                  | `v0.0.1` |
-| `onlineFS.ingress.enabled`         | Flag to enable ingress for Online Feature Store.        | `false`  |
+| Name                               | Description                                             | Value                  |
+| ---------------------------------- | ------------------------------------------------------- | ---------------------- |
+| `onlineFS.enabled`                 | Flag to enable Online Feature Store.                    | `true`                 |
+| `onlineFS.external_secret.enabled` | Flag to enable the creation of an external secret       | `true`                 |
+| `onlineFS.deployment.replicaCount` | Number of replicas for Online Feature Store deployment. | `1`                    |
+| `onlineFS.deployment.image.tag`    | Tag of the Online Feature Store image.                  | `v0.0.1@sha256:xxxxxx` |
+| `onlineFS.ingress.enabled`         | Flag to enable ingress for Online Feature Store.        | `false`                |
 
 ### Airflow Jobs
 
