@@ -26,9 +26,9 @@ spec:
         namespace: canso-dataplane
         server: https://kubernetes.default.svc
       source:
-        repoURL: 'https://yugen-ai.github.io/platform-helm-chart/canso-agent'
-        chart: canso-agent
-        targetRevision: 0.1.2
+        repoURL: 'https://yugen-ai.github.io/canso-helm-charts'
+        chart: canso-helm-charts/canso-agent
+        targetRevision: 0.1.4
         helm:
           values: |-
             config:
@@ -36,7 +36,8 @@ spec:
               tenantID: {{ .Values.tenantID }}
               deployment_sqs_url: {{ .Values.cansoControlPlane.deployment_sqs_url }}
               notification_sqs_url: {{ .Values.cansoControlPlane.notification_sqs_url }}
-              sqs_region: {{ .Values.cansoControlPlane.sqs_region }}          
+              sqs_region: {{ .Values.cansoControlPlane.sqs_region }}  
+              control_plane_role_arn: {{ .Values.cansoControlPlane.control_plane_role_arn }}
             cansoAgent:
               enabled: true
               serviceAccount:

@@ -6,7 +6,7 @@ metadata:
   namespace: nginx-ingress 
   #TODO: update namespace from values.yaml appset installation
   annotations:
-    helm.sh/hook: post-install, post-upgrade
+    helm.sh/hook: post-install
     helm.sh/hook-weight: "10"
     nginx.org/mergeable-ingress-type: "master"
     nginx.org/basic-auth-secret: "cred" 
@@ -26,7 +26,7 @@ metadata:
   name: {{ .serviceName }}-ing
   namespace: {{ .namespace }}
   annotations:
-    helm.sh/hook: post-install, post-upgrade
+    helm.sh/hook: post-install
     helm.sh/hook-weight: "10"
     nginx.org/mergeable-ingress-type: "minion"
   {{- with .annotations }}
