@@ -8,3 +8,4 @@
 {{- $_ := required "deployment_sqs_url is a required value" .Values.config.deployment_sqs_url}}
 {{- $_ := required "notification_sqs_url is a required value" .Values.config.notification_sqs_url}}
 {{- $_ := required "sqs_region is a required value" .Values.config.sqs_region}}
+{{- $_ := required "control_plane_role_arn is a required value" .Values.config.control_plane_role_arn}}

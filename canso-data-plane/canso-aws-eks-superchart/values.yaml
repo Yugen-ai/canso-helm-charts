@@ -44,6 +44,9 @@ cansoControlPlane:
   ## @param cansoControlPlane.sqs_region region for sqs url in Control Plane. Generated during Tenant onboarding.
   ##
   sqs_region: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
+  ## @param cansoControlPlane.control_plane_role_arn role arn for control plane. Generated during Tenant onboarding.
+  ##
+  control_plane_role_arn: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
 
 ####################################################
 ############### Tolerations & Affinity

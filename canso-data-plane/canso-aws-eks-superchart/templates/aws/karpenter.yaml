@@ -28,9 +28,9 @@ spec:
         namespace: karpenter
         server: 'https://kubernetes.default.svc'
       source:
-        repoURL: https://yugen-ai.github.io/platform-helm-chart/karpenter
-        targetRevision: 0.0.1
-        chart: karpenter
+        repoURL: https://yugen-ai.github.io/canso-helm-charts
+        targetRevision: 0.0.2
+        chart: canso-helm-charts/canso-karpenter
         helm:
           releaseName: karpenter
           values: |-

@@ -26,9 +26,9 @@ spec:
         namespace: online-fs
         server: https://kubernetes.default.svc
       source:
-        repoURL: 'https://yugen-ai.github.io/platform-helm-chart/online-fs-v2'
-        targetRevision: "0.0.1"
-        chart: online-fs-v2
+        repoURL: 'https://yugen-ai.github.io/canso-helm-charts'
+        targetRevision: "0.0.2"
+        chart: canso-helm-charts/canso-online-feature-service
         helm:
           values: |
             external_secret:

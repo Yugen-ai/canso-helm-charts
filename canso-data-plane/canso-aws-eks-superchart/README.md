@@ -19,13 +19,14 @@
 
 ### Control Plane Configs
 
-| Name                                     | Description                                                                | Value |
-| ---------------------------------------- | -------------------------------------------------------------------------- | ----- |
-| `cansoControlPlane.deployment_sqs_url`   | deployment sqs url in Control Plane. Generated during Tenant onboarding.   | `""`  |
-| `cansoControlPlane.notification_sqs_url` | notification sqs url in Control Plane. Generated during Tenant onboarding. | `""`  |
-| `cansoControlPlane.sqs_region`           | region for sqs url in Control Plane. Generated during Tenant onboarding.   | `""`  |
-| `tolerations`                            | Tolerations for the deployment.                                            | `{}`  |
-| `affinity`                               | Affinity for the deployment.                                               | `{}`  |
+| Name                                       | Description                                                                | Value |
+| ------------------------------------------ | -------------------------------------------------------------------------- | ----- |
+| `cansoControlPlane.deployment_sqs_url`     | deployment sqs url in Control Plane. Generated during Tenant onboarding.   | `""`  |
+| `cansoControlPlane.notification_sqs_url`   | notification sqs url in Control Plane. Generated during Tenant onboarding. | `""`  |
+| `cansoControlPlane.sqs_region`             | region for sqs url in Control Plane. Generated during Tenant onboarding.   | `""`  |
+| `cansoControlPlane.control_plane_role_arn` | role arn for control plane. Generated during Tenant onboarding.            | `""`  |
+| `tolerations`                              | Tolerations for the deployment.                                            | `{}`  |
+| `affinity`                                 | Affinity for the deployment.                                               | `{}`  |
 
 ### Karpenter Configs
 

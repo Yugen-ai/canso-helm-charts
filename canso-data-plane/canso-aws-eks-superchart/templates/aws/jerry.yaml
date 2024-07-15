@@ -27,9 +27,9 @@ spec:
         server: https://kubernetes.default.svc
         namespace: airflow
       sources:
-      - repoURL: 'https://yugen-ai.github.io/platform-helm-chart/jerry-v2'
-        targetRevision: "0.0.1"
-        chart: jerry-v2
+      - repoURL: 'https://yugen-ai.github.io/canso-helm-charts'
+        targetRevision: "0.0.2"
+        chart: canso-helm-charts/canso-workflow-orchestrator
         helm:
           releaseName: "jerry"
           values: |
