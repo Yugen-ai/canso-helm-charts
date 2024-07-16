@@ -46,7 +46,7 @@ external_secret:
   target_secret_name_key: .dockerconfigjson
   ## @param external_secret.aws_secret_name name of the AWS secret
   ##
-  aws_secret_name: stage/dockerhub
+  aws_secret_name: canso/dockerhub
   ## @param external_secret.aws_secret_key key of the kubernetes secret
   ##
   aws_secret_key: dockerhub

@@ -45,7 +45,7 @@
 | `external_secret.enabled`           | Flag to enable External Secrets      | `true`                           |
 | `external_secret.name`              | name of the external secret          | `canso-image-pull-secrets`       |
 | `external_secret.secretKey`         | key of the kubernetes secret         | `.dockerconfigjson`              |
-| `external_secret.remoteRefKey`      | name of the AWS secret               | `stage/dockerhub`                |
+| `external_secret.remoteRefKey`      | name of the AWS secret               | `canso/dockerhub`                |
 | `external_secret.remoteRefProperty` | key of the secret in secrets manager | `dockerhub`                      |
 | `external_secret.targetName`        | name of the target kubernetes secret | `docker-secret-cred`             |
 | `external_secret.targetType`        | type of the target kubernetes secret | `kubernetes.io/dockerconfigjson` |

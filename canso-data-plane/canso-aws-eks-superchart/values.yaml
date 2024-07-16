@@ -97,7 +97,7 @@ canso:
   imagePullSecrets:
     - name: canso-image-pull-secrets
       secretKey: .dockerconfigjson # key of the kubernetes secret
-      remoteRefKey: stage/dockerhub # name of AWS secret
+      remoteRefKey: canso/dockerhub # name of AWS secret
       remoteRefProperty: dockerhub # key of the secret in secrets manager
       targetName: docker-secret-cred # name of kubernetes secret
       targetType: kubernetes.io/dockerconfigjson
@@ -500,13 +500,13 @@ ingress:
     path: "/airflow"
     servicePort: 8080
     annotations: {}
-  - serviceName: online-fs       
+  - serviceName: canso-online-feature       
     namespace: online-fs
     host: "*.com"               
     path: "/online-fs/"
     servicePort: 80
     annotations: 
-      nginx.org/rewrites: "serviceName=online-fs rewrite=/"
+      nginx.org/rewrites: "serviceName=canso-online-feature rewrite=/"
   - serviceName: grafana       
     namespace: grafana
     host: "*.com"               

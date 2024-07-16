@@ -28,7 +28,7 @@ spec:
         namespace: airflow
       sources:
       - repoURL: 'https://yugen-ai.github.io/canso-helm-charts'
-        targetRevision: "0.0.2"
+        targetRevision: "0.0.3"
         chart: canso-workflow-orchestrator
         helm:
           releaseName: "jerry"

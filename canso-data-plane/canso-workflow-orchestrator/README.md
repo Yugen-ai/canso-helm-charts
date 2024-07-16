@@ -26,7 +26,7 @@
 | `external_secret.target_secret_name`     | name of the target kubernetes secret               | `docker-secret-cred`             |
 | `external_secret.target_secret_type`     | type of the target kubernetes secret               | `kubernetes.io/dockerconfigjson` |
 | `external_secret.target_secret_name_key` | key of the kubernetes secret                       | `.dockerconfigjson`              |
-| `external_secret.aws_secret_name`        | name of the AWS secret                             | `stage/dockerhub`                |
+| `external_secret.aws_secret_name`        | name of the AWS secret                             | `canso/dockerhub`                |
 | `external_secret.aws_secret_key`         | key of the kubernetes secret                       | `dockerhub`                      |
 | `nameOverride`                           | Override the name of the service                   | `canso-workflow-orchestrator`    |
 | `fullnameOverride`                       | Override the full name of the service              | `""`                             |

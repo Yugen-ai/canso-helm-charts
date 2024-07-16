@@ -18,7 +18,7 @@
 | `external_secret.target_secret_name`     | The name of the secret that will be created                                                       | `docker-secret-cred`             |
 | `external_secret.target_secret_type`     | The type of the secret that will be created                                                       | `kubernetes.io/dockerconfigjson` |
 | `external_secret.target_secret_name_key` | The key within the secret in the external secrets store that holds the Docker configuration JSON. | `.dockerconfigjson`              |
-| `external_secret.aws_secret_name`        | The path to the secret in AWS Secrets Manager that contains the Docker credentials                | `stage/dockerhub`                |
+| `external_secret.aws_secret_name`        | The path to the secret in AWS Secrets Manager that contains the Docker credentials                | `canso/dockerhub`                |
 | `external_secret.aws_secret_key`         | The key within the secret in AWS Secrets Manager that contains the Docker credentials.            | `dockerhub`                      |
 
 ### Deployment 

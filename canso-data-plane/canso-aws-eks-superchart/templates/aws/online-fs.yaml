@@ -27,7 +27,7 @@ spec:
         server: https://kubernetes.default.svc
       source:
         repoURL: 'https://yugen-ai.github.io/canso-helm-charts'
-        targetRevision: "0.0.2"
+        targetRevision: "0.0.3"
         chart: canso-online-feature-service
         helm:
           values: |

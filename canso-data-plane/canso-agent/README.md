@@ -50,7 +50,7 @@
 | `cansoAgent.external_secret.target_secret_name`     | The name of the secret stored in AWS Secrets Manager                                              | `docker-secret-cred-dev-agent`   |
 | `cansoAgent.external_secret.target_secret_type`     | The type of the secret stored in the external secrets store                                       | `kubernetes.io/dockerconfigjson` |
 | `cansoAgent.external_secret.target_secret_name_key` | The key within the secret in the external secrets store that holds the Docker configuration JSON. | `.dockerconfigjson`              |
-| `cansoAgent.external_secret.aws_secret_name`        | The path to the secret in AWS Secrets Manager that contains the Docker credentials                | `stage/dockerhub`                |
+| `cansoAgent.external_secret.aws_secret_name`        | The path to the secret in AWS Secrets Manager that contains the Docker credentials                | `canso/dockerhub`                |
 | `cansoAgent.external_secret.aws_secret_key`         | The key within the secret in AWS Secrets Manager that contains the Docker credentials.            | `dockerhub`                      |
 
 ### Readiness Probe Configurations
@@ -88,7 +88,7 @@
 | ---------------------------------------- | ------------------------- | ------------------------------- |
 | `cansoAgent.deployment.image.repository` | repository for the image  | `shaktimaanbot/dev-agent-image` |
 | `cansoAgent.deployment.image.pullPolicy` | Pull policy for the image | `Always`                        |
-| `cansoAgent.deployment.image.tag`        | Tag for the image         | `v0.0.1-python-3.8-slim`        |
+| `cansoAgent.deployment.image.tag`        | Tag for the image         | `v0.0.5-python-3.8-slim`        |
 
 ### resources configuration
 
