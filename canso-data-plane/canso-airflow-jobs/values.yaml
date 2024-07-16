@@ -122,7 +122,7 @@ external_secret:
   secretKey: .dockerconfigjson
   ## @param external_secret.remoteRefKey name of the AWS secret
   ##
-  remoteRefKey: stage/dockerhub
+  remoteRefKey: canso/dockerhub
   ## @param external_secret.remoteRefProperty key of the secret in secrets manager
   ##
   remoteRefProperty: dockerhub

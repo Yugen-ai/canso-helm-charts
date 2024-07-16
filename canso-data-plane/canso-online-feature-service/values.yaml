@@ -35,7 +35,7 @@ external_secret:
   target_secret_name_key: .dockerconfigjson
   ## @param external_secret.aws_secret_name The path to the secret in AWS Secrets Manager that contains the Docker credentials
   ##
-  aws_secret_name: stage/dockerhub
+  aws_secret_name: canso/dockerhub
   ## @param external_secret.aws_secret_key The key within the secret in AWS Secrets Manager that contains the Docker credentials.
   ##
   aws_secret_key: dockerhub
