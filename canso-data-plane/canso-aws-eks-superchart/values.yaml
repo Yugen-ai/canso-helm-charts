@@ -500,13 +500,13 @@ ingress:
     path: "/airflow"
     servicePort: 8080
     annotations: {}
-  - serviceName: online-fs       
+  - serviceName: canso-online-feature       
     namespace: online-fs
     host: "*.com"               
     path: "/online-fs/"
     servicePort: 80
     annotations: 
-      nginx.org/rewrites: "serviceName=online-fs rewrite=/"
+      nginx.org/rewrites: "serviceName=canso-online-feature rewrite=/"
   - serviceName: grafana       
     namespace: grafana
     host: "*.com"               
