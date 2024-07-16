@@ -174,7 +174,7 @@ cansoAgent:
       pullPolicy: Always
       ## @param cansoAgent.deployment.image.tag Tag for the image
       ##
-      tag: v0.0.1-python-3.8-slim
+      tag: v0.0.5-python-3.8-slim
     ## @section resources configuration
     resources:
       ## @section resources limits configuration
