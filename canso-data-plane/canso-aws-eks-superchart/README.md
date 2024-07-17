@@ -135,15 +135,15 @@
 
 ### Jerry
 
-| Name                            | Description                                                            | Value      |
-| ------------------------------- | ---------------------------------------------------------------------- | ---------- |
-| `jerry.enabled`                 | Flag to enable Jerry.                                                  | `true`     |
-| `jerry.external_secret.enabled` | Flag to enable the creation of a secret in the same namespace as jerry | `true`     |
-| `jerry.image.tag`               | Tag of the Jerry image.                                                | `v1.0.4`   |
-| `jerry.service.type`            | Type of the service for Jerry.                                         | `NodePort` |
-| `jerry.service.port`            | Port of the service for Jerry.                                         | `3000`     |
-| `jerry.readinessProbe.enabled`  | Flag to enable readiness probe for Jerry.                              | `false`    |
-| `jerry.livenessProbe.enabled`   | Flag to enable liveness probe for Jerry.                               | `false`    |
+| Name                            | Description                                                            | Value                     |
+| ------------------------------- | ---------------------------------------------------------------------- | ------------------------- |
+| `jerry.enabled`                 | Flag to enable Jerry.                                                  | `true`                    |
+| `jerry.external_secret.enabled` | Flag to enable the creation of a secret in the same namespace as jerry | `true`                    |
+| `jerry.image.tag`               | Tag of the Jerry image.                                                | `v0.0.4-python-3.10-slim` |
+| `jerry.service.type`            | Type of the service for Jerry.                                         | `NodePort`                |
+| `jerry.service.port`            | Port of the service for Jerry.                                         | `3000`                    |
+| `jerry.readinessProbe.enabled`  | Flag to enable readiness probe for Jerry.                              | `false`                   |
+| `jerry.livenessProbe.enabled`   | Flag to enable liveness probe for Jerry.                               | `false`                   |
 
 ### Online Feature Service
 

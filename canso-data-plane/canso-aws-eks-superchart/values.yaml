@@ -361,7 +361,7 @@ jerry:
   image:
     ## @param jerry.image.tag Tag of the Jerry image.
     ##
-    tag: "v1.0.4"
+    tag: "v0.0.4-python-3.10-slim"
     
   ## @subsection jerry.service 
   service:
