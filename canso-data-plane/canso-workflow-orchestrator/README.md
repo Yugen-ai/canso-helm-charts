@@ -10,11 +10,11 @@
 
 ### image
 
-| Name               | Description                                                   | Value                       |
-| ------------------ | ------------------------------------------------------------- | --------------------------- |
-| `image.repository` | Image repository                                              | `shaktimaanbot/jerry-image` |
-| `image.pullPolicy` | Image pull policy                                             | `Always`                    |
-| `image.tag`        | Overrides the image tag whose default is the chart appVersion | `v1.0.4`                    |
+| Name               | Description                                                   | Value                            |
+| ------------------ | ------------------------------------------------------------- | -------------------------------- |
+| `image.repository` | Image repository                                              | `shaktimaanbot/jerry-image-prod` |
+| `image.pullPolicy` | Image pull policy                                             | `Always`                         |
+| `image.tag`        | Overrides the image tag whose default is the chart appVersion | `v0.0.4-python-3.10-slim`        |
 
 ### external_secret
 
