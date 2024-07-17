@@ -14,5 +14,8 @@ rules:
   - apiGroups: ["argoproj.io"]
     resources: ["applications", "applicationsets", "rollouts"]
     verbs: ["list", "watch"]
+  - apiGroups: ["sparkoperator.k8s.io"]
+    resources: ["sparkapplications"]
+    verbs: ["get", "list", "watch", "create", "delete"]
 {{- end }}
 {{- end}}
