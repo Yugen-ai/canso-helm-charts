@@ -16,13 +16,13 @@ replicaCount: 1
 image:
   ## @param image.repository Image repository
   ##
-  repository: shaktimaanbot/jerry-image
+  repository: shaktimaanbot/jerry-image-prod
   ## @param image.pullPolicy Image pull policy
   ##
   pullPolicy: Always
   ## @param image.tag Overrides the image tag whose default is the chart appVersion
   ##
-  tag: "v1.0.4"
+  tag: "v0.0.4-python-3.10-slim"
 
 ## @section external_secret
 external_secret:
