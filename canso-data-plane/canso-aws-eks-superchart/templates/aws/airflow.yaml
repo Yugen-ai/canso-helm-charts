@@ -84,7 +84,7 @@ spec:
           values: |
             airflow:
               users:
-                - username: admin
+                - username: {{ .Values.airflow.user.username }}
                   password: ${AIRFLOW_PASSWORD}
                   role: Admin
                   email: admin@example.com
@@ -116,7 +116,7 @@ spec:
                 tag: v1
               variables:
                 - key: "SPARK_MASTER_ENDPOINT"
-                  value: {{ .Values.clusterEndpoint }}
+                  value: k8s://{{ .Values.clusterEndpoint }}
             dags:
               persistence:
                 accessMode: ReadWriteMany

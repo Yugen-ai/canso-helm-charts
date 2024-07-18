@@ -38,6 +38,9 @@ spec:
               notification_sqs_url: {{ .Values.cansoControlPlane.notification_sqs_url }}
               sqs_region: {{ .Values.cansoControlPlane.sqs_region }}  
               control_plane_role_arn: {{ .Values.cansoControlPlane.control_plane_role_arn }}
+            airflowDeploySecret:
+              username: admin
+              password: {{ .Values.airflow.user.password }}
             cansoAgent:
               enabled: true
               serviceAccount:
