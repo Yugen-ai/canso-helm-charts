@@ -16,7 +16,7 @@ spec:
       serviceAccountName: {{ include "canso-agent.serviceAccountName" . }}
       containers:
       - name: {{ include "canso-agent-celery.fullname" . }}
-        image: {{ .Values.cansoAgent.deployment.image.repository }}:{{ .Values.cansoAgent.deployment.image.tag }}
+        image: {{ include "canso-agent.image" (dict "repository" .Values.cansoAgent.deployment.image.repository "tag" (default .Chart.AppVersion .Values.cansoAgent.deployment.image.tag)) }}
         imagePullPolicy: {{ .Values.cansoAgent.deployment.image.pullPolicy }}
         command: ["/bin/sh", "-c"]
         args: ["cd src && celery -A celery_app worker --loglevel=info"]

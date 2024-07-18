@@ -76,3 +76,16 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{- end }}
+
+{{/*
+Create the image path for the passed in image field
+Credits - https://blog.andyserver.com/2021/09/adding-image-digest-references-to-your-helm-charts/
+*/}}
+{{- define "canso-agent.image" -}}
+{{- $tag := .tag -}}
+{{- if eq (substr 0 7 $tag) "sha256:" -}}
+{{- printf "%s@%s" .repository $tag -}}
+{{- else -}}
+{{- printf "%s:%s" .repository $tag -}}
+{{- end -}}
+{{- end -}}
