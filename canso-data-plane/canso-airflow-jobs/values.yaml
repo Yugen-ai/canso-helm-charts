@@ -85,7 +85,7 @@ sparkRolebinding:
   name: spark-airflow-rolebinding
   ## @param sparkRolebinding.serviceAccount_name Name of the <TODO - to be updated>.
   ##
-  serviceAccount_name: default
+  serviceAccount_name: airflow-jobs-sa
 
 ####################################################
 ######### Pod Role Binding Configurations

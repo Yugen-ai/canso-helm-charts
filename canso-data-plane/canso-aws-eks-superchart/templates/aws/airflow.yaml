@@ -87,7 +87,7 @@ spec:
                 - username: admin
                   password: ${AIRFLOW_PASSWORD}
                   role: Admin
-                  email: yugen.airflow@example.com
+                  email: admin@example.com
                   firstName: admin
                   lastName: admin
               usersTemplates:
@@ -114,13 +114,9 @@ spec:
                 pullPolicy: Always
                 repository: shaktimaanbot/airflow_image_cncf
                 tag: v1
-              users:
-              - email: admin@example.com
-                firstName: admin
-                lastName: admin
-                password: admin
-                role: Admin
-                username: admin
+              variables:
+                - key: "SPARK_MASTER_ENDPOINT"
+                  value: {{ .Values.clusterEndpoint }}
             dags:
               persistence:
                 accessMode: ReadWriteMany
