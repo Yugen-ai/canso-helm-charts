@@ -39,6 +39,9 @@ spec:
               name: {{ .Values.cansoAirflowJobs.namespace }}
 
             airflowNamespace: {{ .Values.airflow.namespace }}
+            
+            sparkRolebinding:
+              serviceAccount_name: airflow-jobs-sa
 
             serviceAccount:
               enabled: true
