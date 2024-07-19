@@ -97,6 +97,7 @@ spec:
                   key: password
               usersUpdate: true
               config:
+                AIRFLOW__WEBSERVER__BASE_URL: "http://localhost:8080/airflow"
                 AIRFLOW__LOGGING__REMOTE_LOGGING: "True"
                 AIRFLOW__LOGGING__REMOTE_BASE_LOG_FOLDER: {{ .Values.airflow.remoteLogBaseFolder }}
                 AIRFLOW__API__AUTH_BACKEND: "airflow.api.auth.backend.basic_auth"
