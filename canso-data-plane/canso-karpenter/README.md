@@ -21,15 +21,14 @@
 
 ### karpenter.strategy Rolling update configuration parameters.
 
-| Name                                      | Description                                                          | Value                     |
-| ----------------------------------------- | -------------------------------------------------------------------- | ------------------------- |
-| `karpenter.podLabels`                     | Additional labels for the Karpenter pod.                             | `{}`                      |
-| `karpenter.podAnnotations`                | Additional annotations for the Karpenter pod.                        | `{}`                      |
-| `karpenter.priorityClassName`             | PriorityClass name for the pod.                                      | `system-cluster-critical` |
-| `karpenter.terminationGracePeriodSeconds` | Override the default termination grace period for the pod.           | `nil`                     |
-| `karpenter.hostNetwork`                   | Bind the pod to the host network (required when using a custom CNI). | `false`                   |
-| `karpenter.dnsPolicy`                     | Configure the DNS Policy for the pod.                                | `Default`                 |
-| `karpenter.dnsConfig`                     | Configure DNS Config for the pod.                                    | `{}`                      |
+| Name                          | Description                                                          | Value                     |
+| ----------------------------- | -------------------------------------------------------------------- | ------------------------- |
+| `karpenter.podLabels`         | Additional labels for the Karpenter pod.                             | `{}`                      |
+| `karpenter.podAnnotations`    | Additional annotations for the Karpenter pod.                        | `{}`                      |
+| `karpenter.priorityClassName` | PriorityClass name for the pod.                                      | `system-cluster-critical` |
+| `karpenter.hostNetwork`       | Bind the pod to the host network (required when using a custom CNI). | `false`                   |
+| `karpenter.dnsPolicy`         | Configure the DNS Policy for the pod.                                | `Default`                 |
+| `karpenter.dnsConfig`         | Configure DNS Config for the pod.                                    | `{}`                      |
 
 ### karpenter.affinity Affinity rules for scheduling the pod.
 
