@@ -27,7 +27,7 @@ spec:
         namespace: {{ .Values.cansoAirflowJobs.namespace }}
       sources:
       - repoURL: 'https://yugen-ai.github.io/canso-helm-charts'
-        targetRevision: "0.1.2"
+        targetRevision: "0.1.3"
         chart: canso-airflow-jobs
         releaseName: canso-helm-charts/canso-airflow-jobs
         helm:
@@ -39,6 +39,9 @@ spec:
               name: {{ .Values.cansoAirflowJobs.namespace }}
 
             airflowNamespace: {{ .Values.airflow.namespace }}
+            
+            sparkRolebinding:
+              serviceAccount_name: airflow-jobs-sa
 
             serviceAccount:
               enabled: true

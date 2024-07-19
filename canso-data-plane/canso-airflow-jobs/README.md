@@ -28,7 +28,7 @@
 | -------------------------------------- | ---------------------------------------------------------------------------- | --------------------------- |
 | `sparkRolebinding.enabled`             | Flag to enable Spark Role Binding. Strongly advised to not change the value. | `true`                      |
 | `sparkRolebinding.name`                | Name of the Spark role binding.                                              | `spark-airflow-rolebinding` |
-| `sparkRolebinding.serviceAccount_name` | Name of the <TODO - to be updated>.                                          | `default`                   |
+| `sparkRolebinding.serviceAccount_name` | Name of the <TODO - to be updated>.                                          | `airflow-jobs-sa`           |
 
 ### Pod Role Binding Configurations
 

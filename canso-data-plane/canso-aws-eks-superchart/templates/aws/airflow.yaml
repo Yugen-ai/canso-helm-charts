@@ -84,10 +84,10 @@ spec:
           values: |
             airflow:
               users:
-                - username: admin
+                - username: {{ .Values.airflow.user.username }}
                   password: ${AIRFLOW_PASSWORD}
                   role: Admin
-                  email: yugen.airflow@example.com
+                  email: admin@example.com
                   firstName: admin
                   lastName: admin
               usersTemplates:
@@ -97,6 +97,7 @@ spec:
                   key: password
               usersUpdate: true
               config:
+                AIRFLOW__WEBSERVER__BASE_URL: "http://localhost:8080/airflow"
                 AIRFLOW__LOGGING__REMOTE_LOGGING: "True"
                 AIRFLOW__LOGGING__REMOTE_BASE_LOG_FOLDER: {{ .Values.airflow.remoteLogBaseFolder }}
                 AIRFLOW__API__AUTH_BACKEND: "airflow.api.auth.backend.basic_auth"
@@ -114,13 +115,9 @@ spec:
                 pullPolicy: Always
                 repository: shaktimaanbot/airflow_image_cncf
                 tag: v1
-              users:
-              - email: admin@example.com
-                firstName: admin
-                lastName: admin
-                password: admin
-                role: Admin
-                username: admin
+              variables:
+                - key: "SPARK_MASTER_ENDPOINT"
+                  value: k8s://{{ .Values.clusterEndpoint }}
             dags:
               persistence:
                 accessMode: ReadWriteMany
