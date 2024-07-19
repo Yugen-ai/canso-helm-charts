@@ -1,5 +1,17 @@
 apiVersion: v1
 entries:
+  canso-airflow-jobs:
+  - apiVersion: v2
+    appVersion: 0.1.0
+    created: "2024-07-19T10:08:00.087147137Z"
+    description: A utility helm chart to support orchestraction of Spark jobs using
+      airflow
+    digest: a3007445c54df0e5f01284f3c63cde4b53554c4e8f9936900c27cda85d296ec3
+    name: canso-airflow-jobs
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-airflow-jobs-0.1.2/canso-airflow-jobs-0.1.2.tgz
+    version: 0.1.2
   canso-aws-eks-superchart:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -11,4 +23,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-aws-eks-superchart-0.1.7/canso-aws-eks-superchart-0.1.7.tgz
     version: 0.1.7
-generated: "2024-07-19T07:45:39.431058719Z"
+generated: "2024-07-19T10:08:00.22743095Z"
