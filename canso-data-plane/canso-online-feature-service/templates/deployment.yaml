@@ -30,7 +30,7 @@ spec:
       {{- end }}
       containers:
       - name: {{ include "online-feature-service.name" . }}
-        image: {{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}
+        image: {{ include "online-feature-service.image" (dict "repository" .Values.deployment.image.repository "tag" (default .Chart.AppVersion .Values.deployment.image.tag)) }}
         ports:
         - containerPort: {{ .Values.service.targetport }}
         resources:

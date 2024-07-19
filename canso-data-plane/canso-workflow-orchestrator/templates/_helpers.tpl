@@ -49,3 +49,16 @@ Selector labels
 app.kubernetes.io/name: {{ include "helm-jerry.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
+
+{{/*
+Create the image path for the passed in image field
+Credits - https://blog.andyserver.com/2021/09/adding-image-digest-references-to-your-helm-charts/
+*/}}
+{{- define "helm-jerry.image" -}}
+{{- $tag := .tag -}}
+{{- if eq (substr 0 7 $tag) "sha256:" -}}
+{{- printf "%s@%s" .repository $tag -}}
+{{- else -}}
+{{- printf "%s:%s" .repository $tag -}}
+{{- end -}}
+{{- end -}}

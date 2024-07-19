@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: {{ include "canso-agent.fullname" . }}
-        image: {{ .Values.cansoAgent.deployment.image.repository }}:{{ .Values.cansoAgent.deployment.image.tag | default .Chart.AppVersion }}
+        image: {{ include "canso-agent.image" (dict "repository" .Values.cansoAgent.deployment.image.repository "tag" (default .Chart.AppVersion .Values.cansoAgent.deployment.image.tag)) }}
         imagePullPolicy: {{ .Values.cansoAgent.deployment.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.cansoAgent.service.targetport }}

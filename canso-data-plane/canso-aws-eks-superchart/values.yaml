@@ -361,7 +361,8 @@ jerry:
   image:
     ## @param jerry.image.tag Tag of the Jerry image.
     ##
-    tag: "v0.0.4-python-3.10-slim"
+    tag: "sha256:a79046ebf4b32ec501e988210c804307bfda51f4d25a708f02550dcb058da3f3"
+    # Reference - `image.tag` in `canso-data-plane/canso-workflow-orchestrator/values.yaml`
     
   ## @subsection jerry.service 
   service:
@@ -407,7 +408,8 @@ onlineFS:
     image:
       ## @param onlineFS.deployment.image.tag Tag of the Online Feature Store image.
       ##
-      tag: v0.0.1
+      tag: "sha256:220563b873f6c2e0c7ce063da6655e6059a69b47db0e93806df7b72e0f165bbd"
+      # Reference - `deployment.image.tag` in `canso-data-plane/canso-online-feature-service/values.yaml`
 
   ingress:
     ## @param onlineFS.ingress.enabled Flag to enable ingress for Online Feature Store.

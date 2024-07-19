@@ -80,7 +80,7 @@ karpenter:
   ##
   priorityClassName: system-cluster-critical
 
-  ## @param karpenter.terminationGracePeriodSeconds Override the default termination grace period for the pod.
+  ## @skip karpenter.terminationGracePeriodSeconds Override the default termination grace period for the pod.
   ##
   terminationGracePeriodSeconds:
 
