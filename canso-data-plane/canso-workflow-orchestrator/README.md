@@ -10,11 +10,11 @@
 
 ### image
 
-| Name               | Description                                                   | Value                            |
-| ------------------ | ------------------------------------------------------------- | -------------------------------- |
-| `image.repository` | Image repository                                              | `shaktimaanbot/jerry-image-prod` |
-| `image.pullPolicy` | Image pull policy                                             | `Always`                         |
-| `image.tag`        | Overrides the image tag whose default is the chart appVersion | `v0.0.4-python-3.10-slim`        |
+| Name               | Description                                                              | Value                                                                     |
+| ------------------ | ------------------------------------------------------------------------ | ------------------------------------------------------------------------- |
+| `image.repository` | Image repository                                                         | `shaktimaanbot/jerry-image-prod`                                          |
+| `image.pullPolicy` | Image pull policy                                                        | `Always`                                                                  |
+| `image.tag`        | Overrides the image tag/SHA digest whose default is the chart appVersion | `sha256:a79046ebf4b32ec501e988210c804307bfda51f4d25a708f02550dcb058da3f3` |
 
 ### external_secret
 

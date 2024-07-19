@@ -31,13 +31,13 @@
 
 ### deployment.image 
 
-| Name                          | Description                                                    | Value                                    |
-| ----------------------------- | -------------------------------------------------------------- | ---------------------------------------- |
-| `deployment.image.repository` | The image repository                                           | `shaktimaanbot/feature-retrieval-server` |
-| `deployment.image.pullPolicy` | Image pull policy                                              | `IfNotPresent`                           |
-| `deployment.image.tag`        | Overrides the image tag whose default is the chart appVersion. | `v0.0.1`                                 |
-| `deployment.enableEnv`        | Enable the environment variables                               | `false`                                  |
-| `deployment.enableEnvSecrets` | Enable the environment variables from secrets                  | `false`                                  |
+| Name                          | Description                                                    | Value                                                                     |
+| ----------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `deployment.image.repository` | The image repository                                           | `shaktimaanbot/feature-retrieval-server-prod`                             |
+| `deployment.image.pullPolicy` | Image pull policy                                              | `IfNotPresent`                                                            |
+| `deployment.image.tag`        | Overrides the image tag whose default is the chart appVersion. | `sha256:220563b873f6c2e0c7ce063da6655e6059a69b47db0e93806df7b72e0f165bbd` |
+| `deployment.enableEnv`        | Enable the environment variables                               | `false`                                                                   |
+| `deployment.enableEnvSecrets` | Enable the environment variables from secrets                  | `false`                                                                   |
 
 ### autoscaling 
 
