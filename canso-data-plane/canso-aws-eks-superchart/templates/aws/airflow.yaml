@@ -83,6 +83,10 @@ spec:
         helm:
           values: |
             airflow:
+              connections:
+                - id: aws_default
+                  type: s3
+                  description: Default AWS S3 connection
               users:
                 - username: {{ .Values.airflow.user.username }}
                   password: ${AIRFLOW_PASSWORD}
