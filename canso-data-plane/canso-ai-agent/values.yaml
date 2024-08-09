@@ -1,0 +1,89 @@
+# values.yaml
+
+## @param replicaCount Number of replicas to deploy
+replicaCount: 1
+
+## @section Image parameters
+image:
+  ## @param image.repository Image repository
+  repository: repo/image
+  ## @param image.pullPolicy Image pull policy
+  pullPolicy: IfNotPresent
+  ## @param image.tag Image tag (immutable tags are recommended)
+  tag: ""
+
+## @param nameOverride String to partially override ai-agent.fullname template (will maintain the release name)
+nameOverride: ""
+## @param fullnameOverride String to fully override ai-agent.fullname template
+fullnameOverride: ""
+
+## @section Service parameters
+service:
+  ## @param service.type Kubernetes Service type
+  type: NodePort
+  ## @param service.port Service port
+  port: 80
+
+## @section Autoscaling parameters
+autoscaling:
+  ## @param autoscaling.enabled Enable autoscaling for ai-agent deployment
+  enabled: true
+  ## @param autoscaling.minReplicas Minimum number of replicas to scale back
+  minReplicas: 1
+  ## @param autoscaling.maxReplicas Maximum number of replicas to scale out
+  maxReplicas: 5
+  ## @subsection autoscaling.metrics Metrics to use for scaling (only type Resource is supported)
+  metrics:
+    ## @param autoscaling.metrics[0].type Type of metric to use for scaling
+    - type: Resource
+      ## @subsection autoscaling.metrics[0].resource Resource metrics to use for scaling
+      resource:
+        ## @param autoscaling.metrics[0].resource.name Name of the resource to monitor
+        name: memory
+        ## @subsection autoscaling.metrics[0].resource.target Target for the resource metric
+        target:
+          ## @param autoscaling.metrics[0].resource.target.type Type of scaling target
+          type: Utilization
+          ## @param autoscaling.metrics[0].resource.target.averageUtilization Target average utilization percentage
+          averageUtilization: 80
+
+## @section Resource Management
+resources:
+  ## @param resources.limits The resources limits for the ai-agent container
+  limits: {}
+    # cpu: 100m
+    # memory: 128Mi
+  ## @param resources.requests The requested resources for the ai-agent container
+  requests: {}
+    # cpu: 100m
+    # memory: 128Mi
+
+## @section Liveness and Readiness Probes
+## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
+livenessProbe:
+  ## @param livenessProbe.enabled Enable livenessProbe
+  enabled: false
+  ## @param livenessProbe.initialDelaySeconds Initial delay seconds for livenessProbe
+  initialDelaySeconds: 10
+  ## @param livenessProbe.periodSeconds Period seconds for livenessProbe
+  periodSeconds: 10
+  ## @param livenessProbe.timeoutSeconds Timeout seconds for livenessProbe
+  timeoutSeconds: 5
+  ## @param livenessProbe.failureThreshold Failure threshold for livenessProbe
+  failureThreshold: 3
+  ## @param livenessProbe.successThreshold Success threshold for livenessProbe
+  successThreshold: 1
+
+readinessProbe:
+  ## @param readinessProbe.enabled Enable readinessProbe
+  enabled: false
+  ## @param readinessProbe.initialDelaySeconds Initial delay seconds for readinessProbe
+  initialDelaySeconds: 5
+  ## @param readinessProbe.periodSeconds Period seconds for readinessProbe
+  periodSeconds: 10
+  ## @param readinessProbe.timeoutSeconds Timeout seconds for readinessProbe
+  timeoutSeconds: 5
+  ## @param readinessProbe.failureThreshold Failure threshold for readinessProbe
+  failureThreshold: 3
+  ## @param readinessProbe.successThreshold Success threshold for readinessProbe
+  successThreshold: 1

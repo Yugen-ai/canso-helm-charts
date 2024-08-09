@@ -1,0 +1,5 @@
+WARNING: Development Version
+
+You've installed the development version of the AI Agent chart. This version is not intended for production use and may contain bugs or incomplete features. Please use caution and report any issues to:
+
+https://github.com/Yugen-ai/canso-helm-charts/issues
