@@ -7,6 +7,13 @@
 | `argocdProject` | ArgoCD project name.       | `canso-appsets` |
 | `createProject` | Create the ArgoCD project. | `true`          |
 
+### ArgoCD AI Agent Configs
+
+| Name                   | Description                         | Value        |
+| ---------------------- | ----------------------------------- | ------------ |
+| `argocdAIAgentProject` | ArgoCD AI Agent project name.       | `canso-apps` |
+| `createAIAgentProject` | Create the ArgoCD AI Agent project. | `true`       |
+
 ### Default Configs
 
 | Name              | Description                          | Value |
