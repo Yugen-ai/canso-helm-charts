@@ -13,7 +13,7 @@ createProject: true
 
 ## @param argocdAIAgentProject ArgoCD AI Agent project name.
 ##
-argocdAIAgentProject: canso-apps # WARNING: CRITICAL VALUE - DO NOT CHANGE
+argocdAIAgentProject: canso-ai-agents # WARNING: CRITICAL VALUE - DO NOT CHANGE
 
 ## @param createAIAgentProject Create the ArgoCD AI Agent project.
 createAIAgentProject: true
