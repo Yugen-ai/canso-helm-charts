@@ -51,9 +51,9 @@ spec:
         namespace: spark-operator
         server: https://kubernetes.default.svc
       source:
-        repoURL: https://github.com/kubeflow/spark-operator
-        path: charts/spark-operator-chart
-        targetRevision:
+        repoURL: https://kubeflow.github.io/spark-operator/
+        chart: spark-operator
+        targetRevision: 1.4.6
         helm:
           values: |-
             sparkJobNamespaces:
