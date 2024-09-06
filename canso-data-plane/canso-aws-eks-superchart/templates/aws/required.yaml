@@ -7,3 +7,7 @@
 {{- $_ := required "roleArn is a required value" .Values.airflow.roleArn}}
 {{- $_ := required "pvc.Name is a required value" .Values.airflow.pvc.name}}
 {{- $_ := required "password is a required value" .Values.airflow.user.password}}
+{{- $_ := required "deployment_sqs_url is a required value" .Values.cansoControlPlane.deployment_sqs_url}}
+{{- $_ := required "notification_sqs_url is a required value" .Values.cansoControlPlane.notification_sqs_url}}
+{{- $_ := required "sqs_region is a required value" .Values.cansoControlPlane.sqs_region}}
+{{- $_ := required "control_plane_role_arn is a required value" .Values.cansoControlPlane.control_plane_role_arn}}
