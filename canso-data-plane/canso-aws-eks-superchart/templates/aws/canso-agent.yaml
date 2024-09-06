@@ -55,6 +55,16 @@ spec:
               affinity:
                 {{ toYaml . | nindent 12 }}
               {{- end }}
+              external_secret:
+                enabled: true
+                target_secret_name: {{ (index .Values.canso.imagePullSecrets 0).targetName }}
+                target_secret_type: {{ (index .Values.canso.imagePullSecrets 0).targetType }}
+                target_secret_name_key: {{ (index .Values.canso.imagePullSecrets 0).secretKey }}
+                aws_secret_name: {{ (index .Values.canso.imagePullSecrets 0).remoteRefKey }}
+                aws_secret_key: {{ (index .Values.canso.imagePullSecrets 0).remoteRefProperty }}
+              secretStoreRef:
+                name: {{ (index .Values.canso.imagePullSecrets 0).clusterSecretRole }}
+                kind: ClusterSecretStore
       syncPolicy:
         automated:
           prune: true
