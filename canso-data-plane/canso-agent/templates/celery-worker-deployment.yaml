@@ -18,9 +18,35 @@ spec:
       - name: {{ include "canso-agent-celery.fullname" . }}
         image: {{ include "canso-agent.image" (dict "repository" .Values.cansoAgent.deployment.image.repository "tag" (default .Chart.AppVersion .Values.cansoAgent.deployment.image.tag)) }}
         imagePullPolicy: {{ .Values.cansoAgent.deployment.image.pullPolicy }}
+        env:
+          - name: TENANT_NAME
+            value: {{ .Values.config.tenantName | quote }}
+          - name: TENANT_ID
+            value: {{ .Values.config.tenantID | quote }}
+          - name: DEPLOYMENT_QUEUE_URL
+            value: {{ .Values.config.deployment_sqs_url }}
+          - name: NOTIFICATION_QUEUE_URL
+            value: {{ .Values.config.notification_sqs_url }}
+          - name: SQS_REGION
+            value: {{ .Values.config.sqs_region }}
+          - name: CONTROL_PLANE_ROLE_ARN
+            value: {{ .Values.config.control_plane_role_arn }}
+
+          {{- range .Values.cansoAgent.deployment.env }}
+          - name: {{ .name }}
+            value: {{ .value | quote }}
+          {{- end }}
+          
+          {{- range .Values.cansoAgent.deployment.envSecretKeys }}
+          - name: {{ .name }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .secret_name }}
+                key: {{ .key }}
+          {{- end }}
         command: ["/bin/sh", "-c"]
         args: ["cd src && celery -A celery_app worker --loglevel=info"]
-       {{- if .Values.cansoAgent.external_secret.enabled }}
+      {{- if .Values.cansoAgent.external_secret.enabled }}
       imagePullSecrets:
         - name: {{ .Values.cansoAgent.external_secret.target_secret_name }}
       {{- end }}
