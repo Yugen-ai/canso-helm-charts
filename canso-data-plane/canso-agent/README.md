@@ -88,7 +88,7 @@
 | ---------------------------------------- | ------------------------- | ------------------------------------------------------------------------- |
 | `cansoAgent.deployment.image.repository` | repository for the image  | `shaktimaanbot/dev-agent-image`                                           |
 | `cansoAgent.deployment.image.pullPolicy` | Pull policy for the image | `Always`                                                                  |
-| `cansoAgent.deployment.image.tag`        | Tag for the image         | `sha256:5295215c13198ceb0e41025c472985fe568e07a7757b1bd9ea6a9f8a95545fd6` |
+| `cansoAgent.deployment.image.tag`        | Tag for the image         | `sha256:52a3d5f629e89050870c62fa102d70f157700f269fed5a8cc64b3ef058f27f62` |
 
 ### resources configuration
 
