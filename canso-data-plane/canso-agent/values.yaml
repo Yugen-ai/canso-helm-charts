@@ -176,7 +176,7 @@ cansoAgent:
       pullPolicy: Always
       ## @param cansoAgent.deployment.image.tag Tag for the image
       ##
-      tag: "sha256:52a3d5f629e89050870c62fa102d70f157700f269fed5a8cc64b3ef058f27f62"
+      tag: "sha256:f0ca9390b072d452e196943a1781f6ea93c704ce8a476060a8753f709b6cf5da"
     ## @section resources configuration
     resources:
       ## @section resources limits configuration
@@ -231,7 +231,7 @@ cansoAgent:
       pullPolicy: Always
       ## @param cansoAgent.proxyDeployment.image.tag Tag for the image
       ##
-      tag: "sha256:b3e6512925b30bcd7909d692c7501b89100b96a933d3ffab7c634cb008c332d0"
+      tag: "sha256:1d310b1f953841fb8bc838e717f17e6a993247917d15a4b1edb234152d7004cf"
     ## @section resources configuration
     resources:
       ## @section resources limits configuration
