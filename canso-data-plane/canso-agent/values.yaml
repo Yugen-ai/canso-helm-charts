@@ -14,19 +14,21 @@ config:
   ## @param config.tenantID Unique ID assigned to the Tenant
   ##
   tenantID: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
-  ## @param config.deployment_sqs_url deployment sqs url in Control Plane. Generated during Tenant onboarding.
+  ## @param config.queue_host queue server hostname
   ##
-  deployment_sqs_url: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
-  ## @param config.notification_sqs_url notification sqs url in Control Plane. Generated during Tenant onboarding.
+  queue_host: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
+  ## @param config.queue_username rabbitmq username
   ##
-  notification_sqs_url: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
-  ## @param config.sqs_region region for sqs url in Control Plane. Generated during Tenant onboarding.
+  queue_username: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
+  ## @param config.queue_password rabbitmq password
   ##
-  sqs_region: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
-  ## @param config.control_plane_role_arn Role arn for control plane sqs permissions
+  queue_password: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
+  ## @param config.outgoing_queue rabbitmq password
   ##
-  control_plane_role_arn: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
-
+  outgoing_queue: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
+  ## @param config.incoming_queue rabbitmq password
+  ##
+  incoming_queue: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
 
 ####################################################
 ### Secrets (Dependencies to carry out Deploys)
@@ -174,7 +176,7 @@ cansoAgent:
       pullPolicy: Always
       ## @param cansoAgent.deployment.image.tag Tag for the image
       ##
-      tag: "sha256:5295215c13198ceb0e41025c472985fe568e07a7757b1bd9ea6a9f8a95545fd6"
+      tag: "sha256:52a3d5f629e89050870c62fa102d70f157700f269fed5a8cc64b3ef058f27f62"
     ## @section resources configuration
     resources:
       ## @section resources limits configuration

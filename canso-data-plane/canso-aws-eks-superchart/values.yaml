@@ -40,23 +40,21 @@ tenantID: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso T
 awsRegion: "" # THIS VALUE IS MANDATORY
 
 ####################################################
-############### Control Plane Configs
+############### Queue Configs
 ####################################################
+## @param queue_hostname hostname for queue server
+##
+queue_hostname: ""
 
-## @section Control Plane Configs
-cansoControlPlane:
-  ## @param cansoControlPlane.deployment_sqs_url deployment sqs url in Control Plane. Generated during Tenant onboarding.
-  ##
-  deployment_sqs_url: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
-  ## @param cansoControlPlane.notification_sqs_url notification sqs url in Control Plane. Generated during Tenant onboarding.
-  ##
-  notification_sqs_url: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
-  ## @param cansoControlPlane.sqs_region region for sqs url in Control Plane. Generated during Tenant onboarding.
-  ##
-  sqs_region: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
-  ## @param cansoControlPlane.control_plane_role_arn role arn for control plane. Generated during Tenant onboarding.
-  ##
-  control_plane_role_arn: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
+## @section queue authentication username and password
+queue_auth:
+  password_encoded: ""
+  username: ""
+
+## @section queue names
+queues:
+  incoming_queue: ""
+  outgoing_queue: ""
 
 ####################################################
 ############### Tolerations & Affinity

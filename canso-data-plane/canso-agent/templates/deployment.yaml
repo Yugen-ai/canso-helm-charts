@@ -43,14 +43,16 @@ spec:
             value:  {{ .Values.config.tenantName | quote }}
           - name: TENANT_ID
             value:  {{ .Values.config.tenantID | quote }}
-          - name: DEPLOYMENT_QUEUE_URL
-            value: {{ .Values.config.deployment_sqs_url }}
-          - name: NOTIFICATION_QUEUE_URL
-            value: {{ .Values.config.notification_sqs_url }}
-          - name: SQS_REGION
-            value: {{ .Values.config.sqs_region }}
-          - name: CONTROL_PLANE_ROLE_ARN
-            value: {{ .Values.config.control_plane_role_arn }}
+          - name: QUEUE_HOST
+            value: {{ .Values.config.queue_host }}
+          - name: QUEUE_USERNAME
+            value: {{ .Values.config.queue_username }}
+          - name: QUEUE_PASSWORD
+            value: {{ .Values.config.queue_password }}
+          - name: OUTGOING_QUEUE
+            value: {{ .Values.config.outgoing_queue }}
+          - name: INCOMING_QUEUE
+            value: {{ .Values.config.incoming_queue }}
 
           {{- range .Values.cansoAgent.deployment.env }}
           - name: {{ .name }}
