@@ -5,7 +5,8 @@
 
 {{- $_ := required "tenantName is a required value" .Values.config.tenantName}}
 {{- $_ := required "tenantID is a required value" .Values.config.tenantID}}
-{{- $_ := required "deployment_sqs_url is a required value" .Values.config.deployment_sqs_url}}
-{{- $_ := required "notification_sqs_url is a required value" .Values.config.notification_sqs_url}}
-{{- $_ := required "sqs_region is a required value" .Values.config.sqs_region}}
-{{- $_ := required "control_plane_role_arn is a required value" .Values.config.control_plane_role_arn}}
+{{- $_ := required "queue_host is a required value" .Values.config.queue_host}}
+{{- $_ := required "queue_username is a required value" .Values.config.queue_username}}
+{{- $_ := required "queue_password is a required value" .Values.config.queue_password}}
+{{- $_ := required "incoming_queue is a required value" .Values.config.incoming_queue}}
+{{- $_ := required "outgoing_queue is a required value" .Values.config.outgoing_queue}}
