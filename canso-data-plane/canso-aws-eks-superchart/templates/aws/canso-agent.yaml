@@ -28,16 +28,17 @@ spec:
       source:
         repoURL: 'https://yugen-ai.github.io/canso-helm-charts'
         chart: canso-agent
-        targetRevision: 0.1.8
+        targetRevision: 0.1.9
         helm:
           values: |-
             config:
               tenantName: {{ .Values.tenantName }}
               tenantID: {{ .Values.tenantID }}
-              deployment_sqs_url: {{ .Values.cansoControlPlane.deployment_sqs_url }}
-              notification_sqs_url: {{ .Values.cansoControlPlane.notification_sqs_url }}
-              sqs_region: {{ .Values.cansoControlPlane.sqs_region }}  
-              control_plane_role_arn: {{ .Values.cansoControlPlane.control_plane_role_arn }}
+              queue_host: {{ .Values.queue_hostname }}
+              queue_username: {{ .Values.queue_auth.username }}
+              queue_password: {{ .Values.queue_auth.password_encoded }}  
+              outgoing_queue: {{ .Values.queues.outgoing_queue }}
+              incoming_queue: {{ .Values.queues.incoming_queue }}
             airflowDeploySecret:
               username: admin
               password: {{ .Values.airflow.user.password }}
