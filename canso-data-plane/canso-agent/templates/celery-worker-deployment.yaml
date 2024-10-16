@@ -18,9 +18,47 @@ spec:
       - name: {{ include "canso-agent-celery.fullname" . }}
         image: {{ include "canso-agent.image" (dict "repository" .Values.cansoAgent.deployment.image.repository "tag" (default .Chart.AppVersion .Values.cansoAgent.deployment.image.tag)) }}
         imagePullPolicy: {{ .Values.cansoAgent.deployment.image.pullPolicy }}
+        {{- if .Values.cansoAgent.deployment.enableEnv }}
+        env:
+          - name: TENANT_NAME
+            value:  {{ .Values.config.tenantName | quote }}
+          - name: TENANT_ID
+            value:  {{ .Values.config.tenantID | quote }}
+          - name: QUEUE_HOST
+            value: {{ .Values.config.queue_host }}
+          - name: QUEUE_USERNAME
+            value: {{ .Values.config.queue_username }}
+          - name: QUEUE_PASSWORD
+            value: {{ .Values.config.queue_password }}
+          - name: OUTGOING_QUEUE
+            value: {{ .Values.config.outgoing_queue }}
+          - name: INCOMING_QUEUE
+            value: {{ .Values.config.incoming_queue }}
+
+          {{- range .Values.cansoAgent.deployment.env }}
+          - name: {{ .name }}
+            value: {{ .value | quote }}
+          {{- end }}
+          
+          {{- range .Values.cansoAgent.deployment.envSecretKeys }}
+          - name: {{ .name }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .secret_name }}
+                key: {{ .key }}
+          {{- end }}
+        {{- end }}
+        {{- if .Values.cansoAgent.deployment.enableEnvSecrets }}
+        envFrom:
+          {{- range .Values.cansoAgent.deployment.secrets }}
+          - secretRef:
+              name: {{ .name }}
+          {{- end }}
+        {{- end }}
+        
         command: ["/bin/sh", "-c"]
         args: ["cd src && celery -A celery_app worker --loglevel=info"]
-       {{- if .Values.cansoAgent.external_secret.enabled }}
+      {{- if .Values.cansoAgent.external_secret.enabled }}
       imagePullSecrets:
         - name: {{ .Values.cansoAgent.external_secret.target_secret_name }}
       {{- end }}

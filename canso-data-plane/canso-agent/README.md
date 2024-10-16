@@ -88,7 +88,7 @@
 | ---------------------------------------- | ------------------------- | ------------------------------------------------------------------------- |
 | `cansoAgent.deployment.image.repository` | repository for the image  | `shaktimaanbot/dev-agent-image`                                           |
 | `cansoAgent.deployment.image.pullPolicy` | Pull policy for the image | `Always`                                                                  |
-| `cansoAgent.deployment.image.tag`        | Tag for the image         | `sha256:5295215c13198ceb0e41025c472985fe568e07a7757b1bd9ea6a9f8a95545fd6` |
+| `cansoAgent.deployment.image.tag`        | Tag for the image         | `sha256:4d61db5d64cfa7e4c3cf8fbf8a4d2070b3a67926446e0bfa5de6f149af3baf00` |
 
 ### resources configuration
 
@@ -110,6 +110,38 @@
 | `cansoAgent.deployment.resources.requests.ephemeral-storage` | Ephemeral storage requests for the Canso Agent container. Strongly recommend to not decrease. | `256Mi` |
 | `cansoAgent.deployment.enableEnv`                            | Whether environment variables are enabled                                                     | `true`  |
 | `cansoAgent.deployment.enableEnvSecrets`                     | Whether environment secrets are enabled                                                       | `false` |
+
+### Proxy Deployment Configurations
+
+
+### Image Configuration  
+
+| Name                                          | Description               | Value                                                                     |
+| --------------------------------------------- | ------------------------- | ------------------------------------------------------------------------- |
+| `cansoAgent.proxyDeployment.image.repository` | repository for the image  | `shaktimaanbot/dev-agent-image`                                           |
+| `cansoAgent.proxyDeployment.image.pullPolicy` | Pull policy for the image | `Always`                                                                  |
+| `cansoAgent.proxyDeployment.image.tag`        | Tag for the image         | `sha256:24bd248684c38b9f7b7edce4fac91f052c5e4435f088d1b169be30a93ff5e2b5` |
+
+### resources configuration
+
+
+### resources limits configuration
+
+| Name                                                            | Description                                                                                 | Value   |
+| --------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------- |
+| `cansoAgent.proxyDeployment.resources.limits.cpu`               | CPU limits for the Canso Agent container. Strongly recommend to not decrease.               | `800m`  |
+| `cansoAgent.proxyDeployment.resources.limits.memory`            | Memory limits for the Canso Agent container. Strongly recommend to not decrease.            | `512Mi` |
+| `cansoAgent.proxyDeployment.resources.limits.ephemeral-storage` | Ephemeral storage limits for the Canso Agent container. Strongly recommend to not decrease. | `512Mi` |
+
+### resources requests configuration
+
+| Name                                                              | Description                                                                                   | Value   |
+| ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ------- |
+| `cansoAgent.proxyDeployment.resources.requests.cpu`               | CPU requests for the Canso Agent container. Strongly recommend to not decrease.               | `500m`  |
+| `cansoAgent.proxyDeployment.resources.requests.memory`            | Memory requests for the Canso Agent container. Strongly recommend to not decrease.            | `256Mi` |
+| `cansoAgent.proxyDeployment.resources.requests.ephemeral-storage` | Ephemeral storage requests for the Canso Agent container. Strongly recommend to not decrease. | `256Mi` |
+| `cansoAgent.proxyDeployment.enableEnv`                            | Whether environment variables are enabled                                                     | `true`  |
+| `cansoAgent.proxyDeployment.enableEnvSecrets`                     | Whether environment secrets are enabled                                                       | `false` |
 
 ### Autoscaling Configuration
 

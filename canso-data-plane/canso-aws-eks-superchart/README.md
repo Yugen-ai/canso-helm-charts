@@ -16,24 +16,16 @@
 
 ### Default Configs
 
-| Name              | Description                          | Value |
-| ----------------- | ------------------------------------ | ----- |
-| `clusterName`     | Name of the AWS EKS cluster.         | `""`  |
-| `clusterEndpoint` | Endpoint URL of the AWS EKS cluster. | `""`  |
-| `tenantName`      | Name Assigned to the Tenant          | `""`  |
-| `tenantID`        | Unique ID assigned to the Tenant     | `""`  |
-| `awsRegion`       | AWS Region of the cluster            | `""`  |
-
-### Control Plane Configs
-
-| Name                                       | Description                                                                | Value |
-| ------------------------------------------ | -------------------------------------------------------------------------- | ----- |
-| `cansoControlPlane.deployment_sqs_url`     | deployment sqs url in Control Plane. Generated during Tenant onboarding.   | `""`  |
-| `cansoControlPlane.notification_sqs_url`   | notification sqs url in Control Plane. Generated during Tenant onboarding. | `""`  |
-| `cansoControlPlane.sqs_region`             | region for sqs url in Control Plane. Generated during Tenant onboarding.   | `""`  |
-| `cansoControlPlane.control_plane_role_arn` | role arn for control plane. Generated during Tenant onboarding.            | `""`  |
-| `tolerations`                              | Tolerations for the deployment.                                            | `{}`  |
-| `affinity`                                 | Affinity for the deployment.                                               | `{}`  |
+| Name              | Description                          | Value                    |
+| ----------------- | ------------------------------------ | ------------------------ |
+| `clusterName`     | Name of the AWS EKS cluster.         | `""`                     |
+| `clusterEndpoint` | Endpoint URL of the AWS EKS cluster. | `""`                     |
+| `tenantName`      | Name Assigned to the Tenant          | `""`                     |
+| `tenantID`        | Unique ID assigned to the Tenant     | `""`                     |
+| `awsRegion`       | AWS Region of the cluster            | `""`                     |
+| `queue_hostname`  | hostname for queue server            | `rabbitmq-amqp.canso.ai` |
+| `tolerations`     | Tolerations for the deployment.      | `{}`                     |
+| `affinity`        | Affinity for the deployment.         | `{}`                     |
 
 ### Karpenter Configs
 
