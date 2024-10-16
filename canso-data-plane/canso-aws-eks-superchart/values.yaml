@@ -44,14 +44,14 @@ awsRegion: "" # THIS VALUE IS MANDATORY
 ####################################################
 ## @param queue_hostname hostname for queue server
 ##
-queue_hostname: ""
+queue_hostname: "rabbitmq-amqp.canso.ai"
 
-## @section queue authentication username and password
+## @skip queue_auth queue authentication username and password
 queue_auth:
   password_encoded: ""
   username: ""
 
-## @section queue names
+## @skip queues names of queue.
 queues:
   incoming_queue: ""
   outgoing_queue: ""

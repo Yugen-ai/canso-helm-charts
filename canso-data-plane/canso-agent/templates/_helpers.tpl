@@ -89,3 +89,18 @@ Credits - https://blog.andyserver.com/2021/09/adding-image-digest-references-to-
 {{- printf "%s:%s" .repository $tag -}}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Create a default fully qualified proxy app name
+*/}}
+{{- define "canso-agent-proxy.fullname" -}}
+{{- include "canso-agent.fullname" . | trunc 57 | trimSuffix "-" }}-proxy
+{{- end }}
+
+{{/*
+Selector labels for canso-agent-proxy
+*/}}
+{{- define "canso-agent-proxy.selectorLabels" -}}
+{{ include "canso-agent.selectorLabels" . }}
+app.kubernetes.io/component: metrics-proxy
+{{- end }}

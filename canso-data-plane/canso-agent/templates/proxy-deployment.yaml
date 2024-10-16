@@ -1,0 +1,104 @@
+{{- if .Values.cansoAgent.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "canso-agent-proxy.fullname" . }}
+  labels:
+    {{- include "canso-agent.labels" . | nindent 4 }}
+    app.kubernetes.io/component: metrics-proxy
+spec:
+  {{- if not .Values.cansoAgent.autoscaling.enabled }}
+  replicas: 1
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "canso-agent-proxy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        'consul.hashicorp.com/connect-inject': 'false'
+      labels:
+        {{- include "canso-agent-proxy.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+      - name: {{ include "canso-agent-proxy.fullname" . }}
+        image: {{ include "canso-agent.image" (dict "repository" .Values.cansoAgent.proxyDeployment.image.repository "tag" (default .Chart.AppVersion .Values.cansoAgent.proxyDeployment.image.tag)) }}
+        imagePullPolicy: {{ .Values.cansoAgent.proxyDeployment.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.cansoAgent.service.targetport }}
+        {{- if .Values.cansoAgent.livenessProbe.enabled }}
+        livenessProbe:
+          {{- toYaml .Values.cansoAgent.livenessProbe | nindent 12 }}
+        {{- end }}
+        {{- if .Values.cansoAgent.readinessProbe.enabled }}
+        readinessProbe:
+          {{- toYaml .Values.cansoAgent.readinessProbe | nindent 12 }}
+        {{- end }}
+        volumeMounts:
+            {{- toYaml .Values.cansoAgent.extraVolumeMounts | nindent 12 }}
+        resources:
+          {{- toYaml .Values.cansoAgent.proxyDeployment.resources | nindent 10 }}
+        {{- if .Values.cansoAgent.proxyDeployment.enableEnv }}
+        env:
+          - name: TENANT_NAME
+            value:  {{ .Values.config.tenantName | quote }}
+          - name: TENANT_ID
+            value:  {{ .Values.config.tenantID | quote }}
+          - name: QUEUE_HOST
+            value: {{ .Values.config.queue_host }}
+          - name: QUEUE_USERNAME
+            value: {{ .Values.config.queue_username }}
+          - name: QUEUE_PASSWORD
+            value: {{ .Values.config.queue_password }}
+          - name: OUTGOING_QUEUE
+            value: {{ .Values.config.outgoing_queue }}
+          - name: INCOMING_QUEUE
+            value: {{ .Values.config.incoming_queue }}
+          - name: AIRFLOW_INTERVAL_MINUTES
+            value: {{ .Values.config.airflow_interval_minutes | quote }}
+          - name: STREAMING_INTERVAL_MINUTES
+            value: {{ .Values.config.streaming_interval_minutes | quote }}
+
+          {{- range .Values.cansoAgent.proxyDeployment.env }}
+          - name: {{ .name }}
+            value: {{ .value | quote }}
+          {{- end }}
+          
+          {{- range .Values.cansoAgent.proxyDeployment.envSecretKeys }}
+          - name: {{ .name }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ .secret_name }}
+                key: {{ .key }}
+          {{- end }}
+        {{- end }}
+        {{- if .Values.cansoAgent.proxyDeployment.enableEnvSecrets }}
+        envFrom:
+          {{- range .Values.cansoAgent.proxyDeployment.secrets }}
+          - secretRef:
+              name: {{ .name }}
+          {{- end }}
+        {{- end }}
+      serviceAccountName: {{ include "canso-agent.serviceAccountName" . }}
+      {{- with .Values.cansoAgent.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.cansoAgent.external_secret.enabled }}
+      imagePullSecrets:
+        - name: {{ .Values.cansoAgent.external_secret.target_secret_name }}
+      {{- end }}
+      volumes:
+        {{- toYaml .Values.cansoAgent.extraVolumes | nindent 8 }}
+      {{- with .Values.cansoAgent.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.cansoAgent.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.cansoAgent.priorityClassName }}
+      priorityClassName: {{ . | quote }}
+      {{- end}}
+{{- end}}
