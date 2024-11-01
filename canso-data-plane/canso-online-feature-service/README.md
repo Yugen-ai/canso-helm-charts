@@ -35,7 +35,7 @@
 | ----------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | `deployment.image.repository` | The image repository                                           | `shaktimaanbot/feature-retrieval-server-prod`                             |
 | `deployment.image.pullPolicy` | Image pull policy                                              | `IfNotPresent`                                                            |
-| `deployment.image.tag`        | Overrides the image tag whose default is the chart appVersion. | `sha256:220563b873f6c2e0c7ce063da6655e6059a69b47db0e93806df7b72e0f165bbd` |
+| `deployment.image.tag`        | Overrides the image tag whose default is the chart appVersion. | `sha256:3bcbcf0dd673784e63f4b68548c976f915c22f046e3966d654484a6235a892fd` |
 | `deployment.enableEnv`        | Enable the environment variables                               | `false`                                                                   |
 | `deployment.enableEnvSecrets` | Enable the environment variables from secrets                  | `false`                                                                   |
 

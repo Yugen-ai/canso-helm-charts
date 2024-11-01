@@ -416,7 +416,7 @@ onlineFS:
     image:
       ## @param onlineFS.deployment.image.tag Tag of the Online Feature Store image.
       ##
-      tag: "sha256:220563b873f6c2e0c7ce063da6655e6059a69b47db0e93806df7b72e0f165bbd"
+      tag: "sha256:3bcbcf0dd673784e63f4b68548c976f915c22f046e3966d654484a6235a892fd"
       # Reference - `deployment.image.tag` in `canso-data-plane/canso-online-feature-service/values.yaml`
 
   ingress:
