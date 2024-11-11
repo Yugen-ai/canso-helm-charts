@@ -199,6 +199,20 @@ entries:
   canso-karpenter:
   - apiVersion: v2
     appVersion: 0.0.1
+    created: "2024-11-11T10:51:13.20560331Z"
+    dependencies:
+    - name: karpenter
+      repository: oci://public.ecr.aws/karpenter
+      version: 1.0.7
+    description: A Helm chart for Kubernetes
+    digest: 85d220134ee0215955897388a4788f565c91a8d481f3b6b417b1153df1f93cda
+    name: canso-karpenter
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-karpenter-0.0.4/canso-karpenter-0.0.4.tgz
+    version: 0.0.4
+  - apiVersion: v2
+    appVersion: 0.0.1
     created: "2024-07-19T12:39:25.56925496Z"
     dependencies:
     - name: karpenter
@@ -243,4 +257,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2024-11-11T09:47:10.03469885Z"
+generated: "2024-11-11T10:51:13.205652011Z"
