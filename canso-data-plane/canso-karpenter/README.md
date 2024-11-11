@@ -27,7 +27,7 @@
 | `karpenter.podAnnotations`    | Additional annotations for the Karpenter pod.                        | `{}`                      |
 | `karpenter.priorityClassName` | PriorityClass name for the pod.                                      | `system-cluster-critical` |
 | `karpenter.hostNetwork`       | Bind the pod to the host network (required when using a custom CNI). | `false`                   |
-| `karpenter.dnsPolicy`         | Configure the DNS Policy for the pod.                                | `Default`                 |
+| `karpenter.dnsPolicy`         | Configure the DNS Policy for the pod.                                | `ClusterFirst`            |
 | `karpenter.dnsConfig`         | Configure DNS Config for the pod.                                    | `{}`                      |
 
 ### karpenter.affinity Affinity rules for scheduling the pod.
@@ -49,29 +49,19 @@
 | `karpenter.controller.extraVolumeMounts`   | Additional volumeMounts for the controller pod.                    | `[]`                                                                      |
 | `karpenter.controller.sidecarContainer`    | Additional sidecar container configuration for the controller pod. | `[]`                                                                      |
 | `karpenter.controller.sidecarVolumeMounts` | Additional volume mounts for the sidecar container.                | `[]`                                                                      |
-| `karpenter.controller.metrics.port`        | The container port to use for metrics.                             | `8000`                                                                    |
+| `karpenter.controller.metrics.port`        | The container port to use for metrics.                             | `8080`                                                                    |
 | `karpenter.controller.healthProbe.port`    | The container port to use for the http health probe.               | `8081`                                                                    |
 
 ### karpenter.webhook Webhook configuration
 
-| Name                             | Description                                             | Value   |
-| -------------------------------- | ------------------------------------------------------- | ------- |
-| `karpenter.webhook.enabled`      | Whether to enable the webhooks and webhook permissions. | `false` |
-| `karpenter.webhook.port`         | The container port to use for the webhook.              | `8443`  |
-| `karpenter.webhook.metrics.port` | The container port to use for webhook metrics.          | `8001`  |
-| `karpenter.logLevel`             | Global log level, defaults to 'info'                    | `info`  |
-
-### karpenter.logConfig Log configuration (Deprecated: Logging configuration will be dropped by v1, use logLevel instead)
-
-| Name                                      | Description                                                        | Value        |
-| ----------------------------------------- | ------------------------------------------------------------------ | ------------ |
-| `karpenter.logConfig.enabled`             | Whether to enable provisioning and mounting the log ConfigMap.     | `false`      |
-| `karpenter.logConfig.outputPaths`         | Log output paths - defaults to stdout only.                        | `["stdout"]` |
-| `karpenter.logConfig.errorOutputPaths`    | Log error output paths - defaults to stderr only.                  | `["stderr"]` |
-| `karpenter.logConfig.logEncoding`         | Log encoding - defaults to json - must be one of 'json', 'console' | `json`       |
-| `karpenter.logConfig.logLevel.global`     | Global log level, defaults to 'info'.                              | `info`       |
-| `karpenter.logConfig.logLevel.controller` | Controller log level, defaults to 'info'.                          | `info`       |
-| `karpenter.logConfig.logLevel.webhook`    | Webhook log level, defaults to 'error'.                            | `error`      |
+| Name                             | Description                                             | Value        |
+| -------------------------------- | ------------------------------------------------------- | ------------ |
+| `karpenter.webhook.enabled`      | Whether to enable the webhooks and webhook permissions. | `false`      |
+| `karpenter.webhook.port`         | The container port to use for the webhook.              | `8443`       |
+| `karpenter.webhook.metrics.port` | The container port to use for webhook metrics.          | `8001`       |
+| `karpenter.logLevel`             | Global log level, defaults to 'info'                    | `info`       |
+| `karpenter.logOutputPaths`       | Log outputPaths defaults to stdout only                 | `["stdout"]` |
+| `karpenter.logErrorOutputPaths`  | Log errorOutputPaths defaults to stderr only            | `["stderr"]` |
 
 ### karpenter.settings Global settings to configure Karpenter
 
@@ -79,8 +69,6 @@
 | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
 | `karpenter.settings.batchMaxDuration`        | The maximum length of a batch window.                                                                                                                                                                                      | `10s`   |
 | `karpenter.settings.batchIdleDuration`       | The maximum amount of time with no new ending pods that if exceeded ends the current batching window.                                                                                                                      | `1s`    |
-| `karpenter.settings.assumeRoleARN`           | Role to assume for calling AWS services.                                                                                                                                                                                   | `""`    |
-| `karpenter.settings.assumeRoleDuration`      | Duration of assumed credentials in minutes. Default value is 15 minutes. Not used unless assumeRoleARN set.                                                                                                                | `15m`   |
 | `karpenter.settings.clusterCABundle`         | Cluster CA bundle for TLS configuration of provisioned nodes. If not set, this is taken from the controller's TLS configuration for the API server.                                                                        | `""`    |
 | `karpenter.settings.clusterName`             | Cluster name.                                                                                                                                                                                                              | `""`    |
 | `karpenter.settings.clusterEndpoint`         | Cluster endpoint. If not set, will be discovered during startup (EKS only).                                                                                                                                                | `""`    |
