@@ -237,7 +237,12 @@ cansoAgent:
       pullPolicy: Always
       ## @param cansoAgent.proxyDeployment.image.tag Tag for the image
       ##
+      
+      # Do not rely on the chart's `appVersion` since the proxy and the core agent
+      # are on different positions in the semver progression.
       tag: "sha256:bad8eb8fe5561d17773eeaef041ac7f0ec478d7b89115a3d76109804c24793bc"
+      
+
     ## @section resources configuration
     resources:
       ## @section resources limits configuration
