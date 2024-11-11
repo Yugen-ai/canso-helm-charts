@@ -152,10 +152,10 @@ karpenter:
       repository: public.ecr.aws/karpenter/controller
       ## @param karpenter.controller.image.tag Tag of the controller image.
       ##
-      tag: v0.33.1
+      tag: 1.0.7
       ## @param karpenter.controller.image.digest SHA256 digest of the controller image.
       ##
-      digest: sha256:7f484951baf70d1574d6408be3947a3ca5f54463c2d1f29993b492e7e916ef11
+      digest: sha256:1c64c64ec89b7d33c93558d24f3c7a26b6176869ac11182b870fe9edb5c033ce
 
     ## @param karpenter.controller.env Additional environment variables for the controller pod.
     ##
@@ -285,6 +285,6 @@ karpenter:
 
     ## @section karpenter.settings.featureGates Feature gate configuration values. Feature gates follow the same graduation process and requirements as in Kubernetes.
     featureGates:
-      ## @param karpenter.settings.featureGates.drift Enable/disable the drift disruption method to watch for drift between deployed nodes and the desired state set in nodepools and nodeclasses. Drift is in BETA and enabled by default.
-      drift: true
+      ## @param karpenter.settings.featureGates.spotToSpotConsolidation Setting this to true will enable spot replacement consolidation for both single and multi-node consolidation.
+      spotToSpotConsolidation: false
     
