@@ -41,8 +41,8 @@
 | Name                                       | Description                                                        | Value                                                                     |
 | ------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------------- |
 | `karpenter.controller.image.repository`    | Repository path to the controller image.                           | `public.ecr.aws/karpenter/controller`                                     |
-| `karpenter.controller.image.tag`           | Tag of the controller image.                                       | `v0.33.1`                                                                 |
-| `karpenter.controller.image.digest`        | SHA256 digest of the controller image.                             | `sha256:7f484951baf70d1574d6408be3947a3ca5f54463c2d1f29993b492e7e916ef11` |
+| `karpenter.controller.image.tag`           | Tag of the controller image.                                       | `1.0.7`                                                                   |
+| `karpenter.controller.image.digest`        | SHA256 digest of the controller image.                             | `sha256:1c64c64ec89b7d33c93558d24f3c7a26b6176869ac11182b870fe9edb5c033ce` |
 | `karpenter.controller.env`                 | Additional environment variables for the controller pod.           | `[]`                                                                      |
 | `karpenter.controller.envFrom`             | Additional environment variables from config map or secret.        | `[]`                                                                      |
 | `karpenter.controller.resources`           | Resources for the controller pod.                                  | `{}`                                                                      |
@@ -91,6 +91,6 @@
 
 ### karpenter.settings.featureGates Feature gate configuration values. Feature gates follow the same graduation process and requirements as in Kubernetes.
 
-| Name                                    | Description                                                                                                                                                                           | Value  |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
-| `karpenter.settings.featureGates.drift` | Enable/disable the drift disruption method to watch for drift between deployed nodes and the desired state set in nodepools and nodeclasses. Drift is in BETA and enabled by default. | `true` |
+| Name                                                      | Description                                                                                                   | Value   |
+| --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------- |
+| `karpenter.settings.featureGates.spotToSpotConsolidation` | Setting this to true will enable spot replacement consolidation for both single and multi-node consolidation. | `false` |
