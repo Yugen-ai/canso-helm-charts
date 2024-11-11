@@ -89,7 +89,7 @@ karpenter:
   hostNetwork: false
   ## @param karpenter.dnsPolicy Configure the DNS Policy for the pod.
   ##
-  dnsPolicy: Default
+  dnsPolicy: ClusterFirst
 
   ## @param karpenter.dnsConfig Configure DNS Config for the pod.
   ##
@@ -126,7 +126,7 @@ karpenter:
   topologySpreadConstraints:
     - maxSkew: 1
       topologyKey: topology.kubernetes.io/zone
-      whenUnsatisfiable: ScheduleAnyway
+      whenUnsatisfiable: DoNotSchedule
 
   ## @skip karpenter.tolerations Tolerations to allow the pod to be scheduled to nodes with taints.
   ##
@@ -152,10 +152,10 @@ karpenter:
       repository: public.ecr.aws/karpenter/controller
       ## @param karpenter.controller.image.tag Tag of the controller image.
       ##
-      tag: v0.33.1
+      tag: 1.0.7
       ## @param karpenter.controller.image.digest SHA256 digest of the controller image.
       ##
-      digest: sha256:7f484951baf70d1574d6408be3947a3ca5f54463c2d1f29993b492e7e916ef11
+      digest: sha256:1c64c64ec89b7d33c93558d24f3c7a26b6176869ac11182b870fe9edb5c033ce
 
     ## @param karpenter.controller.env Additional environment variables for the controller pod.
     ##
@@ -184,7 +184,7 @@ karpenter:
     metrics:
       ## @param karpenter.controller.metrics.port The container port to use for metrics.
       ##
-      port: 8000
+      port: 8080
 
     ## @subsection karpenter.controller.healthProbe Health probe configuration for the controller pod.
     healthProbe:
@@ -215,34 +215,14 @@ karpenter:
   ################ Log Config
   ####################################################
 
-  ## @section karpenter.logConfig Log configuration (Deprecated: Logging configuration will be dropped by v1, use logLevel instead)
+  ## @param karpenter.logOutputPaths Log outputPaths defaults to stdout only
   ##
-  logConfig:
-    ## @param karpenter.logConfig.enabled Whether to enable provisioning and mounting the log ConfigMap.
-    ##
-    enabled: false
-    ## @param karpenter.logConfig.outputPaths Log output paths - defaults to stdout only.
-    ##
-    outputPaths:
-      - stdout
-    ## @param karpenter.logConfig.errorOutputPaths Log error output paths - defaults to stderr only.
-    ##
-    errorOutputPaths:
-      - stderr
-    ## @param karpenter.logConfig.logEncoding Log encoding - defaults to json - must be one of 'json', 'console'
-    ##
-    logEncoding: json
-    ## @subsection karpenter.logConfig.logLevel Component-based log configuration
-    logLevel:
-      ## @param karpenter.logConfig.logLevel.global Global log level, defaults to 'info'.
-      ##
-      global: info
-      ## @param karpenter.logConfig.logLevel.controller Controller log level, defaults to 'info'.
-      ##
-      controller: info
-      ## @param karpenter.logConfig.logLevel.webhook Webhook log level, defaults to 'error'.
-      ##
-      webhook: error
+  logOutputPaths:
+    - stdout
+  ## @param karpenter.logErrorOutputPaths Log errorOutputPaths defaults to stderr only
+  ##
+  logErrorOutputPaths:
+    - stderr
 
   ## @section karpenter.settings Global settings to configure Karpenter
   settings:
@@ -253,14 +233,6 @@ karpenter:
     ## @param karpenter.settings.batchIdleDuration The maximum amount of time with no new ending pods that if exceeded ends the current batching window.
     ##
     batchIdleDuration: 1s
-
-    ## @param karpenter.settings.assumeRoleARN Role to assume for calling AWS services.
-    ##
-    assumeRoleARN: ""
-
-    ## @param karpenter.settings.assumeRoleDuration Duration of assumed credentials in minutes. Default value is 15 minutes. Not used unless assumeRoleARN set.
-    ##
-    assumeRoleDuration: 15m
 
     ## @param karpenter.settings.clusterCABundle Cluster CA bundle for TLS configuration of provisioned nodes. If not set, this is taken from the controller's TLS configuration for the API server.
     clusterCABundle: ""
@@ -285,6 +257,6 @@ karpenter:
 
     ## @section karpenter.settings.featureGates Feature gate configuration values. Feature gates follow the same graduation process and requirements as in Kubernetes.
     featureGates:
-      ## @param karpenter.settings.featureGates.drift Enable/disable the drift disruption method to watch for drift between deployed nodes and the desired state set in nodepools and nodeclasses. Drift is in BETA and enabled by default.
-      drift: true
+      ## @param karpenter.settings.featureGates.spotToSpotConsolidation Setting this to true will enable spot replacement consolidation for both single and multi-node consolidation.
+      spotToSpotConsolidation: false
     
