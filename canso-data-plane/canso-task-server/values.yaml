@@ -1,0 +1,43 @@
+nameOverride: ""
+fullnameOverride: ""
+
+deployment:
+  name: task-server
+  replicas: 2
+  image: shaktimaanbot/task-server:v0.0.1
+  imageSha: "" # Optional SHA for image
+  imagePullPolicy: IfNotPresent
+  imagePullSecrets:
+    - name: regcred
+  concurrencyPerReplica: 4
+
+broker:
+  url: "redis://redis-master:6379/0"
+
+service:
+  type: ClusterIP
+  port: 8000
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  hosts:
+    - host: task-server.local
+      paths:
+        - path: /
+          pathType: Prefix
+
+serviceAccount:
+  create: true
+  name: task-server
+  annotations: {}
+
+resources:
+  limits:
+    cpu: 1000m
+    memory: 1024Mi
+  requests:
+    cpu: 500m
+    memory: 512Mi
