@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "task-server.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.deployment.replicas }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       {{- include "task-server.selectorLabels" . | nindent 6 }}
@@ -16,7 +16,7 @@ spec:
     spec:
       serviceAccountName: {{ include "task-server.serviceAccountName" . }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ .Values.name }}
           image: "{{ .Values.deployment.image }}{{ if .Values.deployment.imageSha }}@sha256:{{ .Values.deployment.imageSha }}{{ end }}"
           imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
           env:
@@ -26,11 +26,11 @@ spec:
               value:  {{ .Values.namespace }}
           command: ["/bin/sh", "-c"]
           args: 
-            - cd src && celery -A tasks worker --loglevel=info --concurrency {{ .Values.deployment.concurrencyPerReplica }}
+            - cd src && celery -A tasks worker --loglevel=info --concurrency {{ .Values.concurrencyPerReplica }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-      {{- with .Values.deployment.imagePullSecrets }}
+      {{- if .Values.external_secret.enabled }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+        - name: {{ .Values.external_secret.target_secret_name }}
       {{- end }}
 

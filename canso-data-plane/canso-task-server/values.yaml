@@ -1,35 +1,18 @@
 nameOverride: ""
 fullnameOverride: ""
 
+name: task-server
 namespace: default
+concurrencyPerReplica: 1
+replicas: 1
+
 
 deployment:
-  name: task-server
-  replicas: 2
-  image: shaktimaanbot/task-server:v0.0.1 # TODO: updated once the first image is release int the task server repo
-  imageSha: "" # Optional SHA for image
+  image: shaktimaanbot/canso-task-server:v0.0.1 
+  imageSha: ""
   imagePullPolicy: IfNotPresent
-  imagePullSecrets:
-    - name: regcred
-  concurrencyPerReplica: 4
-  
 
 broker: "redis://redis-master:6379/0"
-
-service:
-  type: ClusterIP
-  port: 8000
-
-ingress:
-  enabled: true
-  className: nginx
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-  hosts:
-    - host: task-server.local
-      paths:
-        - path: /
-          pathType: Prefix
 
 serviceAccount:
   create: true
@@ -43,3 +26,16 @@ resources:
   requests:
     cpu: 500m
     memory: 512Mi
+
+external_secret:
+  enabled: true
+  name: docker-secret-cred-task-server
+  target_secret_name: docker-secret-cred-task-server
+  target_secret_type: kubernetes.io/dockerconfigjson
+  target_secret_name_key: .dockerconfigjson
+  aws_secret_name: canso/dockerhub
+  aws_secret_key: dockerhub
+
+secretStoreRef:
+    name: "secretstore-by-role"
+    kind: ClusterSecretStore
