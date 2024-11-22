@@ -17,7 +17,7 @@ spec:
       serviceAccountName: {{ include "task-server.serviceAccountName" . }}
       containers:
         - name: {{ .Values.name }}
-          image: "{{ .Values.deployment.image }}{{ if .Values.deployment.imageSha }}@sha256:{{ .Values.deployment.imageSha }}{{ end }}"
+          image: "{{ .Values.deployment.image.repository }}{{ if .Values.deployment.image.imageSha }}@sha256:{{ .Values.deployment.image.imageSha }}{{ end }}"
           imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
           env:
             - name: BROKER
