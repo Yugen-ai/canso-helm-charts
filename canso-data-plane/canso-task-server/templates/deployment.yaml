@@ -26,7 +26,7 @@ spec:
               value:  {{ .Values.namespace }}
           command: ["/bin/sh", "-c"]
           args: 
-            - cd src && celery -A tasks worker --loglevel=info --concurrency {{ .Values.concurrencyPerReplica }}
+            - celery -A src.tasks worker --loglevel=info --concurrency {{ .Values.concurrencyPerReplica }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- if .Values.external_secret.enabled }}
