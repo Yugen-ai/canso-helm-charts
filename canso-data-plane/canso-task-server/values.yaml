@@ -43,7 +43,7 @@ deployment:
     imageSha: ""
     ## @param deployment.image.pullPolicy Image pull policy for the deployment
     ##
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
 
 ## @param broker Connection URL for the message broker
 ##
