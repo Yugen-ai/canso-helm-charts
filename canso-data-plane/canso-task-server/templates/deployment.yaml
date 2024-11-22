@@ -21,7 +21,9 @@ spec:
           imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
           env:
             - name: BROKER
-              value: {{ .Values.broker.url | quote }}
+              value: {{ .Values.broker | quote }}
+            - name: NAMESPACE
+              value:  {{ .Values.namespace }}
           command: ["/bin/sh", "-c"]
           args: 
             - cd src && celery -A tasks worker --loglevel=info --concurrency {{ .Values.deployment.concurrencyPerReplica }}

@@ -1,18 +1,20 @@
 nameOverride: ""
 fullnameOverride: ""
 
+namespace: default
+
 deployment:
   name: task-server
   replicas: 2
-  image: shaktimaanbot/task-server:v0.0.1
+  image: shaktimaanbot/task-server:v0.0.1 # TODO: updated once the first image is release int the task server repo
   imageSha: "" # Optional SHA for image
   imagePullPolicy: IfNotPresent
   imagePullSecrets:
     - name: regcred
   concurrencyPerReplica: 4
+  
 
-broker:
-  url: "redis://redis-master:6379/0"
+broker: "redis://redis-master:6379/0"
 
 service:
   type: ClusterIP
