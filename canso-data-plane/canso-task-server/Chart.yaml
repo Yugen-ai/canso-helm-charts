@@ -1,5 +1,5 @@
 apiVersion: v2
-name: task-server
+name: canso-task-server
 description: A Helm chart for Task Server deployment
 type: application
 version: 0.1.0
