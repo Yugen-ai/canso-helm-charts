@@ -246,6 +246,17 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-online-feature-service-0.0.4/canso-online-feature-service-0.0.4.tgz
     version: 0.0.4
+  canso-task-server:
+  - apiVersion: v2
+    appVersion: v0.0.1
+    created: "2024-11-22T14:30:31.236285694Z"
+    description: A Helm chart for Task Server deployment
+    digest: 1a9177be6f1820ad528524d0a87604f073e05cd1305e57c51713f3eb70d21aa5
+    name: canso-task-server
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-task-server-0.1.0/canso-task-server-0.1.0.tgz
+    version: 0.1.0
   canso-workflow-orchestrator:
   - apiVersion: v2
     appVersion: v0.0.4-python-3.10-slim
@@ -257,4 +268,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2024-11-11T10:51:13.205652011Z"
+generated: "2024-11-22T14:30:31.236329596Z"
