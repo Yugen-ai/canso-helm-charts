@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "task-server.fullname" . }}
+  labels:
+    {{- include "task-server.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      {{- include "task-server.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "task-server.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "task-server.serviceAccountName" . }}
+      containers:
+        - name: {{ .Values.name }}
+          image: "{{ .Values.deployment.image }}{{ if .Values.deployment.imageSha }}@sha256:{{ .Values.deployment.imageSha }}{{ end }}"
+          imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
+          env:
+            - name: BROKER
+              value: {{ .Values.broker | quote }}
+            - name: NAMESPACE
+              value:  {{ .Values.namespace }}
+          command: ["/bin/sh", "-c"]
+          args: 
+            - cd src && celery -A tasks worker --loglevel=info --concurrency {{ .Values.concurrencyPerReplica }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- if .Values.external_secret.enabled }}
+      imagePullSecrets:
+        - name: {{ .Values.external_secret.target_secret_name }}
+      {{- end }}
+
