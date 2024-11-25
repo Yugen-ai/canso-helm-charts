@@ -22,7 +22,7 @@ broker_url: "broker_url"
 checkpoint_db_host: "checkpoint_db_host"
 
 ## @param checkpoint_db_port checkpoint db port
-checkpoint_db_port: "checkpoint_db_port"
+checkpoint_db_port: 5432
 
 ## @param checkpoint_db_password checkpoint db password
 checkpoint_db_password: "checkpoint_db_password"
