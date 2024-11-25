@@ -64,6 +64,16 @@ entries:
   canso-ai-agent:
   - apiVersion: v2
     appVersion: 0.0.1
+    created: "2024-11-25T14:08:14.043837547Z"
+    description: A Helm chart for deploying AI agent services
+    digest: 883d1cc6c1d7f5b380c9019840f7ea37f649f358f1f02640bca6f21fcbf94cba
+    name: canso-ai-agent
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-ai-agent-0.1.2/canso-ai-agent-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.0.1
     created: "2024-11-25T11:23:12.589206788Z"
     description: A Helm chart for deploying AI agent services
     digest: 8160fa52da8ee08535dc4528116187c7d7a7543f4eab6373e183ddb8c31826a3
@@ -298,4 +308,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2024-11-25T11:23:12.754674447Z"
+generated: "2024-11-25T14:08:14.043923077Z"
