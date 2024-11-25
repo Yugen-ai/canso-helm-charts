@@ -6,7 +6,7 @@ replicas: 1
 ## @param image full image name including tag
 image: "image"
 
-## @param image pull secret
+## @param image_pull_secret image pull secret
 image_pull_secret : "image_pull_secret"
 
 ## @param agent_name name of the ai agent
