@@ -48,4 +48,5 @@ Selector labels
 {{- define "ai-agent.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "ai-agent.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+canso.ai/agent-name : {{ .Values.agent_name }}
 {{- end }}

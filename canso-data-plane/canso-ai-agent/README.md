@@ -4,22 +4,12 @@ This Helm chart deploys an AI agent service to Kubernetes. It is currently in an
 
 ## Parameters
 
-### Image parameters
-
-| Name               | Description                                                                              | Value          |
-| ------------------ | ---------------------------------------------------------------------------------------- | -------------- |
-| `image.repository` | Image repository                                                                         | `repo/image`   |
-| `image.pullPolicy` | Image pull policy                                                                        | `IfNotPresent` |
-| `image.tag`        | Image tag (immutable tags are recommended)                                               | `""`           |
-| `nameOverride`     | String to partially override ai-agent.fullname template (will maintain the release name) | `""`           |
-| `fullnameOverride` | String to fully override ai-agent.fullname template                                      | `""`           |
-
 ### Service parameters
 
 | Name           | Description             | Value      |
 | -------------- | ----------------------- | ---------- |
 | `service.type` | Kubernetes Service type | `NodePort` |
-| `service.port` | Service port            | `80`       |
+| `service.port` | Service port            | `8080`     |
 
 ### Autoscaling parameters
 

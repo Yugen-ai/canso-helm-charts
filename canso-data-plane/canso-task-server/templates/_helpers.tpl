@@ -43,6 +43,7 @@ Selector labels
 {{- define "task-server.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "task-server.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
+canso.ai/task-server-name: {{ .Values.name }}
 {{- end }}
 
 {{/*
