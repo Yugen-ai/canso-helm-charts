@@ -1,7 +1,0 @@
-## Mandatory values for the Canso Ai Agent Helm. If not provided, helm will fail with a 
-## `Error: execution error at ...` message.
-## The goal of this file to be a central place to have a single source of truth for
-## all values mandatorily needed by the Helm.
-
-
-{{- $_ := required "image.repository is a required value" .Values.image.repository}}

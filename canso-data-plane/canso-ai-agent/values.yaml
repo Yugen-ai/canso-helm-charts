@@ -1,16 +1,31 @@
 # values.yaml
 
-## @param replicaCount Number of replicas to deploy
-replicaCount: 1
+## @param replicas Number of replicas to deploy
+replicas: 1
 
-## @section Image parameters
-image:
-  ## @param image.repository Image repository
-  repository: repo/image
-  ## @param image.pullPolicy Image pull policy
-  pullPolicy: IfNotPresent
-  ## @param image.tag Image tag (immutable tags are recommended)
-  tag: ""
+## @param image full image name including tag
+image: "image"
+
+## @param image pull secret
+image_pull_secret : "image_pull_secret"
+
+## @param agent_name name of the ai agent
+agent_name: "agent_name"
+
+## @param agent_url url of the ai agent
+agent_url: "agent_url"
+
+## @param broker_url url of the broker through which to communicate to task server
+broker_url: "broker_url"
+
+## @param checkpoint_db_host checkpoint db host
+checkpoint_db_host: "checkpoint_db_host"
+
+## @param checkpoint_db_port checkpoint db port
+checkpoint_db_port: "checkpoint_db_port"
+
+## @param checkpoint_db_password checkpoint db password
+checkpoint_db_password: "checkpoint_db_password"
 
 ## @param nameOverride String to partially override ai-agent.fullname template (will maintain the release name)
 nameOverride: ""
@@ -22,7 +37,7 @@ service:
   ## @param service.type Kubernetes Service type
   type: NodePort
   ## @param service.port Service port
-  port: 80
+  port: 8080
 
 ## @section Autoscaling parameters
 autoscaling:

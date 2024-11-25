@@ -2,5 +2,5 @@ apiVersion: v2
 name: canso-ai-agent
 description: A Helm chart for deploying AI agent services
 type: application
-version: 0.1.0-rc0
+version: 0.1.1
 appVersion: "0.0.1"

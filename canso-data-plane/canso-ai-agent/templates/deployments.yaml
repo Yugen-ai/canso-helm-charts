@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "ai-agent.fullname" . }}
+  name: {{ .Values.agent_name }}
   labels:
     {{- include "ai-agent.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: {{ .Values.replicas }}
   selector:
     matchLabels:
       {{- include "ai-agent.selectorLabels" . | nindent 6 }}
@@ -15,12 +15,25 @@ spec:
         {{- include "ai-agent.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+        - name: {{ .Values.agent_name }}
+          image: {{ .Values.image }}
+          env:
+            - name: AGENT_NAME
+              value: {{ .Values.agent_name}}
+            - name: AGENT_URL
+              value:  {{ .Values.agent_url }}
+            - name: BROKER_URL
+              value: {{ .Values.broker_url }}
+            - name: CHECKPOINT_DB_HOST
+              value: {{ .Values.checkpoint_db_host }}
+            - name: CHECKPOINT_DB_PORT
+              value: {{ .Values.checkpoint_db_port }}
+            - name: CHECKPOINT_DB_PASSWORD
+              value: {{ .Values.checkpoint_db_password }}
+
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 8080
               protocol: TCP
           {{- if .Values.resources }}
           resources:
@@ -48,3 +61,5 @@ spec:
             failureThreshold: {{ .Values.readinessProbe.failureThreshold }}
             successThreshold: {{ .Values.readinessProbe.successThreshold }}
           {{- end }}
+      imagePullSecrets:
+        - name: {{ .Values.image_pull_secret }}
