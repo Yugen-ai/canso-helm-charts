@@ -18,6 +18,16 @@ argocdAIAgentProject: canso-ai-agents # WARNING: CRITICAL VALUE - DO NOT CHANGE
 ## @param createAIAgentProject Create the ArgoCD AI Agent project.
 createAIAgentProject: true
 
+## @section ArgoCD Canso User Components Configs
+##
+
+## @param argocdCansoComponentsProject ArgoCD Canso Components project name.
+##
+argocdCansoComponentsProject: canso-user-components # WARNING: CRITICAL VALUE - DO NOT CHANGE
+
+## @param createComponentsProject Create the ArgoCD Canso Components project.
+createComponentsProject: true
+
 ####################################################
 ################# Default Configs
 ####################################################
