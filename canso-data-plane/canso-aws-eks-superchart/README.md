@@ -9,10 +9,12 @@
 
 ### ArgoCD AI Agent Configs
 
-| Name                   | Description                         | Value             |
-| ---------------------- | ----------------------------------- | ----------------- |
-| `argocdAIAgentProject` | ArgoCD AI Agent project name.       | `canso-ai-agents` |
-| `createAIAgentProject` | Create the ArgoCD AI Agent project. | `true`            |
+| Name                           | Description                                 | Value             |
+| ------------------------------ | ------------------------------------------- | ----------------- |
+| `argocdAIAgentProject`         | ArgoCD AI Agent project name.               | `canso-ai-agents` |
+| `createAIAgentProject`         | Create the ArgoCD AI Agent project.         | `true`            |
+| `argocdCansoComponentsProject` | ArgoCD Canso Components project name.       | `user-components` |
+| `createComponentsProject`      | Create the ArgoCD Canso Components project. | `true`            |
 
 ### Default Configs
 
