@@ -16,10 +16,10 @@
 
 ### ArgoCD Canso User Components Configs
 
-| Name                           | Description                                 | Value             |
-| ------------------------------ | ------------------------------------------- | ----------------- |
-| `argocdCansoComponentsProject` | ArgoCD Canso Components project name.       | `user-components` |
-| `createComponentsProject`      | Create the ArgoCD Canso Components project. | `true`            |
+| Name                           | Description                                 | Value                   |
+| ------------------------------ | ------------------------------------------- | ----------------------- |
+| `argocdCansoComponentsProject` | ArgoCD Canso Components project name.       | `canso-user-components` |
+| `createComponentsProject`      | Create the ArgoCD Canso Components project. | `true`                  |
 
 ### Default Configs
 
