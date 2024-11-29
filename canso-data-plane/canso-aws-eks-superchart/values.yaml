@@ -23,7 +23,7 @@ createAIAgentProject: true
 
 ## @param argocdCansoComponentsProject ArgoCD Canso Components project name.
 ##
-argocdCansoComponentsProject: user-components # WARNING: CRITICAL VALUE - DO NOT CHANGE
+argocdCansoComponentsProject: canso-user-components # WARNING: CRITICAL VALUE - DO NOT CHANGE
 
 ## @param createComponentsProject Create the ArgoCD Canso Components project.
 createComponentsProject: true
