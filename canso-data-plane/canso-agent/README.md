@@ -88,7 +88,7 @@
 | ---------------------------------------- | ------------------------- | ------------------------------------------------------------------------- |
 | `cansoAgent.deployment.image.repository` | repository for the image  | `shaktimaanbot/dev-agent-image`                                           |
 | `cansoAgent.deployment.image.pullPolicy` | Pull policy for the image | `Always`                                                                  |
-| `cansoAgent.deployment.image.tag`        | Tag for the image         | `sha256:21a5f89c583b9a73c152110b87840ed408f799e1193efd0c4d1548e8582ff5f9` |
+| `cansoAgent.deployment.image.tag`        | Tag for the image         | `sha256:25889f59ab1ce787550a424c886a73c4274af255a04c15cd1eb365d7e408aaf1` |
 
 ### resources configuration
 
@@ -120,7 +120,7 @@
 | --------------------------------------------- | ------------------------- | ------------------------------------------------------------------------- |
 | `cansoAgent.proxyDeployment.image.repository` | repository for the image  | `shaktimaanbot/dev-agent-image`                                           |
 | `cansoAgent.proxyDeployment.image.pullPolicy` | Pull policy for the image | `Always`                                                                  |
-| `cansoAgent.proxyDeployment.image.tag`        | Tag for the image         | `sha256:bad8eb8fe5561d17773eeaef041ac7f0ec478d7b89115a3d76109804c24793bc` |
+| `cansoAgent.proxyDeployment.image.tag`        | Tag for the image         | `sha256:62e2a49485b941bab5613fbde246517f2183321bdb4547e553bd3fd435bea4ea` |
 
 ### resources configuration
 
