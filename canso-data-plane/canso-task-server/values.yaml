@@ -37,10 +37,10 @@ deployment:
   image:
     ## @param deployment.image.repository Repository for the image
     ##
-    repository: shaktimaanbot/canso-task-server:v0.0.1
+    repository: shaktimaanbot/canso-task-server
     ## @param deployment.image.imageSha SHA256 hash of the image (optional)
     ##
-    imageSha: ""
+    imageSha: "3e8d6730248d02df206e74fcc53f03bd4ace6d521d805ddca821db83424f19a4"
     ## @param deployment.image.pullPolicy Image pull policy for the deployment
     ##
     pullPolicy: Always
