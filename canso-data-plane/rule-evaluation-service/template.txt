@@ -1,0 +1,111 @@
+---
+# Source: rule-evaluation-service/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: rule-evaluation-service
+  namespace: rule-evaluation
+spec:
+  type: NodePort
+  selector:
+    app: rule-evaluation-service
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  - name: https
+    port: 443
+    protocol: TCP
+    targetPort: 8080
+---
+# Source: rule-evaluation-service/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rule-evaluation-service
+  name: rule-evaluation-service
+  namespace: rule-evaluation
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rule-evaluation-service
+  template:
+    metadata:
+      annotations:
+        'consul.hashicorp.com/connect-inject': 'false'
+      labels:
+        app: rule-evaluation-service
+    spec:
+      containers:
+      - name: rule-evaluation-service
+        image: shaktimaanbot/rule-evaluation-service:v0.0.1-python-3.12-slim
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 400m
+            memory: 500Mi
+          requests:
+            cpu: 50m
+            memory: 100Mi
+      imagePullSecrets:
+        - name: docker-secret-cred
+---
+# Source: rule-evaluation-service/templates/ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rule-evaluation-service-ing
+  namespace: rule-evaluation
+  labels:
+    app: rule-evaluation-service
+  annotations:
+    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig":
+      { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
+    alb.ingress.kubernetes.io/certificate-arn: ""
+    alb.ingress.kubernetes.io/group.name: ""
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: "60"
+    alb.ingress.kubernetes.io/healthcheck-path: /fs/api/health
+    alb.ingress.kubernetes.io/healthcheck-protocol: HTTPS
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "30"
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80},{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/ssl-redirect: "443"
+    alb.ingress.kubernetes.io/tags: Environment=stage
+spec:
+  ingressClassName: alb
+  rules:
+    - host: 
+      http:
+        paths:
+          - backend:
+              service:
+                name: rule-evaluation-service
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+---
+# Source: rule-evaluation-service/templates/external-secret.yaml
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: rule-evaluation-service-es
+  namespace: rule-evaluation
+spec:
+  refreshInterval: 1m
+  secretStoreRef:
+    name: rule-evaluation-secret
+    kind: ClusterSecretStore
+  target:
+    name: docker-secret-cred 
+    template:
+      type: kubernetes.io/dockerconfigjson 
+  data:
+  - secretKey: .dockerconfigjson 
+    remoteRef:
+      key: canso/dockerhub 
+      property: dockerhub
