@@ -63,7 +63,7 @@
 | -------------------- | ------------------------------- | ------------------------- |
 | `service.name`       | The name of the service         | `rule-evaluation-service` |
 | `service.app`        | The app name for service labels | `rule-evaluation-service` |
-| `service.targetport` | The target port for the service | `8080`                    |
+| `service.targetport` | The target port for the service | `8000`                    |
 
 ### Ingress
 
