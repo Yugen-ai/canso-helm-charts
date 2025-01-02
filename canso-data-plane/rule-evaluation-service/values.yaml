@@ -107,7 +107,7 @@ service:
   ## @param service.app The app name for service labels
   app: *service_name
   ## @param service.targetport The target port for the service
-  targetport: 8080
+  targetport: 8000
 
 
 ##############################################################################################
