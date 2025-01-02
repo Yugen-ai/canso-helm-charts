@@ -134,7 +134,7 @@ ingress:
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80},{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/scheme: 'internet-facing'
     alb.ingress.kubernetes.io/healthcheck-interval-seconds: '60'
-    alb.ingress.kubernetes.io/healthcheck-path: '/fs/api/health'
+    alb.ingress.kubernetes.io/healthcheck-path: '/health'
     alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '30'
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/tags: Environment=stage
