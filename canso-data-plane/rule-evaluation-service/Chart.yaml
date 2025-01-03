@@ -1,5 +1,5 @@
 apiVersion: v2
-name: rule-evaluation-service
+name: canso-rule-evaluation-service
 description: A Helm chart for Risk/Fraud Rule Evaluation Service.
 
 # A chart can be either an 'application' or a 'library' chart.

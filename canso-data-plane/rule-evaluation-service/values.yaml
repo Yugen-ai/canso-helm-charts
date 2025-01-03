@@ -1,13 +1,13 @@
 ## @section spec
 spec:
   ## @param spec.service_name Name of the service to be deployed
-  service_name: &service_name "rule-evaluation-service"
+  service_name: &service_name "canso-rule-evaluation-service"
 
 ## @param nameOverride Override the name of the service
-nameOverride: "rule-evaluation-service"
+nameOverride: "canso-rule-evaluation-service"
 
 ## @param fullnameOverride Override the full name of the service
-fullnameOverride: "rule-evaluation-service"
+fullnameOverride: "canso-rule-evaluation-service"
 
 # Override the deployment namespace.
 ## @section Override the deployment namespace
@@ -119,24 +119,14 @@ ingress:
   ## @param ingress.enabled Enable the ingress
   enabled: true
   ## @param ingress.host The host for the ingress
-  host: ""
+  host: '*.com'
   ## @param ingress.path The path for path based routing
-  path: /
+  path: '/v1/risk'
   ## @param ingress.pathType The path type for the ingress
   pathType: Prefix
   ## @param ingress.ingressClassName The ingress class name 
-  ingressClassName: alb
+  ingressClassName: nginx
   ## @skip ingress.annotations The annotations for the ingress
   annotations:
-    alb.ingress.kubernetes.io/actions.ssl-redirect: '{"Type": "redirect", "RedirectConfig": { "Protocol": "HTTPS", "Port": "443", "StatusCode": "HTTP_301"}}'
-    alb.ingress.kubernetes.io/certificate-arn: '' 
-    alb.ingress.kubernetes.io/group.name: '' # Ingress Grouop
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80},{"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/scheme: 'internet-facing'
-    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '60'
-    alb.ingress.kubernetes.io/healthcheck-path: '/health'
-    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '30'
-    alb.ingress.kubernetes.io/ssl-redirect: '443'
-    alb.ingress.kubernetes.io/tags: Environment=stage
-    alb.ingress.kubernetes.io/healthcheck-protocol: HTTPS
+    nginx.org/mergeable-ingress-type: 'minion'
 

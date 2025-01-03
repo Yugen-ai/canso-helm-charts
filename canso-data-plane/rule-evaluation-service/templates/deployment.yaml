@@ -2,8 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{ include "rule-evaluation-service.name" . }}
-  name: {{ include "rule-evaluation-service.name" . }}
+    app: {{ include "canso-rule-evaluation-service.name" . }}
+  name: {{ include "canso-rule-evaluation-service.name" . }}
   namespace: {{ .Values.namespaceOverride }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
@@ -11,13 +11,13 @@ spec:
   {{- end }}
   selector:
     matchLabels:
-      app: {{ include "rule-evaluation-service.name" . }}
+      app: {{ include "canso-rule-evaluation-service.name" . }}
   template:
     metadata:
       annotations:
         'consul.hashicorp.com/connect-inject': 'false'
       labels:
-        app: {{ include "rule-evaluation-service.name" . }}
+        app: {{ include "canso-rule-evaluation-service.name" . }}
     spec:
       {{- if .Values.taint.enabled }}
       nodeSelector:
@@ -29,8 +29,8 @@ spec:
         value: {{ .Values.taint.tolerations.value }}
       {{- end }}
       containers:
-      - name: {{ include "rule-evaluation-service.name" . }}
-        image: {{ include "rule-evaluation-service.image" (dict "repository" .Values.deployment.image.repository "tag" (default .Chart.AppVersion .Values.deployment.image.tag)) }}
+      - name: {{ include "canso-rule-evaluation-service.name" . }}
+        image: {{ include "canso-rule-evaluation-service.image" (dict "repository" .Values.deployment.image.repository "tag" (default .Chart.AppVersion .Values.deployment.image.tag)) }}
         ports:
         - containerPort: {{ .Values.service.targetport }}
         resources:
