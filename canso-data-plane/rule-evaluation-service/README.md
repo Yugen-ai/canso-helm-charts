@@ -2,11 +2,11 @@
 
 ### spec
 
-| Name                | Description                           | Value                     |
-| ------------------- | ------------------------------------- | ------------------------- |
-| `spec.service_name` | Name of the service to be deployed    | `rule-evaluation-service` |
-| `nameOverride`      | Override the name of the service      | `rule-evaluation-service` |
-| `fullnameOverride`  | Override the full name of the service | `rule-evaluation-service` |
+| Name                | Description                           | Value                           |
+| ------------------- | ------------------------------------- | ------------------------------- |
+| `spec.service_name` | Name of the service to be deployed    | `canso-rule-evaluation-service` |
+| `nameOverride`      | Override the name of the service      | `canso-rule-evaluation-service` |
+| `fullnameOverride`  | Override the full name of the service | `canso-rule-evaluation-service` |
 
 ### Override the deployment namespace
 
@@ -19,7 +19,7 @@
 | Name                                     | Description                                                                                       | Value                            |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------- |
 | `external_secret.enabled`                | Enable the creation of the secret                                                                 | `true`                           |
-| `external_secret.name`                   | The name of the secret that will be created                                                       | `rule-evaluation-service`        |
+| `external_secret.name`                   | The name of the secret that will be created                                                       | `canso-rule-evaluation-service`  |
 | `external_secret.cluster_secret_role`    | The name of the cluster secret role creted in the cluster                                         | `rule-evaluation-secret`         |
 | `external_secret.target_secret_name`     | The name of the secret that will be created                                                       | `docker-secret-cred`             |
 | `external_secret.target_secret_type`     | The type of the secret that will be created                                                       | `kubernetes.io/dockerconfigjson` |
@@ -59,18 +59,18 @@
 
 ### Service
 
-| Name                 | Description                     | Value                     |
-| -------------------- | ------------------------------- | ------------------------- |
-| `service.name`       | The name of the service         | `rule-evaluation-service` |
-| `service.app`        | The app name for service labels | `rule-evaluation-service` |
-| `service.targetport` | The target port for the service | `8000`                    |
+| Name                 | Description                     | Value                           |
+| -------------------- | ------------------------------- | ------------------------------- |
+| `service.name`       | The name of the service         | `canso-rule-evaluation-service` |
+| `service.app`        | The app name for service labels | `canso-rule-evaluation-service` |
+| `service.targetport` | The target port for the service | `8000`                          |
 
 ### Ingress
 
-| Name                       | Description                     | Value    |
-| -------------------------- | ------------------------------- | -------- |
-| `ingress.enabled`          | Enable the ingress              | `true`   |
-| `ingress.host`             | The host for the ingress        | `""`     |
-| `ingress.path`             | The path for path based routing | `/`      |
-| `ingress.pathType`         | The path type for the ingress   | `Prefix` |
-| `ingress.ingressClassName` | The ingress class name          | `alb`    |
+| Name                       | Description                     | Value      |
+| -------------------------- | ------------------------------- | ---------- |
+| `ingress.enabled`          | Enable the ingress              | `true`     |
+| `ingress.host`             | The host for the ingress        | `*.com`    |
+| `ingress.path`             | The path for path based routing | `/v1/risk` |
+| `ingress.pathType`         | The path type for the ingress   | `Prefix`   |
+| `ingress.ingressClassName` | The ingress class name          | `nginx`    |
