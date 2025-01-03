@@ -1,0 +1,132 @@
+## @section spec
+spec:
+  ## @param spec.service_name Name of the service to be deployed
+  service_name: &service_name "canso-rule-evaluation-service"
+
+## @param nameOverride Override the name of the service
+nameOverride: "canso-rule-evaluation-service"
+
+## @param fullnameOverride Override the full name of the service
+fullnameOverride: "canso-rule-evaluation-service"
+
+# Override the deployment namespace.
+## @section Override the deployment namespace
+## @param namespaceOverride Override for the all helm components for deployment.
+namespaceOverride: "rule-evaluation"
+
+##############################################################################################
+####    External Secrets Config
+##############################################################################################
+
+## @section External Secrets Config
+external_secret:
+  ## @param external_secret.enabled Enable the creation of the secret
+  ##
+  enabled: true
+  ## @param external_secret.name The name of the secret that will be created
+  ##
+  name: *service_name
+  ## @param external_secret.cluster_secret_role The name of the cluster secret role creted in the cluster
+  ##
+  cluster_secret_role: rule-evaluation-secret
+  ## @param external_secret.target_secret_name The name of the secret that will be created
+  ##
+  target_secret_name: &image_pull_secret_name docker-secret-cred
+  ## @param external_secret.target_secret_type The type of the secret that will be created
+  ##
+  target_secret_type: kubernetes.io/dockerconfigjson
+  ## @param external_secret.target_secret_name_key The key within the secret in the external secrets store that holds the Docker configuration JSON.
+  ##
+  target_secret_name_key: .dockerconfigjson
+  ## @param external_secret.aws_secret_name The path to the secret in AWS Secrets Manager that contains the Docker credentials
+  ##
+  aws_secret_name: canso/dockerhub
+  ## @param external_secret.aws_secret_key The key within the secret in AWS Secrets Manager that contains the Docker credentials.
+  ##
+  aws_secret_key: dockerhub
+
+##############################################################################################
+####    Deployment 
+##############################################################################################
+
+## @section Deployment 
+deployment:
+
+  ## @subsection ImagePullSecrets
+  ImagePullSecrets:
+    ## @param deployment.ImagePullSecrets.enabled Enable the creation of the secret
+    ##
+    enabled: true
+    ## @param deployment.ImagePullSecrets.private_registry_secret The name of the secret created by external secrets
+    ##
+    private_registry_secret: *image_pull_secret_name
+
+  ## @param deployment.replicaCount Number of replicas to deploy
+  replicaCount: 1
+
+  ## @section deployment.image 
+  image:
+    ## @param deployment.image.repository The image repository
+    repository: shaktimaanbot/rule-evaluation-service
+    ## @param deployment.image.pullPolicy Image pull policy
+    pullPolicy: IfNotPresent
+    ## @param deployment.image.tag Overrides the image tag whose default is the chart appVersion.
+    tag: ""
+
+  ## @skip deployment.resources The resources requests and limits for the container.
+  resources:
+    limits:
+      cpu: "400m"
+      memory: "500Mi"
+    requests:
+      cpu: "50m"
+      memory: "100Mi"
+  ## @param deployment.enableEnv Enable the environment variables
+  enableEnv: false
+  ## @param deployment.enableEnvSecrets Enable the environment variables from secrets
+  enableEnvSecrets: false
+
+## @section autoscaling 
+autoscaling:
+  ## @param autoscaling.enabled enable autoscaling for the pods
+  enabled: false
+
+## @section taint 
+taint:
+  ## @param taint.enabled enabletaint for deployment pods
+  enabled: false
+
+##############################################################################################
+####      Service COnfig
+##############################################################################################
+
+## @section Service
+service:
+  ## @param service.name The name of the service
+  name: *service_name
+  ## @param service.app The app name for service labels
+  app: *service_name
+  ## @param service.targetport The target port for the service
+  targetport: 8000
+
+
+##############################################################################################
+###      Ingress Config
+##############################################################################################
+
+## @section Ingress
+ingress:
+  ## @param ingress.enabled Enable the ingress
+  enabled: true
+  ## @param ingress.host The host for the ingress
+  host: '*.com'
+  ## @param ingress.path The path for path based routing
+  path: '/v1/risk'
+  ## @param ingress.pathType The path type for the ingress
+  pathType: Prefix
+  ## @param ingress.ingressClassName The ingress class name 
+  ingressClassName: nginx
+  ## @skip ingress.annotations The annotations for the ingress
+  annotations:
+    nginx.org/mergeable-ingress-type: 'minion'
+
