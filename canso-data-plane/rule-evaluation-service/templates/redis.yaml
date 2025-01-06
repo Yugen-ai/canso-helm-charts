@@ -1,0 +1,60 @@
+{{- if .Values.redis.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "canso-rule-evaluation-service.name" . }}
+  labels:
+    app: {{ include "canso-rule-evaluation-service.name" . }}-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "canso-rule-evaluation-service.name" . }}-redis
+  template:
+    metadata:
+      labels:
+        app: {{ include "canso-rule-evaluation-service.name" . }}-redis
+    spec:
+      containers:
+        - name: redis
+          image: "{{ .Values.redis.image.repository }}:{{ .Values.redis.image.tag }}"
+          imagePullPolicy: {{ .Values.redis.image.pullPolicy }}
+          ports:
+            - name: redis
+              containerPort: 6379
+              protocol: TCP
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.workflowName }}-redis
+                  key: redis-password
+          resources:
+            {{- toYaml .Values.redis.resources | nindent 12 }}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ include "canso-rule-evaluation-service.name" . }}
+  labels:
+    app: {{ include "canso-rule-evaluation-service.name" . }}-redis
+type: Opaque
+data:
+  redis-password: {{ .Values.redis.auth.password | b64enc }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "canso-rule-evaluation-service.name" . }}
+  labels:
+    app: {{ include "canso-rule-evaluation-service.name" . }}-redis
+spec:
+  type: ClusterIP
+  ports:
+    - port: 6379
+      targetPort: redis
+      protocol: TCP
+      name: redis
+  selector:
+    app: {{ include "canso-rule-evaluation-service.name" . }}-redis
+{{- end }}
