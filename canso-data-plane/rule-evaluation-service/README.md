@@ -65,6 +65,27 @@
 | `service.app`        | The app name for service labels | `canso-rule-evaluation-service` |
 | `service.targetport` | The target port for the service | `8000`                          |
 
+### Redis
+
+| Name            | Description      | Value  |
+| --------------- | ---------------- | ------ |
+| `redis.enabled` | Enable the redis | `true` |
+
+### redis.image 
+
+| Name                     | Description                                                    | Value           |
+| ------------------------ | -------------------------------------------------------------- | --------------- |
+| `redis.image.repository` | The image repository                                           | `bitnami/redis` |
+| `redis.image.tag`        | Overrides the image tag whose default is the chart appVersion. | `7.2.4`         |
+| `redis.image.pullPolicy` | Image pull policy                                              | `IfNotPresent`  |
+
+### redis.auth 
+
+| Name                  | Description            | Value  |
+| --------------------- | ---------------------- | ------ |
+| `redis.auth.enabled`  | Enable the redis auth  | `true` |
+| `redis.auth.password` | password of redis auth | `""`   |
+
 ### Ingress
 
 | Name                       | Description                     | Value      |
