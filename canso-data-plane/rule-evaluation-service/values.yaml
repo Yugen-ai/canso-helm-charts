@@ -28,7 +28,7 @@ external_secret:
   name: *service_name
   ## @param external_secret.cluster_secret_role The name of the cluster secret role creted in the cluster
   ##
-  cluster_secret_role: rule-evaluation-secret
+  cluster_secret_role: secretstore-by-role
   ## @param external_secret.target_secret_name The name of the secret that will be created
   ##
   target_secret_name: &image_pull_secret_name docker-secret-cred
@@ -40,7 +40,7 @@ external_secret:
   target_secret_name_key: .dockerconfigjson
   ## @param external_secret.aws_secret_name The path to the secret in AWS Secrets Manager that contains the Docker credentials
   ##
-  aws_secret_name: canso/dockerhub
+  aws_secret_name: canso-dockerhub-credentials
   ## @param external_secret.aws_secret_key The key within the secret in AWS Secrets Manager that contains the Docker credentials.
   ##
   aws_secret_key: dockerhub
@@ -82,7 +82,11 @@ deployment:
       cpu: "50m"
       memory: "100Mi"
   ## @param deployment.enableEnv Enable the environment variables
-  enableEnv: false
+  enableEnv: true
+
+  ## @param deployment.env The environment variables
+  env:  {}
+  
   ## @param deployment.enableEnvSecrets Enable the environment variables from secrets
   enableEnvSecrets: false
 
@@ -122,14 +126,14 @@ redis:
     ## @param redis.image.repository The image repository
     repository: bitnami/redis
     ## @param redis.image.tag Overrides the image tag whose default is the chart appVersion.
-    tag: "7.2.4"
+    tag: "7.4.1"
     ## @param redis.image.pullPolicy Image pull policy
     pullPolicy: IfNotPresent
   
   ## @section redis.auth 
   auth:
     ## @param redis.auth.enabled Enable the redis auth
-    enabled: true
+    enabled: false
     ## @param redis.auth.password password of redis auth
     password: ""
   
