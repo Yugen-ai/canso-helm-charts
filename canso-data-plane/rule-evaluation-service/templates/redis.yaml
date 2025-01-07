@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "canso-rule-evaluation-service.name" . }}-redis
+  namespace: {{ .Values.namespaceOverride }}
   labels:
     app: {{ include "canso-rule-evaluation-service.name" . }}-redis
 spec:
@@ -28,7 +29,7 @@ spec:
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.workflowName }}-redis
+                  name: {{ include "canso-rule-evaluation-service.name" . }}-redis
                   key: redis-password
             {{- end }}
           resources:
@@ -39,7 +40,8 @@ spec:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: {{ include "canso-rule-evaluation-service.name" . }}
+  name: {{ include "canso-rule-evaluation-service.name" . }}-redis
+  namespace: {{ .Values.namespaceOverride }}
   labels:
     app: {{ include "canso-rule-evaluation-service.name" . }}-redis
 type: Opaque
@@ -52,6 +54,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ include "canso-rule-evaluation-service.name" . }}-redis
+  namespace: {{ .Values.namespaceOverride }}
   labels:
     app: {{ include "canso-rule-evaluation-service.name" . }}-redis
 spec:
