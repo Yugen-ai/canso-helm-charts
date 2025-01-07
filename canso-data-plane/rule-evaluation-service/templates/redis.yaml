@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "canso-rule-evaluation-service.name" . }}
+  name: {{ include "canso-rule-evaluation-service.name" . }}-redis
   labels:
     app: {{ include "canso-rule-evaluation-service.name" . }}-redis
 spec:
@@ -24,14 +24,18 @@ spec:
               containerPort: 6379
               protocol: TCP
           env:
+            {{- if .Values.redis.auth.enabled }}
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.workflowName }}-redis
                   key: redis-password
+            {{- end }}
           resources:
             {{- toYaml .Values.redis.resources | nindent 12 }}
 ---
+
+{{- if .Values.redis.auth.enabled }}
 apiVersion: v1
 kind: Secret
 metadata:
@@ -41,15 +45,17 @@ metadata:
 type: Opaque
 data:
   redis-password: {{ .Values.redis.auth.password | b64enc }}
+{{- end }}
+
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "canso-rule-evaluation-service.name" . }}
+  name: {{ include "canso-rule-evaluation-service.name" . }}-redis
   labels:
     app: {{ include "canso-rule-evaluation-service.name" . }}-redis
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
     - port: 6379
       targetPort: redis
