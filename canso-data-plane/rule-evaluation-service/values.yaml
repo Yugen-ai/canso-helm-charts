@@ -109,6 +109,38 @@ service:
   ## @param service.targetport The target port for the service
   targetport: 8000
 
+##############################################################################################
+####      Redis COnfig
+##############################################################################################
+
+## @section Redis
+redis:
+  ## @param redis.enabled Enable the redis
+  enabled: true
+  ## @section redis.image 
+  image:
+    ## @param redis.image.repository The image repository
+    repository: bitnami/redis
+    ## @param redis.image.tag Overrides the image tag whose default is the chart appVersion.
+    tag: "7.2.4"
+    ## @param redis.image.pullPolicy Image pull policy
+    pullPolicy: IfNotPresent
+  
+  ## @section redis.auth 
+  auth:
+    ## @param redis.auth.enabled Enable the redis auth
+    enabled: true
+    ## @param redis.auth.password password of redis auth
+    password: ""
+  
+  ## @skip redis.resources The resources requests and limits for the container.
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
 
 ##############################################################################################
 ###      Ingress Config
