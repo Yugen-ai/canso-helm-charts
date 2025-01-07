@@ -82,10 +82,10 @@
 
 ### redis.auth 
 
-| Name                  | Description            | Value   |
-| --------------------- | ---------------------- | ------- |
-| `redis.auth.enabled`  | Enable the redis auth  | `false` |
-| `redis.auth.password` | password of redis auth | `""`    |
+| Name                  | Description            | Value      |
+| --------------------- | ---------------------- | ---------- |
+| `redis.auth.enabled`  | Enable the redis auth  | `true`     |
+| `redis.auth.password` | password of redis auth | `WKdJ0Y2k` |
 
 ### Ingress
 
