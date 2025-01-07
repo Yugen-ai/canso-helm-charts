@@ -20,11 +20,11 @@
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------- | -------------------------------- |
 | `external_secret.enabled`                | Enable the creation of the secret                                                                 | `true`                           |
 | `external_secret.name`                   | The name of the secret that will be created                                                       | `canso-rule-evaluation-service`  |
-| `external_secret.cluster_secret_role`    | The name of the cluster secret role creted in the cluster                                         | `rule-evaluation-secret`         |
+| `external_secret.cluster_secret_role`    | The name of the cluster secret role creted in the cluster                                         | `secretstore-by-role`            |
 | `external_secret.target_secret_name`     | The name of the secret that will be created                                                       | `docker-secret-cred`             |
 | `external_secret.target_secret_type`     | The type of the secret that will be created                                                       | `kubernetes.io/dockerconfigjson` |
 | `external_secret.target_secret_name_key` | The key within the secret in the external secrets store that holds the Docker configuration JSON. | `.dockerconfigjson`              |
-| `external_secret.aws_secret_name`        | The path to the secret in AWS Secrets Manager that contains the Docker credentials                | `canso/dockerhub`                |
+| `external_secret.aws_secret_name`        | The path to the secret in AWS Secrets Manager that contains the Docker credentials                | `canso-dockerhub-credentials`    |
 | `external_secret.aws_secret_key`         | The key within the secret in AWS Secrets Manager that contains the Docker credentials.            | `dockerhub`                      |
 
 ### Deployment 
@@ -42,7 +42,8 @@
 | `deployment.image.repository` | The image repository                                           | `shaktimaanbot/rule-evaluation-service` |
 | `deployment.image.pullPolicy` | Image pull policy                                              | `IfNotPresent`                          |
 | `deployment.image.tag`        | Overrides the image tag whose default is the chart appVersion. | `""`                                    |
-| `deployment.enableEnv`        | Enable the environment variables                               | `false`                                 |
+| `deployment.enableEnv`        | Enable the environment variables                               | `true`                                  |
+| `deployment.env`              | The environment variables                                      | `{}`                                    |
 | `deployment.enableEnvSecrets` | Enable the environment variables from secrets                  | `false`                                 |
 
 ### autoscaling 
@@ -76,15 +77,15 @@
 | Name                     | Description                                                    | Value           |
 | ------------------------ | -------------------------------------------------------------- | --------------- |
 | `redis.image.repository` | The image repository                                           | `bitnami/redis` |
-| `redis.image.tag`        | Overrides the image tag whose default is the chart appVersion. | `7.2.4`         |
+| `redis.image.tag`        | Overrides the image tag whose default is the chart appVersion. | `7.4.1`         |
 | `redis.image.pullPolicy` | Image pull policy                                              | `IfNotPresent`  |
 
 ### redis.auth 
 
-| Name                  | Description            | Value  |
-| --------------------- | ---------------------- | ------ |
-| `redis.auth.enabled`  | Enable the redis auth  | `true` |
-| `redis.auth.password` | password of redis auth | `""`   |
+| Name                  | Description            | Value   |
+| --------------------- | ---------------------- | ------- |
+| `redis.auth.enabled`  | Enable the redis auth  | `false` |
+| `redis.auth.password` | password of redis auth | `""`    |
 
 ### Ingress
 
