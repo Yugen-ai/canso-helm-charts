@@ -133,9 +133,9 @@ redis:
   ## @section redis.auth 
   auth:
     ## @param redis.auth.enabled Enable the redis auth
-    enabled: false
+    enabled: true
     ## @param redis.auth.password password of redis auth
-    password: ""
+    password: "WKdJ0Y2k"  # random password genrated by openssl
   
   ## @skip redis.resources The resources requests and limits for the container.
   resources:
