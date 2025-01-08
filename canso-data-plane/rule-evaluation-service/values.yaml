@@ -124,18 +124,18 @@ redis:
   ## @section redis.image 
   image:
     ## @param redis.image.repository The image repository
-    repository: bitnami/redis
+    repository: redis
     ## @param redis.image.tag Overrides the image tag whose default is the chart appVersion.
-    tag: "7.4.1"
+    tag: "7.4.2"
     ## @param redis.image.pullPolicy Image pull policy
     pullPolicy: IfNotPresent
   
   ## @section redis.auth 
   auth:
     ## @param redis.auth.enabled Enable the redis auth
-    enabled: true
+    enabled: false
     ## @param redis.auth.password password of redis auth
-    password: "WKdJ0Y2k"  # random password genrated by openssl
+    password: ""
   
   ## @skip redis.resources The resources requests and limits for the container.
   resources:
