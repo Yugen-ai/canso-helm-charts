@@ -74,18 +74,18 @@
 
 ### redis.image 
 
-| Name                     | Description                                                    | Value           |
-| ------------------------ | -------------------------------------------------------------- | --------------- |
-| `redis.image.repository` | The image repository                                           | `bitnami/redis` |
-| `redis.image.tag`        | Overrides the image tag whose default is the chart appVersion. | `7.4.1`         |
-| `redis.image.pullPolicy` | Image pull policy                                              | `IfNotPresent`  |
+| Name                     | Description                                                    | Value          |
+| ------------------------ | -------------------------------------------------------------- | -------------- |
+| `redis.image.repository` | The image repository                                           | `redis`        |
+| `redis.image.tag`        | Overrides the image tag whose default is the chart appVersion. | `7.4.2`        |
+| `redis.image.pullPolicy` | Image pull policy                                              | `IfNotPresent` |
 
 ### redis.auth 
 
-| Name                  | Description            | Value      |
-| --------------------- | ---------------------- | ---------- |
-| `redis.auth.enabled`  | Enable the redis auth  | `true`     |
-| `redis.auth.password` | password of redis auth | `WKdJ0Y2k` |
+| Name                  | Description            | Value   |
+| --------------------- | ---------------------- | ------- |
+| `redis.auth.enabled`  | Enable the redis auth  | `false` |
+| `redis.auth.password` | password of redis auth | `""`    |
 
 ### Ingress
 
