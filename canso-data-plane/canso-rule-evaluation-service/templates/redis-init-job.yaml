@@ -1,0 +1,37 @@
+{{- if .Values.redis.initJob.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "canso-rule-evaluation-service.name" . }}-redis-init
+  namespace: {{ .Values.namespaceOverride }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: redis-init
+          image: python:3.12-slim
+          command: ["sh", "-c"]
+          args:
+            - |
+              pip install redis &&
+              python /scripts/redis-init.py
+          volumeMounts:
+            - name: redis-init-script
+              mountPath: /scripts
+      volumes:
+        - name: redis-init-script
+          configMap:
+            name: {{ include "canso-rule-evaluation-service.name" . }}-redis-init-script
+      env:
+        {{- if .Values.redis.auth.enabled }}
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "canso-rule-evaluation-service.name" . }}-redis
+              key: redis-password
+        {{- end }}
+{{- end }}

@@ -1,0 +1,14 @@
+{{- if .Values.redis.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "canso-rule-evaluation-service.name" . }}-redis-pvc
+  namespace: {{ .Values.namespaceOverride }}
+spec:
+  accessModes:
+    {{- toYaml .Values.redis.persistence.accessModes | nindent 4 }}
+  resources:
+    requests:
+      storage: {{ .Values.redis.persistence.size }}
+  storageClassName: {{ .Values.redis.persistence.storageClass }}
+{{- end }}
