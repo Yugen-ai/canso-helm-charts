@@ -182,7 +182,7 @@ cansoAgent:
       pullPolicy: Always
       ## @param cansoAgent.deployment.image.tag Tag for the image
       ##
-      tag: "sha256:25889f59ab1ce787550a424c886a73c4274af255a04c15cd1eb365d7e408aaf1"
+      tag: "sha256:155f88cb7259970bc4043c6d776d52ea6d645cd63be98f04e61a8c9621070ac8"
     ## @section resources configuration
     resources:
       ## @section resources limits configuration
@@ -239,7 +239,7 @@ cansoAgent:
       ##
       # Do not rely on the chart's `appVersion` since the proxy and the core agent
       # are on different positions in the semver progression.
-      tag: "sha256:62e2a49485b941bab5613fbde246517f2183321bdb4547e553bd3fd435bea4ea"
+      tag: "sha256:3f133f247a96de599edacba389c167610f6efbefef898321856ec53e9a1278de"
       
 
     ## @section resources configuration
