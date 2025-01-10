@@ -85,7 +85,7 @@ deployment:
   enableEnv: true
 
   ## @param deployment.env The environment variables
-  env:  {}
+  env:  []
   
   ## @param deployment.enableEnvSecrets Enable the environment variables from secrets
   enableEnvSecrets: false
@@ -121,6 +121,29 @@ service:
 redis:
   ## @param redis.enabled Enable the redis
   enabled: true
+
+  ## @section redis.initJob
+  initJob:
+    ## @param redis.initJob.enabled Enable the initialization job
+    enabled: true  
+    ## @param redis.initJob.workflowKey The workflow key
+    workflowKey: ""
+    ## @param redis.initJob.ruleEntries The rule entries
+    ruleEntries: {}
+
+  ## @section redis.persistence
+  persistence:
+    ## @param redis.persistence.enabled Enable persistence for redis instance
+    enabled: true 
+    ## @param redis.persistence.storageClass Specify the storage class or leave blank for default
+    storageClass: ""  
+    ## @param redis.persistence.size Size of the PersistentVolumeClaim
+    size: 1Gi  
+    ## @param redis.persistence.accessModes Define access modes
+    accessModes:  
+      - ReadWriteOnce
+
+
   ## @section redis.image 
   image:
     ## @param redis.image.repository The image repository
