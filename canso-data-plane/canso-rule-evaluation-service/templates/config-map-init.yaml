@@ -1,3 +1,4 @@
+{{- if .Values.redis.initJob.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -36,3 +37,4 @@ data:
 
     # Initialize rule entries
     client.mset(rule_entries)
+{{- end }}

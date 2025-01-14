@@ -8,6 +8,7 @@ metadata:
     app: {{ include "canso-rule-evaluation-service.name" . }}
   annotations:
     {{- toYaml .Values.ingress.annotations | nindent 4 }}
+    nginx.org/rewrites: serviceName={{ include "canso-rule-evaluation-service.name" . }} rewrite={{ .Values.ingress.path }}
 spec:
   ingressClassName: {{ .Values.ingress.ingressClassName }}
   rules:
@@ -19,6 +20,6 @@ spec:
                 name: {{ include "canso-rule-evaluation-service.name" . }}
                 port:
                   number: 80
-            path: {{ .Values.ingress.path }}
+            path: /{{ include "canso-rule-evaluation-service.name" . }}{{ .Values.ingress.path }}
             pathType: {{ .Values.ingress.pathType }}
 {{- end }}

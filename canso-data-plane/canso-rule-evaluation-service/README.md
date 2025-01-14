@@ -74,17 +74,17 @@
 
 ### redis.initJob
 
-| Name                        | Description                   | Value  |
-| --------------------------- | ----------------------------- | ------ |
-| `redis.initJob.enabled`     | Enable the initialization job | `true` |
-| `redis.initJob.workflowKey` | The workflow key              | `""`   |
-| `redis.initJob.ruleEntries` | The rule entries              | `{}`   |
+| Name                        | Description                   | Value   |
+| --------------------------- | ----------------------------- | ------- |
+| `redis.initJob.enabled`     | Enable the initialization job | `false` |
+| `redis.initJob.workflowKey` | The workflow key              | `""`    |
+| `redis.initJob.ruleEntries` | The rule entries              | `{}`    |
 
 ### redis.persistence
 
 | Name                             | Description                                          | Value               |
 | -------------------------------- | ---------------------------------------------------- | ------------------- |
-| `redis.persistence.enabled`      | Enable persistence for redis instance                | `true`              |
+| `redis.persistence.enabled`      | Enable persistence for redis instance                | `false`             |
 | `redis.persistence.storageClass` | Specify the storage class or leave blank for default | `""`                |
 | `redis.persistence.size`         | Size of the PersistentVolumeClaim                    | `1Gi`               |
 | `redis.persistence.accessModes`  | Define access modes                                  | `["ReadWriteOnce"]` |
