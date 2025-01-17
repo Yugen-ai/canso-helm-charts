@@ -125,7 +125,7 @@ redis:
   ## @section redis.initJob
   initJob:
     ## @param redis.initJob.enabled Enable the initialization job
-    enabled: false  
+    enabled: true  
     ## @param redis.initJob.workflowKey The workflow key
     workflowKey: ""
     ## @param redis.initJob.ruleEntries The rule entries
