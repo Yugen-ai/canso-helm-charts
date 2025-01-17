@@ -3,6 +3,11 @@ kind: Service
 metadata:
   name: {{ include "canso-rule-evaluation-service.name" . }}
   namespace: {{ .Values.namespaceOverride }}
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "{{ .Values.service.targetport }}"
+    prometheus.io/path: "/metrics"
+    prometheus.io/scheme: "http"
 spec:
   type: NodePort
   selector:
