@@ -25,16 +25,16 @@ spec:
           volumeMounts:
             - name: redis-init-script
               mountPath: /scripts
+          env:
+            {{- if .Values.redis.auth.enabled }}
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "canso-rule-evaluation-service.name" . }}-redis
+                  key: redis-password
+            {{- end }}
       volumes:
         - name: redis-init-script
           configMap:
             name: {{ include "canso-rule-evaluation-service.name" . }}-redis-init-script
-      env:
-        {{- if .Values.redis.auth.enabled }}
-        - name: REDIS_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ include "canso-rule-evaluation-service.name" . }}-redis
-              key: redis-password
-        {{- end }}
 {{- end }}
