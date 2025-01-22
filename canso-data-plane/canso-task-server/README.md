@@ -5,7 +5,7 @@
 | Name                          | Description                            | Value                                                              |
 | ----------------------------- | -------------------------------------- | ------------------------------------------------------------------ |
 | `deployment.image.repository` | Repository for the image               | `shaktimaanbot/canso-task-server`                                  |
-| `deployment.image.imageSha`   | SHA256 hash of the image (optional)    | `c72de5b583773cbcc7f9b46bf626a5ee86a5b1c170a6bd922d7795fb0c1c9ca7` |
+| `deployment.image.imageSha`   | SHA256 hash of the image (optional)    | `184f0a1453ee08ef3419b15cba13e618fa9fafea8d2cf7b38bf2237a0f54f9ee` |
 | `deployment.image.pullPolicy` | Image pull policy for the deployment   | `Always`                                                           |
 | `broker`                      | Connection URL for the message broker  | `redis://redis-master:6379/0`                                      |
 | `serviceAccount.create`       | Bool to enable serviceAccount creation | `true`                                                             |
