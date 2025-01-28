@@ -33,7 +33,6 @@
 | ----------------------------------------------------- | -------------------------------------------------- | -------------------- |
 | `deployment.ImagePullSecrets.enabled`                 | Enable the creation of the secret                  | `true`               |
 | `deployment.ImagePullSecrets.private_registry_secret` | The name of the secret created by external secrets | `docker-secret-cred` |
-| `deployment.replicaCount`                             | Number of replicas to deploy                       | `1`                  |
 
 ### deployment.image 
 
@@ -48,9 +47,13 @@
 
 ### autoscaling 
 
-| Name                  | Description                     | Value   |
-| --------------------- | ------------------------------- | ------- |
-| `autoscaling.enabled` | enable autoscaling for the pods | `false` |
+| Name                                            | Description                          | Value  |
+| ----------------------------------------------- | ------------------------------------ | ------ |
+| `autoscaling.enabled`                           | enable autoscaling for the pods      | `true` |
+| `autoscaling.minReplicas`                       | minimum number of replicas           | `1`    |
+| `autoscaling.maxReplicas`                       | maximum number of replicas           | `10`   |
+| `autoscaling.targetCPUUtilizationPercentage`    | target CPU utilization percentage    | `80`   |
+| `autoscaling.targetMemoryUtilizationPercentage` | target memory utilization percentage | `80`   |
 
 ### taint 
 
