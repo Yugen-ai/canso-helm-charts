@@ -77,11 +77,11 @@
 
 ### redis.initJob
 
-| Name                        | Description                   | Value  |
-| --------------------------- | ----------------------------- | ------ |
-| `redis.initJob.enabled`     | Enable the initialization job | `true` |
-| `redis.initJob.workflowKey` | The workflow key              | `""`   |
-| `redis.initJob.ruleEntries` | The rule entries              | `{}`   |
+| Name                        | Description                   | Value   |
+| --------------------------- | ----------------------------- | ------- |
+| `redis.initJob.enabled`     | Enable the initialization job | `false` |
+| `redis.initJob.workflowKey` | The workflow key              | `""`    |
+| `redis.initJob.ruleEntries` | The rule entries              | `{}`    |
 
 ### redis.persistence
 
