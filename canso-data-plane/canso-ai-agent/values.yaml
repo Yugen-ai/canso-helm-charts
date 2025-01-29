@@ -102,3 +102,14 @@ readinessProbe:
   failureThreshold: 3
   ## @param readinessProbe.successThreshold Success threshold for readinessProbe
   successThreshold: 1
+
+## @section Service Account parameters
+serviceAccount:
+  ## @param serviceAccount.annotations Additional custom annotations for the ServiceAccount
+  annotations: {}
+  ## @subsection AWS IAM Role configuration
+  aws:
+    ## @param serviceAccount.aws.enabled Enable AWS IAM role
+    enabled: false
+    ## @param serviceAccount.aws.roleArn ARN of the IAM role to associate with the ServiceAccount
+    roleArn: ""

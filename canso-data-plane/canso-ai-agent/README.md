@@ -46,3 +46,11 @@ This Helm chart deploys an AI agent service to Kubernetes. It is currently in an
 | `readinessProbe.timeoutSeconds`      | Timeout seconds for readinessProbe       | `5`     |
 | `readinessProbe.failureThreshold`    | Failure threshold for readinessProbe     | `3`     |
 | `readinessProbe.successThreshold`    | Success threshold for readinessProbe     | `1`     |
+
+### Service Account parameters
+
+| Name                         | Description                                              | Value   |
+| ---------------------------- | -------------------------------------------------------- | ------- |
+| `serviceAccount.annotations` | Additional custom annotations for the ServiceAccount     | `{}`    |
+| `serviceAccount.aws.enabled` | Enable AWS IAM role                                      | `false` |
+| `serviceAccount.aws.roleArn` | ARN of the IAM role to associate with the ServiceAccount | `""`    |
