@@ -349,6 +349,16 @@ entries:
   canso-rule-evaluation-service:
   - apiVersion: v2
     appVersion: v0.0.2-python-3.12-slim
+    created: "2025-01-29T09:56:37.850364275Z"
+    description: A Helm chart for Risk/Fraud Rule Evaluation Service.
+    digest: 892ab07fa4ba976e3fa1526cd2b31a4e249f8cf5d13aa8dc407bb64de13338e7
+    name: canso-rule-evaluation-service
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-rule-evaluation-service-0.0.12/canso-rule-evaluation-service-0.0.12.tgz
+    version: 0.0.12
+  - apiVersion: v2
+    appVersion: v0.0.2-python-3.12-slim
     created: "2025-01-28T14:06:09.959442103Z"
     description: A Helm chart for Risk/Fraud Rule Evaluation Service.
     digest: 5e258eeb6764bd18f51e0e96b04002eb0142da5d9e9f1fa5bb09be0dc8f57c7b
@@ -539,4 +549,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2025-01-29T09:07:25.303474732Z"
+generated: "2025-01-29T09:56:37.850509568Z"
