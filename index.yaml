@@ -3,6 +3,16 @@ entries:
   canso-agent:
   - apiVersion: v2
     appVersion: v0.0.7-python-3.13-slim
+    created: "2025-02-04T16:37:54.725022049Z"
+    description: A Helm chart for deploying the Canso AI Developer Agent
+    digest: c83680486bfbfd4e28dcf93d40c26c1836c8f51cc377235e982bb5db687dc0ea
+    name: canso-agent
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-agent-0.1.16/canso-agent-0.1.16.tgz
+    version: 0.1.16
+  - apiVersion: v2
+    appVersion: v0.0.7-python-3.13-slim
     created: "2025-01-22T10:56:37.006546283Z"
     description: A Helm chart for deploying the Canso AI Developer Agent
     digest: 06f712dcc6771ccce6ca583575902ef96efdb34b9c506656a5784b94615594e7
@@ -156,6 +166,16 @@ entries:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-airflow-jobs-0.1.2/canso-airflow-jobs-0.1.2.tgz
     version: 0.1.2
   canso-aws-eks-superchart:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2025-02-04T16:37:54.82627727Z"
+    description: A Helm chart to deploy all Canso K8s components in AWS EKS.
+    digest: 2e34174a6075dfffe29db84db0427e6b0e8c078daaabe2f98a9b0742cfe89a4d
+    name: canso-aws-eks-superchart
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-aws-eks-superchart-0.1.21/canso-aws-eks-superchart-0.1.21.tgz
+    version: 0.1.21
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2025-01-22T10:56:37.125543485Z"
@@ -470,6 +490,16 @@ entries:
   canso-task-server:
   - apiVersion: v2
     appVersion: v0.0.1
+    created: "2025-02-04T16:37:54.937768204Z"
+    description: A Helm chart for Task Server deployment
+    digest: 54e4228b7b254362c06678ff17fce8079b9c2c3b6b588ceb3a99cc1c27d98783
+    name: canso-task-server
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-task-server-0.1.7/canso-task-server-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v2
+    appVersion: v0.0.1
     created: "2025-01-22T12:17:05.716570135Z"
     description: A Helm chart for Task Server deployment
     digest: a77557f00cff4ffe0a68c67ca911579d75aad53baef65cb46302046b990aaa10
@@ -549,4 +579,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2025-01-29T09:56:37.850509568Z"
+generated: "2025-02-04T16:37:54.938020485Z"
