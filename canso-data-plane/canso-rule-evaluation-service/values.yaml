@@ -61,8 +61,6 @@ deployment:
     ##
     private_registry_secret: *image_pull_secret_name
 
-  ## @param deployment.replicaCount Number of replicas to deploy
-  replicaCount: 1
 
   ## @section deployment.image 
   image:
@@ -93,7 +91,15 @@ deployment:
 ## @section autoscaling 
 autoscaling:
   ## @param autoscaling.enabled enable autoscaling for the pods
-  enabled: false
+  enabled: true
+  ## @param autoscaling.minReplicas minimum number of replicas
+  minReplicas: 1
+  ## @param autoscaling.maxReplicas maximum number of replicas
+  maxReplicas: 10
+  ## @param autoscaling.targetCPUUtilizationPercentage target CPU utilization percentage
+  targetCPUUtilizationPercentage: 80
+  ## @param autoscaling.targetMemoryUtilizationPercentage target memory utilization percentage
+  targetMemoryUtilizationPercentage: 80
 
 ## @section taint 
 taint:
@@ -125,7 +131,7 @@ redis:
   ## @section redis.initJob
   initJob:
     ## @param redis.initJob.enabled Enable the initialization job
-    enabled: true  
+    enabled: false  
     ## @param redis.initJob.workflowKey The workflow key
     workflowKey: ""
     ## @param redis.initJob.ruleEntries The rule entries
