@@ -143,6 +143,12 @@
 | `cansoAgent.proxyDeployment.enableEnv`                            | Whether environment variables are enabled                                                     | `true`  |
 | `cansoAgent.proxyDeployment.enableEnvSecrets`                     | Whether environment secrets are enabled                                                       | `false` |
 
+### redis configuration
+
+| Name                     | Description | Value                                    |
+| ------------------------ | ----------- | ---------------------------------------- |
+| `cansoAgent.redis.image` | redis image | `shaktimaanbot/redis:7.4.2-debian-12-r1` |
+
 ### Autoscaling Configuration
 
 | Name                             | Description                                          | Value                     |
