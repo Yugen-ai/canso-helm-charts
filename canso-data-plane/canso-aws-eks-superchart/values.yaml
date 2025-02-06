@@ -58,13 +58,13 @@ queue_hostname: "rabbitmq-amqp.canso.ai"
 
 ## @skip queue_auth queue authentication username and password
 queue_auth:
-  password_encoded: ""
-  username: ""
+  password_encoded: "fgh"
+  username: "ghjj"
 
 ## @skip queues names of queue.
 queues:
-  incoming_queue: ""
-  outgoing_queue: ""
+  incoming_queue: "ghj"
+  outgoing_queue: "ghj"
 
 ####################################################
 ############### Tolerations & Affinity
@@ -120,6 +120,22 @@ canso:
       targetName: docker-secret-cred # name of kubernetes secret
       targetType: kubernetes.io/dockerconfigjson
       clusterSecretRole: secretstore-by-role # name of the ClusterSecret Role
+
+
+####################################################
+#################### Metrics Server
+####################################################
+
+## @section Metrics Server Configuration
+metricsServer:
+  ## @param metricsServer.enabled Flag to enable Metrics Server
+  ##
+  enabled: true
+  ## @param metricsServer.args Additional arguments for Metrics Server
+  ##
+  args:
+    - --kubelet-insecure-tls
+
 
 ####################################################
 ##################### AWS Configs
