@@ -121,6 +121,18 @@ canso:
       targetType: kubernetes.io/dockerconfigjson
       clusterSecretRole: secretstore-by-role # name of the ClusterSecret Role
 
+
+####################################################
+#################### Metrics Server
+####################################################
+
+## @section Metrics Server Configuration
+metricsServer:
+  ## @param metricsServer.enabled Flag to enable Metrics Server
+  ##
+  enabled: true
+
+
 ####################################################
 ##################### AWS Configs
 ####################################################
