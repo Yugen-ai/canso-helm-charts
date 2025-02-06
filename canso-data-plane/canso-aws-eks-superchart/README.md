@@ -51,6 +51,13 @@
 ### Canso Image Pull Secrets
 
 
+### Metrics Server Configuration
+
+| Name                    | Description                             | Value                        |
+| ----------------------- | --------------------------------------- | ---------------------------- |
+| `metricsServer.enabled` | Flag to enable Metrics Server           | `true`                       |
+| `metricsServer.args`    | Additional arguments for Metrics Server | `["--kubelet-insecure-tls"]` |
+
 ### AWS Configs
 
 | Name                                    | Description                                 | Value  |
