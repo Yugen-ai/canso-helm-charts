@@ -58,13 +58,13 @@ queue_hostname: "rabbitmq-amqp.canso.ai"
 
 ## @skip queue_auth queue authentication username and password
 queue_auth:
-  password_encoded: "fgh"
-  username: "ghjj"
+  password_encoded: ""
+  username: ""
 
 ## @skip queues names of queue.
 queues:
-  incoming_queue: "ghj"
-  outgoing_queue: "ghj"
+  incoming_queue: ""
+  outgoing_queue: ""
 
 ####################################################
 ############### Tolerations & Affinity
