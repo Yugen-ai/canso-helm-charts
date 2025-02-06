@@ -53,10 +53,9 @@
 
 ### Metrics Server Configuration
 
-| Name                    | Description                             | Value                        |
-| ----------------------- | --------------------------------------- | ---------------------------- |
-| `metricsServer.enabled` | Flag to enable Metrics Server           | `true`                       |
-| `metricsServer.args`    | Additional arguments for Metrics Server | `["--kubelet-insecure-tls"]` |
+| Name                    | Description                   | Value  |
+| ----------------------- | ----------------------------- | ------ |
+| `metricsServer.enabled` | Flag to enable Metrics Server | `true` |
 
 ### AWS Configs
 
