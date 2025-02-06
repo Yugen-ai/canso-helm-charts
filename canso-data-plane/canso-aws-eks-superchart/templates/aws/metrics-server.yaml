@@ -31,12 +31,6 @@ spec:
         repoURL: https://kubernetes-sigs.github.io/metrics-server/
         chart: metrics-server
         targetRevision: 3.11.0
-        helm:
-          values: |
-            args:
-            {{- range .Values.metricsServer.args }}
-              - {{ . }}
-            {{- end }}
       syncPolicy:
         automated:
           prune: true

@@ -131,10 +131,6 @@ metricsServer:
   ## @param metricsServer.enabled Flag to enable Metrics Server
   ##
   enabled: true
-  ## @param metricsServer.args Additional arguments for Metrics Server
-  ##
-  args:
-    - --kubelet-insecure-tls
 
 
 ####################################################
