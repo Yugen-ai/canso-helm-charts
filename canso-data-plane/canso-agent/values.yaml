@@ -289,7 +289,7 @@ cansoAgent:
   redis:
     ## @param cansoAgent.redis.image redis image
     ##
-    image: shaktimaanbot/redis:7.4.2-debian-12-r1
+    image: redis:7.2.5
   
   ## @section Autoscaling Configuration
   ##
