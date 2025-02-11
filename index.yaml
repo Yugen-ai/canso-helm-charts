@@ -3,6 +3,16 @@ entries:
   canso-agent:
   - apiVersion: v2
     appVersion: v0.0.7-python-3.13-slim
+    created: "2025-02-11T18:28:36.01070341Z"
+    description: A Helm chart for deploying the Canso AI Developer Agent
+    digest: c25a0fcefb6c1fad3189c0c11dcca3384c59a6bd48e17e9437fb3d094b15bf33
+    name: canso-agent
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-agent-0.1.18/canso-agent-0.1.18.tgz
+    version: 0.1.18
+  - apiVersion: v2
+    appVersion: v0.0.7-python-3.13-slim
     created: "2025-02-11T17:47:21.610639431Z"
     description: A Helm chart for deploying the Canso AI Developer Agent
     digest: 8daaa2bcc4ffb8e269e21716f69e110ca1ccb5aefed897eddd1605826f70a73b
@@ -176,6 +186,16 @@ entries:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-airflow-jobs-0.1.2/canso-airflow-jobs-0.1.2.tgz
     version: 0.1.2
   canso-aws-eks-superchart:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2025-02-11T18:28:36.103647433Z"
+    description: A Helm chart to deploy all Canso K8s components in AWS EKS.
+    digest: 26c5dba1ce4307c1cba8cad64ab25e21e28c5c4d565663a5777abd9827ac7e4d
+    name: canso-aws-eks-superchart
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-aws-eks-superchart-0.1.23/canso-aws-eks-superchart-0.1.23.tgz
+    version: 0.1.23
   - apiVersion: v2
     appVersion: 1.16.0
     created: "2025-02-06T12:36:00.52045875Z"
@@ -599,4 +619,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2025-02-11T17:47:21.759114172Z"
+generated: "2025-02-11T18:28:36.103876832Z"
