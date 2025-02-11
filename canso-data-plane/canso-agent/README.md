@@ -145,9 +145,9 @@
 
 ### redis configuration
 
-| Name                     | Description | Value                                    |
-| ------------------------ | ----------- | ---------------------------------------- |
-| `cansoAgent.redis.image` | redis image | `shaktimaanbot/redis:7.4.2-debian-12-r1` |
+| Name                     | Description | Value         |
+| ------------------------ | ----------- | ------------- |
+| `cansoAgent.redis.image` | redis image | `redis:7.2.5` |
 
 ### Autoscaling Configuration
 
