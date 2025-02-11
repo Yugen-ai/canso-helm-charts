@@ -30,7 +30,7 @@ spec:
     spec:
       containers:
       - name: {{ include "canso-agent-redis.fullname" . }}
-        image: redis:7.2.5
+        image: {{ .Values.cansoAgent.redis.image }}
         # https://hub.docker.com/layers/library/redis/7.2.5/images/sha256-f4c27470a48335cd0acca76bbda101aa03e160367bd7494f8ea846c4535f224c?context=explore
         ports:
         - containerPort: 6379
