@@ -19,18 +19,10 @@ spec:
         - name: {{ .Values.agent_name }}
           image: {{ .Values.image }}
           env:
-            - name: AGENT_NAME
-              value: {{ .Values.agent_name}}
-            - name: AGENT_URL
-              value:  {{ .Values.agent_url }}
-            - name: BROKER_URL
-              value: {{ .Values.broker_url }}
-            - name: CHECKPOINT_DB_HOST
-              value: {{ .Values.checkpoint_db_host }}
-            - name: CHECKPOINT_DB_PORT
-              value: '{{ .Values.checkpoint_db_port }}'
-            - name: CHECKPOINT_DB_PASSWORD
-              value: {{ .Values.checkpoint_db_password }}
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
 
           ports:
             - name: http
