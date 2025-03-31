@@ -33,7 +33,7 @@ autoscaling:
   ## @param autoscaling.customMetrics Additional custom metrics for scaling (optional)
   customMetrics: []
 
-## @skip deployment.resources The resources requests and limits for the container.
+## @skip resources The resources requests and limits for the container.
 resources:
   limits:
     cpu: "500m"
