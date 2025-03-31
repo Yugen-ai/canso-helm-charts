@@ -33,16 +33,14 @@ autoscaling:
   ## @param autoscaling.customMetrics Additional custom metrics for scaling (optional)
   customMetrics: []
 
-## @section Resource Management
+## @skip deployment.resources The resources requests and limits for the container.
 resources:
-  ## @param resources.limits The resources limits for the ai-agent container
-  limits: {}
-    # cpu: 100m
-    # memory: 128Mi
-  ## @param resources.requests The requested resources for the ai-agent container
-  requests: {}
-    # cpu: 100m
-    # memory: 128Mi
+  limits:
+    cpu: "500m"
+    memory: "600Mi"
+  requests:
+    cpu: "100m"
+    memory: "200Mi"
 
 ## @section Liveness and Readiness Probes
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
