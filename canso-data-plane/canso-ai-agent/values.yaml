@@ -36,11 +36,11 @@ autoscaling:
 ## @skip resources The resources requests and limits for the container.
 resources:
   limits:
-    cpu: "500m"
-    memory: "600Mi"
+    cpu: "2000m"
+    memory: "2400Mi"
   requests:
-    cpu: "100m"
-    memory: "200Mi"
+    cpu: "400m"
+    memory: "800Mi"
 
 ## @section Liveness and Readiness Probes
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/
