@@ -182,7 +182,7 @@ cansoAgent:
       pullPolicy: Always
       ## @param cansoAgent.deployment.image.tag Tag for the image
       ##
-      tag: "sha256:416a53749a1326c0b2a62732c78ea2f09482c462fd2e3d5cc4b01cc14d067c73"
+      tag: "v0.1.rc1-python-3.13-slim" # !!!CAUTION!!! - RELEASE CANDIDATE, DO NOT USE IN PRODUCTION!!!
     ## @section resources configuration
     resources:
       ## @section resources limits configuration
@@ -190,10 +190,10 @@ cansoAgent:
       limits:
         ## @param cansoAgent.deployment.resources.limits.cpu CPU limits for the Canso Agent container. Strongly recommend to not decrease.
         ##
-        cpu: 800m
+        cpu: 2400m
         ## @param cansoAgent.deployment.resources.limits.memory Memory limits for the Canso Agent container. Strongly recommend to not decrease.
         ##
-        memory: 512Mi
+        memory: 2000Mi
         ## @param cansoAgent.deployment.resources.limits.ephemeral-storage Ephemeral storage limits for the Canso Agent container. Strongly recommend to not decrease.
         ##
         ephemeral-storage: 512Mi
@@ -202,10 +202,10 @@ cansoAgent:
       requests:
         ## @param cansoAgent.deployment.resources.requests.cpu CPU requests for the Canso Agent container. Strongly recommend to not decrease.
         ##
-        cpu: 500m
+        cpu: 1600m
         ## @param cansoAgent.deployment.resources.requests.memory Memory requests for the Canso Agent container. Strongly recommend to not decrease.
         ##
-        memory: 256Mi
+        memory: 1024Mi
         ## @param cansoAgent.deployment.resources.requests.ephemeral-storage Ephemeral storage requests for the Canso Agent container. Strongly recommend to not decrease.
         ##
         ephemeral-storage: 256Mi
