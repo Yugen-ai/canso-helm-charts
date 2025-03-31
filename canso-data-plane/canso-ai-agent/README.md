@@ -13,15 +13,14 @@ This Helm chart deploys an AI agent service to Kubernetes. It is currently in an
 
 ### Autoscaling parameters
 
-| Name                                                        | Description                                | Value         |
-| ----------------------------------------------------------- | ------------------------------------------ | ------------- |
-| `autoscaling.enabled`                                       | Enable autoscaling for ai-agent deployment | `true`        |
-| `autoscaling.minReplicas`                                   | Minimum number of replicas to scale back   | `1`           |
-| `autoscaling.maxReplicas`                                   | Maximum number of replicas to scale out    | `5`           |
-| `autoscaling.metrics[0].type`                               | Type of metric to use for scaling          | `Resource`    |
-| `autoscaling.metrics[0].resource.name`                      | Name of the resource to monitor            | `memory`      |
-| `autoscaling.metrics[0].resource.target.type`               | Type of scaling target                     | `Utilization` |
-| `autoscaling.metrics[0].resource.target.averageUtilization` | Target average utilization percentage      | `80`          |
+| Name                                            | Description                                      | Value  |
+| ----------------------------------------------- | ------------------------------------------------ | ------ |
+| `autoscaling.enabled`                           | Enable autoscaling for ai-agent deployment       | `true` |
+| `autoscaling.minReplicas`                       | Minimum number of replicas to scale back         | `1`    |
+| `autoscaling.maxReplicas`                       | Maximum number of replicas to scale out          | `5`    |
+| `autoscaling.targetCPUUtilizationPercentage`    | Target CPU utilization percentage                | `80`   |
+| `autoscaling.targetMemoryUtilizationPercentage` | Target memory utilization percentage             | `80`   |
+| `autoscaling.customMetrics`                     | Additional custom metrics for scaling (optional) | `[]`   |
 
 ### Resource Management
 
