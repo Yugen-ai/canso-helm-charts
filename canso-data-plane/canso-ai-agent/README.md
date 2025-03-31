@@ -22,13 +22,6 @@ This Helm chart deploys an AI agent service to Kubernetes. It is currently in an
 | `autoscaling.targetMemoryUtilizationPercentage` | Target memory utilization percentage             | `80`   |
 | `autoscaling.customMetrics`                     | Additional custom metrics for scaling (optional) | `[]`   |
 
-### Resource Management
-
-| Name                 | Description                                        | Value |
-| -------------------- | -------------------------------------------------- | ----- |
-| `resources.limits`   | The resources limits for the ai-agent container    | `{}`  |
-| `resources.requests` | The requested resources for the ai-agent container | `{}`  |
-
 ### Liveness and Readiness Probes
 
 | Name                                 | Description                              | Value   |
