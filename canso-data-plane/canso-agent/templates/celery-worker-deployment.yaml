@@ -56,8 +56,8 @@ spec:
           {{- end }}
         {{- end }}
         
-        command: ["/bin/sh", "-c"]
-        args: ["cd src && celery -A celery_app worker --loglevel=info"]
+        command: ["python"]
+        args: ["/app/celery_worker.py"]
       {{- if .Values.cansoAgent.external_secret.enabled }}
       imagePullSecrets:
         - name: {{ .Values.cansoAgent.external_secret.target_secret_name }}

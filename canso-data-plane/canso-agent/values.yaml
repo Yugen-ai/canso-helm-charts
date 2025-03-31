@@ -23,10 +23,10 @@ config:
   ## @param config.queue_password rabbitmq password
   ##
   queue_password: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
-  ## @param config.outgoing_queue rabbitmq password
+  ## @param config.outgoing_queue Outgoing Queue
   ##
   outgoing_queue: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
-  ## @param config.incoming_queue rabbitmq password
+  ## @param config.incoming_queue Incoming Queue
   ##
   incoming_queue: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso Team)
   ## @param config.airflow_interval_minutes interval to get airflow job health metrics.
