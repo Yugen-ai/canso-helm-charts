@@ -290,6 +290,16 @@ cansoAgent:
     ## @param cansoAgent.redis.image redis image
     ##
     image: redis:7.2.5
+    ## @param cansoAgent.redis.servicePort redis service port
+    ##
+    servicePort: 6379
+    # Since no `targetPort` is set in the Redis Service, `port` and `containerPort`
+    # are automatically aligned. If `port` is set and `targetPort` is omitted, then
+    # targetPort`` is automatically set to `port`
+    # `6379` could have been hardcoded in the template
+    # but we need this value to create the FQDN which is part of the `CELERY_BROKER_URL`
+    # and `CELERY_BACKEND_URL` env variables used the Celery App in the Canso Dev Agent
+    # Core.
   
   ## @section Autoscaling Configuration
   ##
