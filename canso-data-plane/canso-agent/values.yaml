@@ -182,7 +182,7 @@ cansoAgent:
       pullPolicy: Always
       ## @param cansoAgent.deployment.image.tag Tag for the image
       ##
-      tag: "v0.1.rc1-python-3.13-slim" # !!!CAUTION!!! - RELEASE CANDIDATE, DO NOT USE IN PRODUCTION!!!
+      tag: "v0.1.0-python-3.13-slim"
     ## @section resources configuration
     resources:
       ## @section resources limits configuration

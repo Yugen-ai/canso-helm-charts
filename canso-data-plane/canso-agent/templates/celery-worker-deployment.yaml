@@ -37,7 +37,7 @@ spec:
           - name: CELERY_BROKER_URL
             value: {{ printf "redis://%s.%s.svc.cluster.local:%d/%d" (include "canso-agent-redis.fullname" .) .Release.Namespace ( .Values.cansoAgent.redis.servicePort | int ) ( .Values.cansoAgent.redis.database | default 0 | int ) }}
           - name: CELERY_BACKEND_URL
-            value: {{ printf "redis://%s.%s.svc.cluster.local:%d/%d" (include "canso-agent-redis.fullname" .) .Release.Namespace ( .Values.cansoAgent.redis.servicePort | int ) ( .Values.cansoAgent.redis.database | default 0 | int) }}
+            value: {{ printf "redis://%s.%s.svc.cluster.local:%d/%d" (include "canso-agent-redis.fullname" .) .Release.Namespace ( .Values.cansoAgent.redis.servicePort | int ) ( .Values.cansoAgent.redis.database | default 0 | int ) }}
 
           {{- range .Values.cansoAgent.deployment.env }}
           - name: {{ .name }}
