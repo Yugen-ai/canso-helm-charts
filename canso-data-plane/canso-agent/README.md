@@ -84,32 +84,32 @@
 
 ### Image Configuration  
 
-| Name                                     | Description               | Value                                                                     |
-| ---------------------------------------- | ------------------------- | ------------------------------------------------------------------------- |
-| `cansoAgent.deployment.image.repository` | repository for the image  | `shaktimaanbot/dev-agent-image`                                           |
-| `cansoAgent.deployment.image.pullPolicy` | Pull policy for the image | `Always`                                                                  |
-| `cansoAgent.deployment.image.tag`        | Tag for the image         | `sha256:416a53749a1326c0b2a62732c78ea2f09482c462fd2e3d5cc4b01cc14d067c73` |
+| Name                                     | Description               | Value                           |
+| ---------------------------------------- | ------------------------- | ------------------------------- |
+| `cansoAgent.deployment.image.repository` | repository for the image  | `shaktimaanbot/dev-agent-image` |
+| `cansoAgent.deployment.image.pullPolicy` | Pull policy for the image | `Always`                        |
+| `cansoAgent.deployment.image.tag`        | Tag for the image         | `v0.1.rc1-python-3.13-slim`     |
 
 ### resources configuration
 
 
 ### resources limits configuration
 
-| Name                                                       | Description                                                                                 | Value   |
-| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------- |
-| `cansoAgent.deployment.resources.limits.cpu`               | CPU limits for the Canso Agent container. Strongly recommend to not decrease.               | `800m`  |
-| `cansoAgent.deployment.resources.limits.memory`            | Memory limits for the Canso Agent container. Strongly recommend to not decrease.            | `512Mi` |
-| `cansoAgent.deployment.resources.limits.ephemeral-storage` | Ephemeral storage limits for the Canso Agent container. Strongly recommend to not decrease. | `512Mi` |
+| Name                                                       | Description                                                                                 | Value    |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------------------- | -------- |
+| `cansoAgent.deployment.resources.limits.cpu`               | CPU limits for the Canso Agent container. Strongly recommend to not decrease.               | `2400m`  |
+| `cansoAgent.deployment.resources.limits.memory`            | Memory limits for the Canso Agent container. Strongly recommend to not decrease.            | `2000Mi` |
+| `cansoAgent.deployment.resources.limits.ephemeral-storage` | Ephemeral storage limits for the Canso Agent container. Strongly recommend to not decrease. | `512Mi`  |
 
 ### resources requests configuration
 
-| Name                                                         | Description                                                                                   | Value   |
-| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------- | ------- |
-| `cansoAgent.deployment.resources.requests.cpu`               | CPU requests for the Canso Agent container. Strongly recommend to not decrease.               | `500m`  |
-| `cansoAgent.deployment.resources.requests.memory`            | Memory requests for the Canso Agent container. Strongly recommend to not decrease.            | `256Mi` |
-| `cansoAgent.deployment.resources.requests.ephemeral-storage` | Ephemeral storage requests for the Canso Agent container. Strongly recommend to not decrease. | `256Mi` |
-| `cansoAgent.deployment.enableEnv`                            | Whether environment variables are enabled                                                     | `true`  |
-| `cansoAgent.deployment.enableEnvSecrets`                     | Whether environment secrets are enabled                                                       | `false` |
+| Name                                                         | Description                                                                                   | Value    |
+| ------------------------------------------------------------ | --------------------------------------------------------------------------------------------- | -------- |
+| `cansoAgent.deployment.resources.requests.cpu`               | CPU requests for the Canso Agent container. Strongly recommend to not decrease.               | `1600m`  |
+| `cansoAgent.deployment.resources.requests.memory`            | Memory requests for the Canso Agent container. Strongly recommend to not decrease.            | `1024Mi` |
+| `cansoAgent.deployment.resources.requests.ephemeral-storage` | Ephemeral storage requests for the Canso Agent container. Strongly recommend to not decrease. | `256Mi`  |
+| `cansoAgent.deployment.enableEnv`                            | Whether environment variables are enabled                                                     | `true`   |
+| `cansoAgent.deployment.enableEnvSecrets`                     | Whether environment secrets are enabled                                                       | `false`  |
 
 ### Proxy Deployment Configurations
 
@@ -145,9 +145,10 @@
 
 ### redis configuration
 
-| Name                     | Description | Value         |
-| ------------------------ | ----------- | ------------- |
-| `cansoAgent.redis.image` | redis image | `redis:7.2.5` |
+| Name                           | Description        | Value         |
+| ------------------------------ | ------------------ | ------------- |
+| `cansoAgent.redis.image`       | redis image        | `redis:7.2.5` |
+| `cansoAgent.redis.servicePort` | redis service port | `6379`        |
 
 ### Autoscaling Configuration
 
