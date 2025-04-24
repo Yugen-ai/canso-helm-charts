@@ -11,8 +11,8 @@ postgresql:
   enabled: true
   architecture: replication
   auth:
-    database: "mydatabase"
-    username: "myappuser"
+    database: "cansodb_case_mgmt"
+    username: "cansoappuser"
     # If empty or not set, a random password will be generated.
     password: ""
     # -- Optional: Specify an existing secret name that contains the PostgreSQL passwords.
@@ -100,9 +100,9 @@ dbSchemaSetup:
   # -- Container image for the Flyway migration job.
   # You need to build and push an image containing Flyway CLI, JDBC driver, and your SQL scripts.
   image:
-    repository: "<YOUR_FLYWAY_IMAGE_REPO>" # e.g., docker.io/myorg/flyway-runner, gcr.io/myproject/flyway-runner
-    tag: "<TAG>" # e.g., "latest", "v1.0.0"
-    pullPolicy: IfNotPresent # Use Always if using 'latest' tag frequently
+    repository: "canso-fraud-analyst-service"
+    tag: "db-v3"
+    pullPolicy: IfNotPresent
 
   # -- Flyway specific configuration
   flyway:

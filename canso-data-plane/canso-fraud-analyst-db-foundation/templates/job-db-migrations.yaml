@@ -1,15 +1,15 @@
 {{- /*
-Database Schema Migration Job. Runs Flyway migrations using a custom image. Triggered by Helm hooks before install and upgrade.
+DB Schema Migration Job. Runs Flyway migrations and Triggered by Helm hooks.
 */}}
 
 {{- if .Values.dbSchemaSetup.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "database-foundation.fullname" . }}-db-migrate
+  name: {{ include "canso-fraud-analyst-db-foundation.fullname" . }}-db-migrate
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "database-foundation.labels" . | nindent 4 }}
+    {{- include "canso-fraud-analyst-db-foundation.labels" . | nindent 4 }}
     app.kubernetes.io/component: db-schema-migration
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
@@ -22,26 +22,33 @@ spec:
 
   template:
     metadata:
-      name: {{ include "database-foundation.fullname" . }}-db-migrate-pod
+      name: {{ include "canso-fraud-analyst-db-foundation.fullname" . }}-db-migrate-pod
       labels:
-        {{- include "database-foundation.labels" . | nindent 8 }}
+        {{- include "canso-fraud-analyst-db-foundation.labels" . | nindent 8 }}
         app.kubernetes.io/component: db-schema-migration
     spec:
       # Jobs should typically run once and not be restarted on failure by the kubelet
       restartPolicy: Never
       initContainers:
       - name: wait-for-db
-        image: "postgres:{{ template "postgresql.imageTag" (dict "Values" .Values.postgresql) }}"
+        image: "postgres:16"
         imagePullPolicy: IfNotPresent
         # Command to repeatedly check if PostgreSQL is ready
         command: ['sh', '-c']
         args:
           - |
-            echo "Waiting for PostgreSQL primary service '{{ printf "%s-postgresql" .Release.Name }}' to be ready..."
-            until pg_isready -h {{ printf "%s-postgresql" .Release.Name }} -p 5432 -U {{ .Values.postgresql.auth.username }} -d {{ .Values.postgresql.auth.database }} -t 5; do
-              echo "PostgreSQL not ready yet, sleeping..."
+            PG_HOST="{{ printf "%s-postgresql-primary" .Release.Name }}"
+            PG_PORT="5432"
+            PG_USER="{{ .Values.postgresql.auth.username }}"
+            PG_DB="{{ .Values.postgresql.auth.database }}"
+
+            echo "Waiting for PostgreSQL primary service '$PG_HOST' to be ready..."
+
+            until pg_isready -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -d "$PG_DB" -t 5; do
+              echo "PostgreSQL not ready yet (Host: $PG_HOST, Port: $PG_PORT, User: $PG_USER, DB: $PG_DB), sleeping..."
               sleep 5
             done
+
             echo "PostgreSQL is ready! Proceeding with migrations."
         env:
           # PGPASSWORD is required by pg_isready when checking with username/database
@@ -53,7 +60,7 @@ spec:
                 name: {{ printf "%s-postgresql" .Release.Name }}
                 # Key within the secret containing the PostgreSQL password
                 # TODO - Check Bitnami official documentation for the correct key
-                key: postgresql-password
+                key: password
         resources:
           requests:
             memory: "64Mi"
@@ -67,13 +74,15 @@ spec:
         image: "{{ .Values.dbSchemaSetup.image.repository }}:{{ .Values.dbSchemaSetup.image.tag }}"
         imagePullPolicy: {{ .Values.dbSchemaSetup.image.pullPolicy }}
         command: ["flyway"]
-        args: ["migrate"]
+        args:
+          - "-X"
+          - "migrate"
         env:
           # --- Flyway Configuration via Environment Variables ---
           # JDBC URL for connecting to the PostgreSQL primary service
           # Format: jdbc:postgresql://<service-name>.<namespace>.svc.cluster.local:<port>/<database>
           - name: FLYWAY_URL
-            value: "jdbc:postgresql://{{ printf "%s-postgresql" .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local:5432/{{ .Values.postgresql.auth.database }}"
+            value: "jdbc:postgresql://{{ printf "%s-postgresql-primary" .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local:5432/{{ .Values.postgresql.auth.database }}"
           # Database username configured in the Bitnami subchart
           - name: FLYWAY_USER
             value: {{ .Values.postgresql.auth.username | quote }}
@@ -84,10 +93,12 @@ spec:
                 # Name of the secret created by the Bitnami PostgreSQL chart
                 name: {{ printf "%s-postgresql" .Release.Name }}
                 # Key within the secret containing the PostgreSQL password
-                # Ensure this matches the key used by the Bitnami chart (e.g., 'postgresql-password' or 'password')
-                key: postgresql-password
+                # Ensure this matches the key used by the Bitnami chart (e.g., 'postgres-password' or 'password')
+                key: password
           - name: FLYWAY_LOCATIONS
             value: {{ .Values.dbSchemaSetup.flyway.locations | quote }}
+          - name: FLYWAY_SCHEMAS
+            value: canso_case_management
         resources:
           {{- toYaml .Values.dbSchemaSetup.resources | nindent 10 }}
 
