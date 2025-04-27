@@ -2,27 +2,30 @@
 ####    Job Details for DB Migrations/Init
 ##############################################################################################
 
-## @section Job Details for DB Migrations/Setup
+## @section Job Details for DB Migrations
 dbSchemaSetup:
    ## @param dbSchemaSetup.enabled Enable DB schema setup job
+   ##
   enabled: true
   
-  ## @param image.repository Image repository for the Flyway migration job
-  ## @param image.tag Image tag for the Flyway migration job
-  ## @param image.pullPolicy Image pull policy for the Flyway migration job
-  ## @param image.pullSecrets Image pull secrets for the Flyway migration job
+  ## @param dbSchemaSetup.image.repository Image repository for the Flyway migration job
+  ## @param dbSchemaSetup.image.tag Image tag for the Flyway migration job
+  ## @param dbSchemaSetup.image.pullPolicy Image pull policy for the Flyway migration job
+  ## @param dbSchemaSetup.image.pullSecrets Image pull secrets for the Flyway migration job
   ##
   image:
     repository: "canso-fraud-analyst-service"
     tag: "db-v3"
     pullPolicy: IfNotPresent
     pullSecrets: ""
-
-  ## @param flyway.locations Flyway directory containing SQL migration scripts
-  ## @param flyway.schemas Flyway schemas to be used
+  
+  ## @section dbSchemaSetup.flyway Flyway configurations
   ##
   flyway:
+    ## @param dbSchemaSetup.flyway.locations Flyway directory containing SQL migration scripts  
     locations: "filesystem:/flyway/sql"
+    ## @param dbSchemaSetup.flyway.schemas Flyway schemas to be used
+    ##
     schemas: ""
 
   ## @param dbSchemaSetup.backoffLimit Job backoff limit
