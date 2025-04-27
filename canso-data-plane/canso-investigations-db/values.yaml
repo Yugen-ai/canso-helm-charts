@@ -36,13 +36,7 @@ dbSchemaSetup:
   ##
   ttlSecondsAfterFinished: 600 # 10 mins
 
-  ## @param dbSchemaSetup.resources Resources for the migration job
-  ## @param dbSchemaSetup.resources.requests CPU/Memory requests for the migration job
-  ## @param dbSchemaSetup.resources.limits CPU/Memory limits for the migration job
-  ## @param dbSchemaSetup.resources.requests.memory Memory request for the migration job
-  ## @param dbSchemaSetup.resources.requests.cpu CPU request for the migration job
-  ## @param dbSchemaSetup.resources.limits.memory Memory limit for the migration job
-  ## @param dbSchemaSetup.resources.limits.cpu CPU limit for the migration job
+  ## @param dbSchemaSetup.resources Resources (Requests & Limits for memory & CPU) for the migration job
   ##
   ## Example:
   ## resources:
