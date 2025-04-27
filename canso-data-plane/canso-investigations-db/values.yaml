@@ -1,0 +1,54 @@
+##############################################################################################
+####    Job Details for DB Migrations/Init
+##############################################################################################
+
+## @section Job Details for DB Migrations/Setup
+dbSchemaSetup:
+   ## @param dbSchemaSetup.enabled Enable DB schema setup job
+  enabled: true
+  
+  ## @param image.repository Image repository for the Flyway migration job
+  ## @param image.tag Image tag for the Flyway migration job
+  ## @param image.pullPolicy Image pull policy for the Flyway migration job
+  ## @param image.pullSecrets Image pull secrets for the Flyway migration job
+  ##
+  image:
+    repository: "canso-fraud-analyst-service"
+    tag: "db-v3"
+    pullPolicy: IfNotPresent
+    pullSecrets: ""
+
+  ## @param flyway.locations Flyway directory containing SQL migration scripts
+  ## @param flyway.schemas Flyway schemas to be used
+  ##
+  flyway:
+    locations: "filesystem:/flyway/sql"
+    schemas: ""
+
+  ## @param dbSchemaSetup.backoffLimit Job backoff limit
+  ##
+  backoffLimit: 2
+
+  ## @param dbSchemaSetup.ttlSecondsAfterFinished Job TTL seconds after finished
+  ##
+  ttlSecondsAfterFinished: 600 # 10 mins
+
+  ## @param dbSchemaSetup.resources Resources for the migration job
+  ## @param dbSchemaSetup.resources.requests CPU/Memory requests for the migration job
+  ## @param dbSchemaSetup.resources.limits CPU/Memory limits for the migration job
+  ## @param dbSchemaSetup.resources.requests.memory Memory request for the migration job
+  ## @param dbSchemaSetup.resources.requests.cpu CPU request for the migration job
+  ## @param dbSchemaSetup.resources.limits.memory Memory limit for the migration job
+  ## @param dbSchemaSetup.resources.limits.cpu CPU limit for the migration job
+  ##
+  ## Example:
+  ## resources:
+  ##   requests:
+  ##     memory: "256Mi"
+  ##     cpu: "100m"
+  ##   limits:
+  ##     memory: "512Mi"
+  ##     cpu: "250m"
+  ##
+  resources: {}
+

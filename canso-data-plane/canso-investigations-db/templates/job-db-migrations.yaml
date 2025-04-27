@@ -6,37 +6,36 @@ DB Schema Migration Job. Runs Flyway migrations and Triggered by Helm hooks.
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "canso-fraud-analyst-db-foundation.fullname" . }}-db-migrate
+  name: {{ include "canso-investigations-db.fullname" . }}-db-migrate
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "canso-fraud-analyst-db-foundation.labels" . | nindent 4 }}
+    {{- include "canso-investigations-db.labels" . | nindent 4 }}
     app.kubernetes.io/component: db-schema-migration
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
     helm.sh/hook-weight: "-5"
     helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
-    description: "Job to apply database schema migrations using Flyway"
 spec:
   backoffLimit: {{ .Values.dbSchemaSetup.backoffLimit }}
   ttlSecondsAfterFinished: {{ .Values.dbSchemaSetup.ttlSecondsAfterFinished }}
 
   template:
     metadata:
-      name: {{ include "canso-fraud-analyst-db-foundation.fullname" . }}-db-migrate-pod
+      name: {{ include "canso-investigations-db.fullname" . }}-db-migrate-pod
       labels:
-        {{- include "canso-fraud-analyst-db-foundation.labels" . | nindent 8 }}
+        {{- include "canso-investigations-db.labels" . | nindent 8 }}
         app.kubernetes.io/component: db-schema-migration
     spec:
-      # Jobs should typically run once and not be restarted on failure by the kubelet
       restartPolicy: Never
       initContainers:
       - name: wait-for-db
         image: "postgres:16"
         imagePullPolicy: IfNotPresent
-        # Command to repeatedly check if PostgreSQL is ready
         command: ['sh', '-c']
         args:
           - |
+            sleep 5
+
             PG_HOST="{{ printf "%s-postgresql-primary" .Release.Name }}"
             PG_PORT="5432"
             PG_USER="{{ .Values.postgresql.auth.username }}"
@@ -51,7 +50,6 @@ spec:
 
             echo "PostgreSQL is ready! Proceeding with migrations."
         env:
-          # PGPASSWORD is required by pg_isready when checking with username/database
           - name: PGPASSWORD
             valueFrom:
               secretKeyRef:
@@ -59,7 +57,6 @@ spec:
                 # This usually follows the pattern '<RELEASE_NAME>-postgresql'
                 name: {{ printf "%s-postgresql" .Release.Name }}
                 # Key within the secret containing the PostgreSQL password
-                # TODO - Check Bitnami official documentation for the correct key
                 key: password
         resources:
           requests:
@@ -72,17 +69,18 @@ spec:
       containers:
       - name: flyway-migrate
         image: "{{ .Values.dbSchemaSetup.image.repository }}:{{ .Values.dbSchemaSetup.image.tag }}"
+        imagePullSecrets:
+          - name: {{ .Values.dbSchemaSetup.image.pullSecrets | quote }}
         imagePullPolicy: {{ .Values.dbSchemaSetup.image.pullPolicy }}
         command: ["flyway"]
         args:
           - "-X"
           - "migrate"
         env:
-          # --- Flyway Configuration via Environment Variables ---
           # JDBC URL for connecting to the PostgreSQL primary service
           # Format: jdbc:postgresql://<service-name>.<namespace>.svc.cluster.local:<port>/<database>
           - name: FLYWAY_URL
-            value: "jdbc:postgresql://{{ printf "%s-postgresql-primary" .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local:5432/{{ .Values.postgresql.auth.database }}"
+            value: "{{ include "postgresql.jdbcUrl" . }}"
           # Database username configured in the Bitnami subchart
           - name: FLYWAY_USER
             value: {{ .Values.postgresql.auth.username | quote }}
@@ -93,12 +91,11 @@ spec:
                 # Name of the secret created by the Bitnami PostgreSQL chart
                 name: {{ printf "%s-postgresql" .Release.Name }}
                 # Key within the secret containing the PostgreSQL password
-                # Ensure this matches the key used by the Bitnami chart (e.g., 'postgres-password' or 'password')
                 key: password
           - name: FLYWAY_LOCATIONS
             value: {{ .Values.dbSchemaSetup.flyway.locations | quote }}
           - name: FLYWAY_SCHEMAS
-            value: canso_case_management
+            value: {{ .Values.dbSchemaSetup.flyway.schemas | quote }}
         resources:
           {{- toYaml .Values.dbSchemaSetup.resources | nindent 10 }}
 
