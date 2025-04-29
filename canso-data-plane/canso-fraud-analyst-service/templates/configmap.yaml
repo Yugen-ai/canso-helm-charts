@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "canso-fraud-analyst-service.fullname" . }}-cm
+  labels:
+    {{- include "canso-fraud-analyst-service.labels" . | nindent 4 }}
+data:
+  data_et_conn_configs.json: {{ .Values.configMaps.fraudAnalyst.tenantDataETConnConfigs | toJson | quote }}
+  data_et_configs.json: {{ .Values.configMaps.fraudAnalyst.tenantDataETConfigs | toJson | quote }}

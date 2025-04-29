@@ -1,0 +1,239 @@
+# Default values for canso-fraud-analyst-service.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## @skip replicaCount Number of replicas
+replicaCount: 1
+
+## @section Image Configuration
+image:
+  ## @param image.repository repository for the image
+  ##
+  repository: ""
+  ## @param image.pullPolicy Pull policy for the image
+  ##
+  pullPolicy: Always
+  ## @param image.tag Tag for the image
+  ##
+  tag: ""
+
+## @param imagePullSecrets Image pull secrets
+##
+imagePullSecrets: []
+## @skip nameOverride Name override
+nameOverride: ""
+## @skip fullnameOverride Full name override
+fullnameOverride: ""
+
+## @section serviceAccount Image pull secrets
+## 
+serviceAccount:
+  ## @param serviceAccount.create Specifies whether a service account should be created
+  ##
+  create: true
+  ## @param serviceAccount.automount Automatically mount a ServiceAccount's API credentials?
+  ##
+  automount: true
+  ## @param serviceAccount.annotations Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  ## @param serviceAccount.name SA Name
+  ##
+  name: ""
+
+## @param podAnnotations POD Annotations
+##
+podAnnotations: {}
+## @param podLabels POD Labels
+##
+podLabels: {}
+
+## @param podSecurityContext POD Security Context
+##
+podSecurityContext: {}
+  # fsGroup: 2000
+
+## @param securityContext Security Context
+##
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+## @section service Service Configuration
+##
+service:
+  ## @param service.type Service Type (ClusterIP, NodePort, and LoadBalancer)
+  ##
+  type: ClusterIP
+  ## @param service.port Port used by clients to access the service
+  ##
+  port: 80
+
+## @skip ingress Ingress Configuration
+##
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+## @param resources Resource Configuration
+##
+resources:
+  limits:
+    cpu: 400m
+    memory: 384Mi
+  requests:
+    cpu: 750m
+    memory: 768Mi
+
+## @section Liveness Probe Configurations
+## @param livenessProbe.enabled Specifies if the liveness probe is enabled
+##
+livenessProbe:
+  ## @param livenessProbe.enabled Specifies if the liveness probe is enabled
+  ##
+  enabled: true
+  ## @param livenessProbe.initialDelaySeconds Number of seconds after the container has started before liveness probes are initiated
+  ##
+  initialDelaySeconds: 60
+  ## @param livenessProbe.periodSeconds How often to perform the probe
+  ##
+  periodSeconds: 10
+  ## @param livenessProbe.timeoutSeconds Number of seconds after which the probe times out
+  ##
+  timeoutSeconds: 20
+  ## @param livenessProbe.successThreshold Success threshold for liveness probe
+  ##
+  successThreshold: 1
+  ## @param livenessProbe.failureThreshold Minimum consecutive failures for the probe to be considered failed
+  ##
+  failureThreshold: 3
+  ## @param livenessProbe.path  The path for the liveness probe
+  ##
+  path: /health
+  ## @param livenessProbe.port  The port to use for the probe
+  ##
+  port: http
+
+## @section Readiness Probe Configurations
+readinessProbe:
+  ## @param readinessProbe.enabled  Specifies if the readiness probe is enabled
+  ##
+  enabled: true
+  ## @param readinessProbe.initialDelaySeconds  Number of seconds after the container has started before readiness probes are initiated
+  ##
+  initialDelaySeconds: 30
+  ## @param readinessProbe.periodSeconds  How often to perform the probe
+  ##
+  periodSeconds: 10
+  ## @param readinessProbe.timeoutSeconds  Number of seconds after which the probe times out
+  ##
+  timeoutSeconds: 20
+  ## @param readinessProbe.successThreshold Success threshold for readiness probe
+  ##
+  successThreshold: 1
+  ## @param readinessProbe.failureThreshold  Minimum consecutive failures for the probe to be considered failed
+  ##
+  failureThreshold: 6
+  ## @param readinessProbe.path  The path for the readiness probe
+  ##
+  path: /health
+  ## @param readinessProbe.port  The port to use for the probe
+  ##
+  port: http
+
+autoscaling:
+  ## @param autoscaling.enabled Enable autoscaling
+  ##
+  enabled: true
+  ## @param autoscaling.minReplicas Minimum number of replicas
+  ##
+  minReplicas: 1
+  ## @param autoscaling.maxReplicas Minimum number of replicas
+  ##
+  maxReplicas: 3
+  ## @param autoscaling.targetCPUUtilizationPercentage Target CPU utilization percentage
+  ##
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+
+## @param volumes Additional volumes on the output Deployment definition.
+##
+volumes: []
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+
+## @param volumeMounts Additional volumeMounts on the output Deployment definition.
+##
+volumeMounts: []
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+## @param nodeSelector to select for scheduling of pod on a node
+##
+nodeSelector: {}
+
+## @param tolerations Taints that pod can tolerate
+##  
+tolerations: []
+  # - key: "key"
+  #   operator: "Equal"
+  #   value: "value"
+  #   effect: "NoSchedule"
+
+## @param affinity Affinity rules for pod scheduling on a node
+##  
+affinity: {}
+  # nodeAffinity:
+  #   requiredDuringSchedulingIgnoredDuringExecution:
+  #     nodeSelectorTerms:
+  #     - matchExpressions:
+  #       - key: kubernetes.io/e2e-az-name
+  #         operator: In
+  #         values:
+  #         - e2e-az1
+  #         - e2e-az2
+
+## @skip env Canso internal Environment Variables
+env:
+  db:
+    cansoInvestigations:
+      host: ""
+      port: 5432
+      database: ""
+      user: "postgres"
+      password: ""
+  vectorDB:
+    cansoCommon:
+      host: ""
+      port: 19530
+      user: ""
+      password: ""
+  llmConfigs: {}
+
+## @skip configMaps Configuration Maps for Tenant Specific Extract & Transform operations
+configMaps:
+  fraudAnalyst:
+    tenantDataETConnConfigs: {}
+    tenantDataETConfigs: {}
