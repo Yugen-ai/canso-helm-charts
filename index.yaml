@@ -546,6 +546,17 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-aws-eks-superchart-0.1.7/canso-aws-eks-superchart-0.1.7.tgz
     version: 0.1.7
+  canso-fraud-analyst-service:
+  - apiVersion: v2
+    appVersion: core-v0.0.1rc1-python-3.13-slim
+    created: "2025-04-29T13:49:39.36523635Z"
+    description: Canso Fraud Analyst Service - AI copilot for Fraud Investigations
+    digest: 693522a78bbf18d1a673bebb5184bcf4ee5c8be5b2970aeb8bf0dd7f60641a1f
+    name: canso-fraud-analyst-service
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-fraud-analyst-service-0.1.0/canso-fraud-analyst-service-0.1.0.tgz
+    version: 0.1.0
   canso-karpenter:
   - apiVersion: v2
     appVersion: 0.0.1
@@ -809,4 +820,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2025-04-01T21:40:40.698960083Z"
+generated: "2025-04-29T13:49:39.365431225Z"
