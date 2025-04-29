@@ -1,0 +1,59 @@
+##############################################################################################
+####    Job Details for DB Migrations/Init
+##############################################################################################
+
+## @section Job Details for DB Migrations
+dbSchemaSetup:
+   ## @param dbSchemaSetup.enabled Enable DB schema setup job
+   ##
+  enabled: true
+  
+  ## @param dbSchemaSetup.image.repository Image repository for the Flyway migration job
+  ## @param dbSchemaSetup.image.tag Image tag for the Flyway migration job
+  ## @param dbSchemaSetup.image.pullPolicy Image pull policy for the Flyway migration job
+  ##
+  image:
+    repository: ""
+    tag: ""
+    pullPolicy: IfNotPresent
+  
+  ## @param dbSchemaSetup.imagePullSecrets Image pull secrets for the Flyway migration job
+  imagePullSecrets: []
+  
+  ## @section dbSchemaSetup.flyway Flyway configurations
+  ##
+  flyway:
+    ## @param dbSchemaSetup.flyway.locations Flyway directory containing SQL migration scripts  
+    locations: "filesystem:/flyway/sql"
+    ## @param dbSchemaSetup.flyway.schemas Flyway schemas to be used
+    ##
+    schemas: ""
+
+  ## @param dbSchemaSetup.backoffLimit Job backoff limit
+  ##
+  backoffLimit: 2
+
+  ## @param dbSchemaSetup.ttlSecondsAfterFinished Job TTL seconds after finished
+  ##
+  ttlSecondsAfterFinished: 600 # 10 mins
+
+  ## @param dbSchemaSetup.resources Resources (Requests & Limits for memory & CPU) for the migration job
+  ##
+  ## Example:
+  ## resources:
+  ##   requests:
+  ##     memory: "256Mi"
+  ##     cpu: "100m"
+  ##   limits:
+  ##     memory: "512Mi"
+  ##     cpu: "250m"
+  ##
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "100m"
+    limits:
+      memory: "128Mi"
+      cpu: "200m"
+  
+
