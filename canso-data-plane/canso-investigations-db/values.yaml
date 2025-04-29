@@ -11,13 +11,14 @@ dbSchemaSetup:
   ## @param dbSchemaSetup.image.repository Image repository for the Flyway migration job
   ## @param dbSchemaSetup.image.tag Image tag for the Flyway migration job
   ## @param dbSchemaSetup.image.pullPolicy Image pull policy for the Flyway migration job
-  ## @param dbSchemaSetup.image.pullSecrets Image pull secrets for the Flyway migration job
   ##
   image:
-    repository: "canso-fraud-analyst-service"
-    tag: "db-v3"
+    repository: ""
+    tag: ""
     pullPolicy: IfNotPresent
-    pullSecrets: ""
+  
+  ## @param dbSchemaSetup.imagePullSecrets Image pull secrets for the Flyway migration job
+  imagePullSecrets: []
   
   ## @section dbSchemaSetup.flyway Flyway configurations
   ##
@@ -47,5 +48,12 @@ dbSchemaSetup:
   ##     memory: "512Mi"
   ##     cpu: "250m"
   ##
-  resources: {}
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "100m"
+    limits:
+      memory: "128Mi"
+      cpu: "200m"
+  
 

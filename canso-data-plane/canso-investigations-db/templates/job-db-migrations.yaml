@@ -28,7 +28,7 @@ spec:
     spec:
       restartPolicy: Never
       imagePullSecrets:
-        - name: {{ .Values.dbSchemaSetup.image.pullSecrets | quote }}
+        - name: {{ .Values.dbSchemaSetup.imagePullSecrets | quote }}
       initContainers:
       - name: wait-for-db
         image: "postgres:16"
