@@ -27,6 +27,8 @@ spec:
         app.kubernetes.io/component: db-schema-migration
     spec:
       restartPolicy: Never
+      imagePullSecrets:
+        - name: {{ .Values.dbSchemaSetup.image.pullSecrets | quote }}
       initContainers:
       - name: wait-for-db
         image: "postgres:16"
@@ -69,8 +71,6 @@ spec:
       containers:
       - name: flyway-migrate
         image: "{{ .Values.dbSchemaSetup.image.repository }}:{{ .Values.dbSchemaSetup.image.tag }}"
-        imagePullSecrets:
-          - name: {{ .Values.dbSchemaSetup.image.pullSecrets | quote }}
         imagePullPolicy: {{ .Values.dbSchemaSetup.image.pullPolicy }}
         command: ["flyway"]
         args:
