@@ -63,6 +63,12 @@ spec:
                   key: milvus-password #FIXME: Incorrect
             - name: CANSO_LLM_CONFIGS
               value: {{ .Values.env.llmConfigs | toJson | quote }}
+            - name: TENANT_CONFIG_ROOT_PATH
+              value: "/opt/canso-fraud-analyst-service/app/tenants"
+            - name: TENANT_DATA_ET_CONN_CONFIG_PATH
+              value: "/opt/canso-fraud-analyst-service/app/tenants/data_et_conn_configs.json"
+            - name: TENANT_DATA_ET_CONFIG_PATH
+              value: "/opt/canso-fraud-analyst-service/app/tenants/data_et_configs.json"
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -76,7 +82,7 @@ spec:
           volumeMounts:
             # ConfigMap volume mount
             - name: tenant-resources 
-              mountPath: /app/tenants #TODO: Discuss & test in docker compose
+              mountPath: /opt/canso-fraud-analyst-service/app/tenants #TODO: Discuss & test in docker compose
               readOnly: true
           {{- with .Values.volumeMounts }}
           volumeMounts:
