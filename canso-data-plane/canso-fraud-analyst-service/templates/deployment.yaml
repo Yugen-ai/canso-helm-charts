@@ -1,0 +1,105 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "canso-fraud-analyst-service.fullname" . }}
+  labels:
+    {{- include "canso-fraud-analyst-service.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "canso-fraud-analyst-service.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "canso-fraud-analyst-service.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "canso-fraud-analyst-service.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: CANSO_INVESTIGATIONS_HOST
+              value: {{ .Values.env.db.cansoInvestigations.host | quote }}
+            - name: CANSO_INVESTIGATIONS_PORT
+              value: {{ .Values.env.db.cansoInvestigations.port | quote }}
+            - name: CANSO_INVESTIGATIONS_DATABASE
+              value: {{ .Values.env.db.cansoInvestigations.database | quote }}
+            - name: CANSO_INVESTIGATIONS_USER
+              value: {{ .Values.env.db.cansoInvestigations.user | quote }}
+            - name: CANSO_INVESTIGATIONS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets #FIXME: Incorrect
+                  key: postgres-password #FIXME: Incorrect
+            - name: CANSO_VECTOR_DB_HOST
+              value: {{ .Values.env.vectorDB.cansoCommon.host | quote }}
+            - name: CANSO_VECTOR_DB_PORT
+              value: {{ .Values.env.vectorDB.cansoCommon.port | quote }}
+            - name: CANSO_VECTOR_DB_USER
+              value: {{ .Values.env.vectorDB.cansoCommon.user | quote }}
+            - name: CANSO_VECTOR_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets #FIXME: Incorrect
+                  key: milvus-password #FIXME: Incorrect
+            - name: CANSO_LLM_CONFIGS
+              value: {{ .Values.env.llmConfigs | toJson | quote }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            # ConfigMap volume mount
+            - name: tenant-resources 
+              mountPath: /app/tenants #TODO: Discuss & test in docker compose
+              readOnly: true
+          {{- with .Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        # ConfigMap volume
+        - name: tenant-resources
+          configMap:
+            name: {{ include "canso-fraud-analyst-service.fullname" . }}-cm
+      {{- with .Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
