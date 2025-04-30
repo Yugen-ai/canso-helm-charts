@@ -95,13 +95,13 @@ ingress:
 ## @param resources Resource Configuration
 ##
 resources:
-  limits:
+  requests:
     cpu: 400m
     memory: 384Mi
-  requests:
+  limits:
     cpu: 750m
     memory: 768Mi
-
+  
 ## @section Liveness Probe Configurations
 ## @param livenessProbe.enabled Specifies if the liveness probe is enabled
 ##
