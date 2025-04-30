@@ -37,38 +37,10 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-            - name: CANSO_INVESTIGATIONS_HOST
-              value: {{ .Values.env.db.cansoInvestigations.host | quote }}
-            - name: CANSO_INVESTIGATIONS_PORT
-              value: {{ .Values.env.db.cansoInvestigations.port | quote }}
-            - name: CANSO_INVESTIGATIONS_DATABASE
-              value: {{ .Values.env.db.cansoInvestigations.database | quote }}
-            - name: CANSO_INVESTIGATIONS_USER
-              value: {{ .Values.env.db.cansoInvestigations.user | quote }}
-            - name: CANSO_INVESTIGATIONS_PASSWORD
-              value: {{ .Values.env.db.cansoInvestigations.password | quote }}
-              # The above is a temporary workaround. Postgres password is available
-              # in the Postgres component release & namespace
-              # valueFrom:
-              #   secretKeyRef:
-              #     name: db-secrets #FIXME: Incorrect
-              #     key: postgres-password #FIXME: Incorrect
-            - name: CANSO_VECTOR_DB_HOST
-              value: {{ .Values.env.vectorDB.cansoCommon.host | quote }}
-            - name: CANSO_VECTOR_DB_PORT
-              value: {{ .Values.env.vectorDB.cansoCommon.port | quote }}
-            - name: CANSO_VECTOR_DB_USER
-              value: {{ .Values.env.vectorDB.cansoCommon.user | quote }}
-            - name: CANSO_VECTOR_DB_PASSWORD
-              value: {{ .Values.env.vectorDB.cansoCommon.password | quote }}
-              # The above is a temporary workaround. Milvus Password is available
-              # in the Milvus component release & namespace.
-              # valueFrom:
-              #   secretKeyRef:
-              #     name: db-secrets #FIXME: Incorrect
-              #     key: milvus-password #FIXME: Incorrect
-            - name: CANSO_LLM_CONFIGS
-              value: {{ .Values.env.llmConfigs | toJson | quote }}
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
             - name: TENANT_CONFIG_ROOT_PATH
               value: "/opt/canso-fraud-analyst-service/app/tenants"
             - name: TENANT_DATA_ET_CONN_CONFIG_PATH

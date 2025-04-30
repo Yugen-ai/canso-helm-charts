@@ -215,22 +215,6 @@ affinity: {}
   #         - e2e-az1
   #         - e2e-az2
 
-## @skip env Canso internal Environment Variables
-env:
-  db:
-    cansoInvestigations:
-      host: ""
-      port: 5432
-      database: ""
-      user: "postgres"
-      password: ""
-  vectorDB:
-    cansoCommon:
-      host: ""
-      port: 19530
-      user: ""
-      password: ""
-  llmConfigs: {}
 
 ## @skip configMaps Configuration Maps for Tenant Specific Extract & Transform operations
 configMaps:
