@@ -557,6 +557,17 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-fraud-analyst-service-0.1.0/canso-fraud-analyst-service-0.1.0.tgz
     version: 0.1.0
+  canso-investigations-db:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2025-04-30T01:29:43.048815244Z"
+    description: A Helm chart for a PostgreSQL DB & tables with schema initialization
+    digest: 4a3cff5471ce8fb0e356c289dc75b2e6dabc1ea010eb9473222925903879f40c
+    name: canso-investigations-db
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-investigations-db-0.1.0/canso-investigations-db-0.1.0.tgz
+    version: 0.1.0
   canso-karpenter:
   - apiVersion: v2
     appVersion: 0.0.1
@@ -820,4 +831,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2025-04-29T13:49:39.365431225Z"
+generated: "2025-04-30T01:29:43.049014461Z"
