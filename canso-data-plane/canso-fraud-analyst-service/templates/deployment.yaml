@@ -41,6 +41,12 @@ spec:
             - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
+            - name: TENANT_CONFIG_ROOT_PATH
+              value: "/opt/canso-fraud-analyst-service/app/tenants"
+            - name: TENANT_DATA_ET_CONN_CONFIG_PATH
+              value: "/opt/canso-fraud-analyst-service/app/tenants/data_et_conn_configs.json"
+            - name: TENANT_DATA_ET_CONFIG_PATH
+              value: "/opt/canso-fraud-analyst-service/app/tenants/data_et_configs.json"
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
