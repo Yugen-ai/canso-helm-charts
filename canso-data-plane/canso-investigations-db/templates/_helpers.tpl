@@ -65,6 +65,7 @@ Create the name of the service account to use
 {{/* 
 Generate PostgreSQL JDBC connection URL
 */}}
+# Format - `jdbc:postgresql://<postgres-service-name>.<namespace>.svc.cluster.local:<port>/<database>``
 {{- define "postgresql.jdbcUrl" -}}
-jdbc:postgresql://{{ printf "%s-postgresql-primary" .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local:5432/{{ .Values.postgresql.auth.database }}
+jdbc:postgresql://{{ .Values.env.postgresInit.PG_HOST }}.{{ .Values.env.postgresInit.PG_NAMESPACE }}.svc.cluster.local:{{ .Values.env.postgresInit.PG_PORT }}/{{ .Values.env.postgresInit.PG_DB }}
 {{- end -}}
