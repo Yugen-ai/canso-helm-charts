@@ -33,16 +33,14 @@ spec:
       - name: wait-for-db
         image: "postgres:16"
         imagePullPolicy: IfNotPresent
+        env:
+          {{- range $key, $value := .Values.env.postgresInit }}
+          - name: {{ $key }}
+            value: {{ $value | quote }}
+          {{- end }}
         command: ['sh', '-c']
         args:
           - |
-            sleep 5
-
-            PG_HOST="{{ printf "%s-postgresql-primary" .Release.Name }}"
-            PG_PORT="5432"
-            PG_USER="{{ .Values.postgresql.auth.username }}"
-            PG_DB="{{ .Values.postgresql.auth.database }}"
-
             echo "Waiting for PostgreSQL primary service '$PG_HOST' to be ready..."
 
             until pg_isready -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -d "$PG_DB" -t 5; do
@@ -51,15 +49,6 @@ spec:
             done
 
             echo "PostgreSQL is ready! Proceeding with migrations."
-        env:
-          - name: PGPASSWORD
-            valueFrom:
-              secretKeyRef:
-                # Name of the secret created by the Bitnami PostgreSQL chart
-                # This usually follows the pattern '<RELEASE_NAME>-postgresql'
-                name: {{ printf "%s-postgresql" .Release.Name }}
-                # Key within the secret containing the PostgreSQL password
-                key: password
         resources:
           requests:
             memory: "64Mi"
@@ -81,22 +70,10 @@ spec:
           # Format: jdbc:postgresql://<service-name>.<namespace>.svc.cluster.local:<port>/<database>
           - name: FLYWAY_URL
             value: "{{ include "postgresql.jdbcUrl" . }}"
-          # Database username configured in the Bitnami subchart
-          - name: FLYWAY_USER
-            value: {{ .Values.postgresql.auth.username | quote }}
-          # Database password retrieved from the secret managed by the Bitnami subchart
-          - name: FLYWAY_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                # Name of the secret created by the Bitnami PostgreSQL chart
-                name: {{ printf "%s-postgresql" .Release.Name }}
-                # Key within the secret containing the PostgreSQL password
-                key: password
-          - name: FLYWAY_LOCATIONS
-            value: {{ .Values.dbSchemaSetup.flyway.locations | quote }}
-          - name: FLYWAY_SCHEMAS
-            value: {{ .Values.dbSchemaSetup.flyway.schemas | quote }}
+          {{- range $key, $value := .Values.env.flyway }}
+          - name: {{ $key }}
+            value: {{ $value | quote }}
+          {{- end }}
         resources:
           {{- toYaml .Values.dbSchemaSetup.resources | nindent 10 }}
-
 {{- end }}
