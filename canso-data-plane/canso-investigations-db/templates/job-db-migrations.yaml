@@ -62,10 +62,6 @@ spec:
           - "-X"
           - "migrate"
         env:
-          # JDBC URL for connecting to the PostgreSQL primary service
-          # Format: jdbc:postgresql://<service-name>.<namespace>.svc.cluster.local:<port>/<database>
-          - name: FLYWAY_URL
-            value: "{{ include "postgresql.jdbcUrl" . }}"
           {{- range $key, $value := .Values.env.flyway }}
           - name: {{ $key }}
             value: {{ $value | quote }}
