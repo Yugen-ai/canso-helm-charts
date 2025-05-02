@@ -72,7 +72,7 @@ service:
   type: ClusterIP
   ## @param service.port Port used by clients to access the service
   ##
-  port: 80
+  port: 8085
 
 ## @skip ingress Ingress Configuration
 ##
@@ -126,7 +126,7 @@ livenessProbe:
   failureThreshold: 3
   ## @param livenessProbe.path  The path for the liveness probe
   ##
-  path: /health
+  path: /api/v1/health
   ## @param livenessProbe.port  The port to use for the probe
   ##
   port: http
@@ -153,7 +153,7 @@ readinessProbe:
   failureThreshold: 6
   ## @param readinessProbe.path  The path for the readiness probe
   ##
-  path: /health
+  path: /api/v1/health
   ## @param readinessProbe.port  The port to use for the probe
   ##
   port: http
