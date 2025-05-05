@@ -47,6 +47,11 @@ dbSchemaSetup:
       memory: "1Gi"
       cpu: "750m"
 
+## @section rbac RBAC (POD Role & POD Role Bindings)
+##
+rbac:
+  enabled: True
+
 
 ## @skip env Environment variables
 env:

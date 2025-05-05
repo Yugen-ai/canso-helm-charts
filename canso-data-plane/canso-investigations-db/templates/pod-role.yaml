@@ -1,0 +1,11 @@
+{{- if .Values.rbac.enabled }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: {{ .Values.env.postgresInit.PG_NAMESPACE }}
+  name: {{ .Release.Name }}-postgres-secret-reader
+- apiGroups: [""]
+  resources: ["secrets"]
+  resourceNames: ["TO_BE_UPDATED"]
+  verbs: ["get"]
+{{- end }}
