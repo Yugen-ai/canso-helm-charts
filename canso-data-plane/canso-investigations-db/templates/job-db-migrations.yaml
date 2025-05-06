@@ -37,6 +37,9 @@ spec:
         command: ['sh', '-c']
         args:
           - |
+            # Initial delay to allow RBAC components (SA, Role, RoleBinding) to propagate
+            sleep 5
+
             echo "Waiting for PostgreSQL primary service '$PG_HOST' to be ready..."
 
             until pg_isready -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -d "$PG_DB" -t 5; do
