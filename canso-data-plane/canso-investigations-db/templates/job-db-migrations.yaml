@@ -69,6 +69,12 @@ spec:
           - name: {{ $key }}
             value: {{ $value | quote }}
           {{- end }}
+          - name: FLYWAY_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.env.postgresInit.PG_SECRET_NAME }}
+                key: {{ .Values.env.postgresInit.PG_SECRET_KEY }}
+                namespace: {{ .Values.env.postgresInit.PG_NAMESPACE }}
         resources:
           {{- toYaml .Values.dbSchemaSetup.resources | nindent 10 }}
 {{- end }}
