@@ -30,7 +30,7 @@ spec:
         image: "postgres:16"
         imagePullPolicy: IfNotPresent
         env:
-          {{- range $key, $value := .Values.env.postgresInit }}
+          {{- range $key, $value := .Values.postgresInit.env }}
           - name: {{ $key }}
             value: {{ $value | quote }}
           {{- end }}
@@ -65,16 +65,16 @@ spec:
           - "-X"
           - "migrate"
         env:
-          {{- range $key, $value := .Values.env.flyway }}
+          {{- range $key, $value := .Values.flyway.env }}
           - name: {{ $key }}
             value: {{ $value | quote }}
           {{- end }}
           - name: FLYWAY_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.env.postgresInit.PG_SECRET_NAME }}
-                key: {{ .Values.env.postgresInit.PG_SECRET_KEY }}
-                namespace: {{ .Values.env.postgresInit.PG_NAMESPACE }}
+                name: {{ .Values.flyway.db_secret_name }}
+                key: {{ .Values.flyway.db_secret_password_key }}
+                namespace: {{ .Values.db_namespace }}
         resources:
           {{- toYaml .Values.dbSchemaSetup.resources | nindent 10 }}
 {{- end }}
