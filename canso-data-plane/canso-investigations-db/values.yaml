@@ -86,7 +86,6 @@ env:
   flyway:
     FLYWAY_URL: "" # JDBC URl with format `jdbc:postgresql://<postgres-service-name>.<namespace>.svc.cluster.local:<port>/<database>`
     FLYWAY_USER: "" # Currently same as `env.postgresInit.PG_USER`
-    FLYWAY_PASSWORD: "" # Same as password`used while deploying the Postgres component
     # Flyway locations - https://documentation.red-gate.com/fd/flyway-locations-setting-277579008.html
     # See https://github.com/Yugen-ai/canso-fraud-analyst-service/blob/main/Dockerfile.DBMigrations
     FLYWAY_LOCATIONS: "filesystem:/flyway/sql"
