@@ -22,6 +22,7 @@ spec:
         {{- include "canso-investigations-db.labels" . | nindent 8 }}
         app.kubernetes.io/component: db-schema-migration
     spec:
+      serviceAccountName: {{ include "canso-investigations-db.serviceAccountName" . }}
       restartPolicy: Never
       imagePullSecrets:
         - name: {{ .Values.dbSchemaSetup.imagePullSecrets | quote }}
