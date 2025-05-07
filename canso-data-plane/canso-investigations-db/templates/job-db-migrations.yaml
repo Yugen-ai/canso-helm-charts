@@ -22,6 +22,7 @@ spec:
         {{- include "canso-investigations-db.labels" . | nindent 8 }}
         app.kubernetes.io/component: db-schema-migration
     spec:
+      serviceAccountName: {{ include "canso-investigations-db.serviceAccountName" . }}
       restartPolicy: Never
       imagePullSecrets:
         - name: {{ .Values.dbSchemaSetup.imagePullSecrets | quote }}
@@ -30,13 +31,16 @@ spec:
         image: "postgres:16"
         imagePullPolicy: IfNotPresent
         env:
-          {{- range $key, $value := .Values.env.postgresInit }}
+          {{- range $key, $value := .Values.postgresInit.env }}
           - name: {{ $key }}
             value: {{ $value | quote }}
           {{- end }}
         command: ['sh', '-c']
         args:
           - |
+            # Initial delay to allow RBAC components (SA, Role, RoleBinding) to propagate
+            sleep 5
+
             echo "Waiting for PostgreSQL primary service '$PG_HOST' to be ready..."
 
             until pg_isready -h "$PG_HOST" -p "$PG_PORT" -U "$PG_USER" -d "$PG_DB" -t 5; do
@@ -62,10 +66,16 @@ spec:
           - "-X"
           - "migrate"
         env:
-          {{- range $key, $value := .Values.env.flyway }}
+          {{- range $key, $value := .Values.flyway.env }}
           - name: {{ $key }}
             value: {{ $value | quote }}
           {{- end }}
+          - name: FLYWAY_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.flyway.db_secret_name }}
+                key: {{ .Values.flyway.db_secret_password_key }}
+                namespace: {{ .Values.db_namespace }}
         resources:
           {{- toYaml .Values.dbSchemaSetup.resources | nindent 10 }}
 {{- end }}
