@@ -75,7 +75,6 @@ spec:
               secretKeyRef:
                 name: {{ .Values.flyway.db_secret_name }}
                 key: {{ .Values.flyway.db_secret_password_key }}
-                namespace: {{ .Values.db_namespace }}
         resources:
           {{- toYaml .Values.dbSchemaSetup.resources | nindent 10 }}
 {{- end }}
