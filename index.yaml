@@ -600,6 +600,16 @@ entries:
   canso-investigations-db:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2025-05-08T00:37:27.928962663Z"
+    description: A Helm chart for a PostgreSQL DB & tables with schema initialization
+    digest: 1b2b1518d2a8597eb890d97d9df5ef5f22d1271ab6fa3e0164801311f683a721
+    name: canso-investigations-db
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-investigations-db-0.1.5/canso-investigations-db-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2025-05-07T20:10:32.212188476Z"
     description: A Helm chart for a PostgreSQL DB & tables with schema initialization
     digest: de426941dad0eddde4ac96919e70756ecc2528f5b754cca7fb1790efb19fb041
@@ -911,4 +921,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2025-05-07T20:10:32.212377519Z"
+generated: "2025-05-08T00:37:27.92908915Z"
