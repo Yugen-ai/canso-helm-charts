@@ -59,7 +59,7 @@ spec:
 
       containers:
       - name: flyway-migrate
-        image: "{{ .Values.dbSchemaSetup.image.repository }}:{{ .Values.dbSchemaSetup.image.tag }}"
+        image: {{ include "canso-investigations-db.image" (dict "repository" .Values.dbSchemaSetup.image.repository "tag" (default .Chart.AppVersion .Values.dbSchemaSetup.image.tag)) }}
         imagePullPolicy: {{ .Values.dbSchemaSetup.image.pullPolicy }}
         command: ["flyway"]
         args:
