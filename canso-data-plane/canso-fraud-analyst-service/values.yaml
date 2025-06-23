@@ -174,6 +174,24 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 
+# External secret configurations.
+## @section External secret configurations
+external_secret:
+  ## @param external_secret.enabled Enable external secret.
+  enabled: true
+  ## @param external_secret.name External secret name.
+  name: canso-dockerhub-credentials
+  ## @param external_secret.target_secret_name Target secret name.
+  target_secret_name: canso-dockerhub-credentials
+  ## @param external_secret.target_secret_type Target secret type.
+  target_secret_type: kubernetes.io/dockerconfigjson
+  ## @param external_secret.target_secret_name_key Target secret name key.
+  target_secret_name_key: .dockerconfigjson
+  ## @param external_secret.aws_secret_name secret name.
+  aws_secret_name: canso/dockerhub
+  ## @param external_secret.aws_secret_key secret key.
+  aws_secret_key: dockerhub
+
 ## @param volumes Additional volumes on the output Deployment definition.
 ##
 volumes: []
