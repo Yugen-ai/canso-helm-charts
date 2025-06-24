@@ -188,7 +188,7 @@ external_secret:
   ## @param external_secret.target_secret_name_key Target secret name key.
   target_secret_name_key: .dockerconfigjson
   ## @param external_secret.aws_secret_name secret name.
-  aws_secret_name: canso/dockerhub
+  aws_secret_name: canso-dockerhub-credentials
   ## @param external_secret.aws_secret_key secret key.
   aws_secret_key: dockerhub
 
