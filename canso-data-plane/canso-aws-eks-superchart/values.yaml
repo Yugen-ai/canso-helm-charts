@@ -467,6 +467,11 @@ cansoAirflowJobs:
 
 ## @section cansoAgent configuration
 cansoAgent:
+  
+  ## @param cansoAgent.replicaCount count of replicas
+  ##
+  replicaCount: 3
+
   ## @param cansoAgent.enabled Boolean Flag to deploy Canso Agent
   ##
   enabled: true
