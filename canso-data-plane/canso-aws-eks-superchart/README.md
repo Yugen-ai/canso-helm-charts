@@ -176,12 +176,13 @@
 
 ### cansoAgent configuration
 
-| Name                     | Description                                 | Value  |
-| ------------------------ | ------------------------------------------- | ------ |
-| `cansoAgent.enabled`     | Boolean Flag to deploy Canso Agent          | `true` |
-| `cansoAgent.tolerations` | Taints that pod can tolerate                | `[]`   |
-| `cansoAgent.affinity`    | Affinity rules for pod scheduling on a node | `{}`   |
-| `cansoAgent.roleArn`     | roleArn name of the irsa role for the agent | `""`   |
+| Name                      | Description                                 | Value  |
+| ------------------------- | ------------------------------------------- | ------ |
+| `cansoAgent.replicaCount` | count of replicas                           | `3`    |
+| `cansoAgent.enabled`      | Boolean Flag to deploy Canso Agent          | `true` |
+| `cansoAgent.tolerations`  | Taints that pod can tolerate                | `[]`   |
+| `cansoAgent.affinity`     | Affinity rules for pod scheduling on a node | `{}`   |
+| `cansoAgent.roleArn`      | roleArn name of the irsa role for the agent | `""`   |
 
 ### Roles
 
