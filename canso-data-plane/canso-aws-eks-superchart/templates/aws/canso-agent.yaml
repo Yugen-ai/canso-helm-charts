@@ -28,7 +28,7 @@ spec:
       source:
         repoURL: 'https://yugen-ai.github.io/canso-helm-charts'
         chart: canso-agent
-        targetRevision: 0.1.27
+        targetRevision: 0.1.28
         helm:
           values: |-
             config:
