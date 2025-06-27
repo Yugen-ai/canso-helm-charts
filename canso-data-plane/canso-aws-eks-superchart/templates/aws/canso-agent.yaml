@@ -31,6 +31,7 @@ spec:
         targetRevision: 0.1.28
         helm:
           values: |-
+            replicaCount: {{ .Values.cansoAgent.replicaCount }}
             config:
               tenantName: {{ .Values.tenantName }}
               tenantID: {{ .Values.tenantID }}

@@ -2,7 +2,7 @@
 # This file contains YAML-formatted configurations to be passed into Helm templates.
 
 ## @skip replicaCount Number of replicas
-replicaCount: 3
+replicaCount: 1
 
 ####################################################
 ################ Default Configs
