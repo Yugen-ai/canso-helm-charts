@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "canso-fraud-analyst-service.labels" . | nindent 4 }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       {{- include "canso-fraud-analyst-service.selectorLabels" . | nindent 6 }}
