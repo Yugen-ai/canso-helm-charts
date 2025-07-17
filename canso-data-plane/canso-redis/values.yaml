@@ -42,7 +42,7 @@ redis:
     ## @param redis.helm.chart redis helm chart name
     ##
     chart: redis
-    ## @param redis.helm.chart redis helm chart version
+    ## @param redis.helm.version redis helm chart version
     ##
     version: 20.5.0
   ## @section redis.auth configs related to redis authentication
