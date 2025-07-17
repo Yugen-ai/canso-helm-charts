@@ -10,7 +10,7 @@ spec:
     chart: {{ .Values.redis.helm.chart }}
     targetRevision: {{ .Values.redis.helm.version }}
     helm:
-      releaseName: {{ .Values.fullname }}
+      releaseName: {{ .Values.fullname }}-release
       values: |
         fullnameOverride: {{ .Values.fullname }}
         auth:
