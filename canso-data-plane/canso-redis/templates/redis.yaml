@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.fullname }}
+  namespace: {{ .Values.argocd.namespace }}
+spec:
+  project: {{ .Values.argocd.project }}
+  source:
+    repoURL: {{ .Values.redis.helm.repo }}
+    chart: {{ .Values.redis.helm.chart }}
+    targetRevision: {{ .Values.redis.helm.version }}
+    helm:
+      releaseName: {{ .Values.fullname }}
+      values: |
+        fullnameOverride: {{ .Values.fullname }}
+        auth:
+          enabled: {{ .Values.redis.auth.enabled }}
+        image:
+          pullSecrets:
+            - name: {{ .Values.imagePullSecret.name }}
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: {{ .Values.redis.namespace }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
