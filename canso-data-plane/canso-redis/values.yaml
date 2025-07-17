@@ -44,7 +44,7 @@ redis:
     chart: redis
     ## @param redis.helm.version redis helm chart version
     ##
-    version: 20.5.0
+    version: 21.2.10
   ## @section redis.auth configs related to redis authentication
   ##
   auth:
