@@ -21,6 +21,7 @@ name: canso-fraud-inv-jobs
 ### Deployment Configurations
 ####################################################
 
+## @section deployment configuration
 deployment:
   ## @param deployment.image full image identifier
   image: shaktimaanbot/canso-fraud-investigation-jobs:v0.0.1rc1-python-3.13-slim
@@ -33,7 +34,7 @@ deployment:
   ## @param concurrencyPerReplica Number of concurrent jobs to process per replica
   ##
   concurrencyPerReplica: 1
-  ## @param deployment.env Number of tasks to process per replica
+  ## @param deployment.env environment variables
   ##
   env: 
     CELERY_BROKER_URL: "redis://canso-redis-master.canso-redis.svc.cluster.local"
