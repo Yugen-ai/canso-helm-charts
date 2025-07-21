@@ -28,16 +28,12 @@ deployment:
   ## @param deployment.imagePullPolicy Image pull policy for the deployment
   ##
   imagePullPolicy: Always
-  ## @param replicas Number of replicas for the canso-fraud-inv-job deployment
+  ## @param deployment.replicas Number of replicas for the canso-fraud-inv-job deployment
   ##
   replicas: 1
-  ## @param concurrencyPerReplica Number of concurrent jobs to process per replica
+  ## @param deployment.concurrencyPerReplica Number of concurrent jobs to process per replica
   ##
   concurrencyPerReplica: 1
-  ## @param deployment.env environment variables
-  ##
-  env: 
-    CELERY_BROKER_URL: "redis://canso-redis-master.canso-redis.svc.cluster.local"
 
 
 ####################################################
