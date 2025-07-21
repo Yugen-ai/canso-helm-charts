@@ -1,0 +1,73 @@
+####################################################
+################ Name Override Configs
+####################################################
+
+## @param nameOverride String to override partial name passed in helm install command
+##
+nameOverride: ""
+## @param fullnameOverride String to override full name passed in helm install command
+##
+fullnameOverride: "canso-fraud-inv-jobs"
+
+####################################################
+### Default Configs
+####################################################
+
+## @param name Name of the server
+##
+name: canso-fraud-inv-jobs
+
+####################################################
+### Deployment Configurations
+####################################################
+
+## @section deployment configuration
+deployment:
+  ## @param deployment.image full image identifier
+  image: shaktimaanbot/canso-fraud-investigation-jobs:v0.0.1rc1-python-3.13-slim
+  ## @param deployment.imagePullPolicy Image pull policy for the deployment
+  ##
+  imagePullPolicy: Always
+  ## @param deployment.replicas Number of replicas for the canso-fraud-inv-job deployment
+  ##
+  replicas: 1
+  ## @param deployment.concurrencyPerReplica Number of concurrent jobs to process per replica
+  ##
+  concurrencyPerReplica: 1
+
+
+####################################################
+### Resources Configurations
+####################################################
+
+resources:
+  ## @section Resource limits configuration
+  limits:
+    ## @param resources.limits.cpu CPU limits for the canso-fraud-inv-job container
+    ##
+    cpu: 1000m
+    ## @param resources.limits.memory Memory limits for the canso-fraud-inv-job container
+    ##
+    memory: 1024Mi
+  ## @section Resource requests configuration
+  requests:
+    ## @param resources.requests.cpu CPU requests for the canso-fraud-inv-job container
+    ##
+    cpu: 500m
+    ## @param resources.requests.memory Memory requests for the canso-fraud-inv-job container
+    ##
+    memory: 512Mi
+
+imagePullSecret:
+  ## @param imagePullSecret.name Name of the Secret that will be created
+  ##
+  name: docker-secret-cred-canso-fraud-inv-jobs
+  ## @param imagePullSecret.key Specifik key inside the secret that will be created
+  ##
+  key: .dockerconfigjson
+  ## @param imagePullSecret.cloudProviderSecretName Name of the secret from the cloudprovider (AWS / GCP / AZURE)
+  ##
+  cloudProviderSecretName: canso-dockerhub-credentials
+  ## @param imagePullSecret.cloudProviderSecretKey Specific key inside the secret from cloud provider
+  ##
+  cloudProviderSecretKey: dockerhub
