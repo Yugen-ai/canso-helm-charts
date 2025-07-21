@@ -677,6 +677,17 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-fraud-analyst-service-0.1.0/canso-fraud-analyst-service-0.1.0.tgz
     version: 0.1.0
+  canso-fraud-investigation-jobs:
+  - apiVersion: v2
+    appVersion: v0.0.1
+    created: "2025-07-21T05:32:41.223651417Z"
+    description: A Helm chart for canso-fraud-investigation-jobs
+    digest: e4b01e7c055ac99c3aa4fa156893085a756abaa272cf4244e7831f84be96c83c
+    name: canso-fraud-investigation-jobs
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-fraud-investigation-jobs-0.0.1/canso-fraud-investigation-jobs-0.0.1.tgz
+    version: 0.0.1
   canso-investigations-db:
   - apiVersion: v2
     appVersion: db-v0.1.1-flyway-11.8-alpine
@@ -1011,4 +1022,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2025-06-27T13:03:55.781795944Z"
+generated: "2025-07-21T05:32:41.223843499Z"
