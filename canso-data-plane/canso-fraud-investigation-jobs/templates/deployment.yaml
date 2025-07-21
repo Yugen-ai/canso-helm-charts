@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "canso-fraud-inv-jobs.fullname" . }}
+  labels:
+    {{- include "canso-fraud-inv-jobs.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      {{- include "canso-fraud-inv-jobs.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "canso-fraud-inv-jobs.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Values.name }}
+          image: "{{ .Values.deployment.image }}"
+          imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
+          env:
+            {{- range $key, $value := .Values.deployment.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          command: ["/bin/sh", "-c"]
+          args: 
+            - celery -A main worker --loglevel=info --concurrency {{ .Values.deployment.concurrencyPerReplica }}
+          resources:
+            {{- toYaml .Values.deployment.resources | nindent 12 }}
+      imagePullSecrets:
+        - name: {{ .Values.imagePullSecret.name }}
+

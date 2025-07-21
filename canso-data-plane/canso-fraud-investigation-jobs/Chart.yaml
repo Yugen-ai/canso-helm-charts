@@ -1,0 +1,6 @@
+apiVersion: v2
+name: canso-fraud-investigation-jobs
+description: A Helm chart for canso-fraud-investigation-jobs
+type: application
+version: 0.0.1
+appVersion: "v0.0.1"
