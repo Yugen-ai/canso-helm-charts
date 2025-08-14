@@ -98,10 +98,10 @@ resources:
   ## @section resources.request Resource request Configuration
   ##
   requests:
-    ## @param resources.request.cpu Resource request  cpu Configuration
+    ## @param resources.requests.cpu Resource request  cpu Configuration
     ##
     cpu: 400m
-    ## @param resources.request.memory Resource request memory Configuration
+    ## @param resources.requests.memory Resource request memory Configuration
     ##
     memory: 384Mi
   ## @section resources.limits Resource limits Configuration
