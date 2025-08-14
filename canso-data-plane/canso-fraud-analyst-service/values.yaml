@@ -92,14 +92,26 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-## @param resources Resource Configuration
+## @section resources Resource Configuration
 ##
 resources:
+  ## @section resources.request Resource request Configuration
+  ##
   requests:
+    ## @param resources.request.cpu Resource request  cpu Configuration
+    ##
     cpu: 400m
+    ## @param resources.request.memory Resource request memory Configuration
+    ##
     memory: 384Mi
+  ## @section resources.limits Resource limits Configuration
+  ##
   limits:
+    ## @param resources.limits.cpu Resource limits cpu Configuration
+    ##
     cpu: 750m
+    ## @param resources.limits.memory Resource limits memory Configuration
+    ##
     memory: 768Mi
   
 ## @section Liveness Probe Configurations
