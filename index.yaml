@@ -589,6 +589,16 @@ entries:
   canso-fraud-analyst-service:
   - apiVersion: v2
     appVersion: core-v0.0.1rc1-python-3.13-slim
+    created: "2025-08-14T15:44:54.022900512Z"
+    description: Canso Fraud Analyst Service - AI copilot for Fraud Investigations
+    digest: 7accc3100afb100046dd129cbc72d1cf41802ced15458741e2845c3a96ed67b3
+    name: canso-fraud-analyst-service
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-fraud-analyst-service-0.1.9/canso-fraud-analyst-service-0.1.9.tgz
+    version: 0.1.9
+  - apiVersion: v2
+    appVersion: core-v0.0.1rc1-python-3.13-slim
     created: "2025-06-27T11:58:28.62980685Z"
     description: Canso Fraud Analyst Service - AI copilot for Fraud Investigations
     digest: af55a5416e4e19d460147124867950290f0796c78c5356091800bb5639d80aef
@@ -1022,4 +1032,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2025-07-21T05:32:41.223843499Z"
+generated: "2025-08-14T15:44:54.023138399Z"
