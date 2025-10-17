@@ -1,0 +1,164 @@
+# Default values for canso-tenant-et-service.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## @section deployment configuration
+deployment:
+  ## @param deployment.image full image identifier
+  image: ""
+  ## @param deployment.imagePullPolicy Image pull policy for the deployment
+  ##
+  imagePullPolicy: Always
+  ## @param deployment.replicas Number of replicas for the canso-fraud-inv-job deployment
+  ##
+  replicas: 1
+
+## @skip nameOverride Name override
+nameOverride: ""
+## @skip fullnameOverride Full name override
+fullnameOverride: ""
+
+## @section serviceAccount Image pull secrets
+## 
+serviceAccount:
+  ## @param serviceAccount.create Specifies whether a service account should be created
+  ##
+  create: true
+  ## @param serviceAccount.automount Automatically mount a ServiceAccount's API credentials?
+  ##
+  automount: true
+  ## @param serviceAccount.annotations Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  ## @param serviceAccount.name SA Name
+  ##
+  name: ""
+
+## @param podAnnotations POD Annotations
+##
+podAnnotations: {}
+## @param podLabels POD Labels
+##
+podLabels: {}
+
+
+## @section service Service Configuration
+##
+service:
+  ## @param service.type Service Type (ClusterIP, NodePort, and LoadBalancer)
+  ##
+  type: ClusterIP
+  ## @param service.port Port used by clients to access the service
+  ##
+  port: 8000
+
+## @section resources Resource Configuration
+##
+resources:
+  ## @section resources.request Resource request Configuration
+  ##
+  requests:
+    ## @param resources.requests.cpu Resource request  cpu Configuration
+    ##
+    cpu: 400m
+    ## @param resources.requests.memory Resource request memory Configuration
+    ##
+    memory: 384Mi
+  ## @section resources.limits Resource limits Configuration
+  ##
+  limits:
+    ## @param resources.limits.cpu Resource limits cpu Configuration
+    ##
+    cpu: 750m
+    ## @param resources.limits.memory Resource limits memory Configuration
+    ##
+    memory: 768Mi
+  
+## @section Liveness Probe Configurations
+## @param livenessProbe.enabled Specifies if the liveness probe is enabled
+##
+livenessProbe:
+  ## @param livenessProbe.enabled Specifies if the liveness probe is enabled
+  ##
+  enabled: true
+  ## @param livenessProbe.initialDelaySeconds Number of seconds after the container has started before liveness probes are initiated
+  ##
+  initialDelaySeconds: 30
+  ## @param livenessProbe.periodSeconds How often to perform the probe
+  ##
+  periodSeconds: 10
+  ## @param livenessProbe.timeoutSeconds Number of seconds after which the probe times out
+  ##
+  timeoutSeconds: 20
+  ## @param livenessProbe.successThreshold Success threshold for liveness probe
+  ##
+  successThreshold: 1
+  ## @param livenessProbe.failureThreshold Minimum consecutive failures for the probe to be considered failed
+  ##
+  failureThreshold: 3
+  ## @param livenessProbe.path  The path for the liveness probe
+  ##
+  path: /v1/health
+  ## @param livenessProbe.port  The port to use for the probe
+  ##
+  port: http
+
+## @section Readiness Probe Configurations
+readinessProbe:
+  ## @param readinessProbe.enabled  Specifies if the readiness probe is enabled
+  ##
+  enabled: true
+  ## @param readinessProbe.initialDelaySeconds  Number of seconds after the container has started before readiness probes are initiated
+  ##
+  initialDelaySeconds: 30
+  ## @param readinessProbe.periodSeconds  How often to perform the probe
+  ##
+  periodSeconds: 10
+  ## @param readinessProbe.timeoutSeconds  Number of seconds after which the probe times out
+  ##
+  timeoutSeconds: 20
+  ## @param readinessProbe.successThreshold Success threshold for readiness probe
+  ##
+  successThreshold: 1
+  ## @param readinessProbe.failureThreshold  Minimum consecutive failures for the probe to be considered failed
+  ##
+  failureThreshold: 6
+  ## @param readinessProbe.path  The path for the readiness probe
+  ##
+  path: /v1/health
+  ## @param readinessProbe.port  The port to use for the probe
+  ##
+  port: http
+
+autoscaling:
+  ## @param autoscaling.enabled Enable autoscaling
+  ##
+  enabled: true
+  ## @param autoscaling.minReplicas Minimum number of replicas
+  ##
+  minReplicas: 1
+  ## @param autoscaling.maxReplicas Minimum number of replicas
+  ##
+  maxReplicas: 5
+  ## @param autoscaling.targetCPUUtilizationPercentage Target CPU utilization percentage
+  ##
+  targetCPUUtilizationPercentage: 80
+  ## @param autoscaling.targetMemoryUtilizationPercentage Target Memory utilization percentage
+  ##
+  targetMemoryUtilizationPercentage: 90
+
+## @section Image Pull secret configuration
+imagePullSecret:
+  ## @param imagePullSecret.name Name of the Secret that will be created
+  ##
+  name: docker-secret-cred-tenant-et-service
+  ## @param imagePullSecret.key Specific key inside the secret that will be created
+  ##
+  key: .dockerconfigjson
+  ## @param imagePullSecret.cloudProviderSecretName Name of the secret from the cloudprovider (AWS / GCP / AZURE)
+  ##
+  cloudProviderSecretName: canso-dockerhub-credentials
+  ## @param imagePullSecret.cloudProviderSecretKey Specific key inside the secret from cloud provider
+  ##
+  cloudProviderSecretKey: dockerhub
