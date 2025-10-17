@@ -1021,6 +1021,17 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-task-server-0.1.0/canso-task-server-0.1.0.tgz
     version: 0.1.0
+  canso-tenant-et-service:
+  - apiVersion: v2
+    appVersion: 0.0.1-python-3.13-slim
+    created: "2025-10-17T21:34:29.18897333Z"
+    description: Canso Service to extract and transform Tenant's data
+    digest: 0254eaa196310079afd7c6ab2281d8642e94850df64a0b46bd3aa015d1f6bcff
+    name: canso-tenant-et-service
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-tenant-et-service-0.0.1/canso-tenant-et-service-0.0.1.tgz
+    version: 0.0.1
   canso-workflow-orchestrator:
   - apiVersion: v2
     appVersion: v0.0.4-python-3.10-slim
@@ -1032,4 +1043,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2025-08-14T15:44:54.023138399Z"
+generated: "2025-10-17T21:34:29.189190124Z"
