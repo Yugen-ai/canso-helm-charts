@@ -41,12 +41,6 @@ spec:
             - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
-            - name: TENANT_CONFIG_ROOT_PATH
-              value: "/opt/canso-fraud-analyst-service/app/tenants"
-            - name: TENANT_DATA_ET_CONN_CONFIG_PATH
-              value: "/opt/canso-fraud-analyst-service/app/tenants/data_et_conn_configs.json"
-            - name: TENANT_DATA_ET_CONFIG_PATH
-              value: "/opt/canso-fraud-analyst-service/app/tenants/data_et_configs.json"
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
@@ -75,20 +69,10 @@ spec:
             {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
-          volumeMounts:
-            # ConfigMap volume mount
-            - name: tenant-resources 
-              mountPath: /opt/canso-fraud-analyst-service/app/tenants #TODO: Discuss & test in docker compose
-              readOnly: true
           {{- with .Values.volumeMounts }}
           volumeMounts:
             {{- toYaml . | nindent 12 }}
           {{- end }}
-      volumes:
-        # ConfigMap volume
-        - name: tenant-resources
-          configMap:
-            name: {{ include "canso-fraud-analyst-service.fullname" . }}-cm
       {{- with .Values.volumes }}
       volumes:
         {{- toYaml . | nindent 8 }}
