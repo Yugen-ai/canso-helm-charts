@@ -1,0 +1,53 @@
+# Default values for canso-redis Helm chart.
+# This file contains YAML-formatted configurations to be passed into Helm templates.
+
+## @param fullname Used as name for argo application, helm release name and fullNameOverride in redis helm chart
+fullname: canso-redis
+
+## @section argocd related configs
+argocd:
+  ## @param argocd.namespace namespace in which argocd in deployed
+  ##
+  namespace: argocd
+  ## @param argocd.project name of the argocd project for redis
+  ##
+  project: canso-redis
+
+## @section imagePullSecret related configs
+imagePullSecret:
+  ## @param imagePullSecret.name Name of the Secret that will be created
+  ##
+  name: docker-secret-cred-canso-redis
+  ## @param imagePullSecret.key Specifik key inside the secret that will be created
+  ##
+  key: .dockerconfigjson
+  ## @param imagePullSecret.cloudProviderSecretName Name of the secret from the cloudprovider (AWS / GCP / AZURE)
+  ##
+  cloudProviderSecretName: canso-dockerhub-credentials
+  ## @param imagePullSecret.cloudProviderSecretKey Specific key inside the secret from cloud provider
+  ##
+  cloudProviderSecretKey: dockerhub
+
+## @section redis configs
+redis:
+  ## @param redis.namespace Namespace in which redis will be installed
+  ##
+  namespace: canso-redis
+  ## @section redis.helm configs related to redis helm chart
+  ##
+  helm:
+    ## @param redis.helm.repo redis helm repository
+    ##
+    repo: registry-1.docker.io/bitnamicharts
+    ## @param redis.helm.chart redis helm chart name
+    ##
+    chart: redis
+    ## @param redis.helm.version redis helm chart version
+    ##
+    version: 21.2.10
+  ## @section redis.auth configs related to redis authentication
+  ##
+  auth:
+    ## @param redis.auth.enabled authentication enabled
+    ##
+    enabled: false
