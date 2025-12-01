@@ -88,7 +88,7 @@
 | ---------------------------------------- | ------------------------- | ------------------------------- |
 | `cansoAgent.deployment.image.repository` | repository for the image  | `shaktimaanbot/dev-agent-image` |
 | `cansoAgent.deployment.image.pullPolicy` | Pull policy for the image | `Always`                        |
-| `cansoAgent.deployment.image.tag`        | Tag for the image         | `v0.1.2-python-3.13-slim`       |
+| `cansoAgent.deployment.image.tag`        | Tag for the image         | `v0.1.3-python-3.13-slim`       |
 
 ### resources configuration
 
