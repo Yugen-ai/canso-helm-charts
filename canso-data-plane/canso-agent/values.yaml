@@ -175,6 +175,7 @@ cansoAgent:
   ## @section Deployment Configurations
   deployment:
     ## @section Image Configuration  
+    ##
     image:
       ## @param cansoAgent.deployment.image.repository repository for the image
       ##
