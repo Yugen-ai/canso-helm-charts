@@ -71,6 +71,7 @@ queues:
 ####################################################
 
 ## @param tolerations Tolerations for the deployment.
+##
 tolerations: {}
 
 ## @param affinity Affinity for the deployment.
