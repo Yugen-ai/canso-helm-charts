@@ -23,16 +23,18 @@
 
 ### Default Configs
 
-| Name              | Description                          | Value                    |
-| ----------------- | ------------------------------------ | ------------------------ |
-| `clusterName`     | Name of the AWS EKS cluster.         | `""`                     |
-| `clusterEndpoint` | Endpoint URL of the AWS EKS cluster. | `""`                     |
-| `tenantName`      | Name Assigned to the Tenant          | `""`                     |
-| `tenantID`        | Unique ID assigned to the Tenant     | `""`                     |
-| `awsRegion`       | AWS Region of the cluster            | `""`                     |
-| `queue_hostname`  | hostname for queue server            | `rabbitmq-amqp.canso.ai` |
-| `tolerations`     | Tolerations for the deployment.      | `{}`                     |
-| `affinity`        | Affinity for the deployment.         | `{}`                     |
+| Name                 | Description                                       | Value                    |
+| -------------------- | ------------------------------------------------- | ------------------------ |
+| `clusterName`        | Name of the AWS EKS cluster.                      | `""`                     |
+| `clusterEndpoint`    | Endpoint URL of the AWS EKS cluster.              | `""`                     |
+| `tenantName`         | Name Assigned to the Tenant                       | `""`                     |
+| `tenantID`           | Unique ID assigned to the Tenant                  | `""`                     |
+| `awsRegion`          | AWS Region of the cluster                         | `""`                     |
+| `encryption_enabled` |                                                   | `true`                   |
+| `fernet_key`         | Fernet decryption for encrypted RabbitMQ messages | `""`                     |
+| `queue_hostname`     | hostname for queue server                         | `rabbitmq-amqp.canso.ai` |
+| `tolerations`        | Tolerations for the deployment.                   | `{}`                     |
+| `affinity`           | Affinity for the deployment.                      | `{}`                     |
 
 ### Karpenter Configs
 
