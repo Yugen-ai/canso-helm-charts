@@ -37,6 +37,12 @@ config:
   ## @param config.streaming_interval_minutes interval to get spark streaming job health metrics.
   ##
   streaming_interval_minutes: "1"
+  ## @param config.encryption_enabled Enable Encryption
+  ##
+  encryption_enabled: ""
+  ## @param config.fernet_key Fernet Key
+  ##
+  fernet_key: ""
 
 ####################################################
 ### Secrets (Dependencies to carry out Deploys)
