@@ -49,6 +49,13 @@ tenantID: "" # THIS VALUE IS MANDATORY FOR CANSO SETUP (Reach out to the Canso T
 ##
 awsRegion: "" # THIS VALUE IS MANDATORY
 
+## @param encryption_enabled
+##
+encryption_enabled: true
+## @param fernet_key Fernet decryption for encrypted RabbitMQ messages
+##
+fernet_key: "" # THIS VALUE IS MANDATORY
+
 ####################################################
 ############### Queue Configs
 ####################################################
