@@ -30,7 +30,7 @@
 | `tenantName`         | Name Assigned to the Tenant                       | `""`                     |
 | `tenantID`           | Unique ID assigned to the Tenant                  | `""`                     |
 | `awsRegion`          | AWS Region of the cluster                         | `""`                     |
-| `encryption_enabled` |                                                   | `true`                   |
+| `encryption_enabled` | Enable Encryption                                 | `""`                     |
 | `fernet_key`         | Fernet decryption for encrypted RabbitMQ messages | `""`                     |
 | `queue_hostname`     | hostname for queue server                         | `rabbitmq-amqp.canso.ai` |
 | `tolerations`        | Tolerations for the deployment.                   | `{}`                     |
