@@ -39,7 +39,7 @@ config:
   streaming_interval_minutes: "1"
   ## @param config.encryption_enabled Enable Encryption
   ##
-  encryption_enabled: true
+  encryption_enabled: ""
   ## @param config.fernet_key Fernet Key
   ##
   fernet_key: ""
