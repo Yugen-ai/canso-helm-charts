@@ -28,7 +28,7 @@ spec:
       source:
         repoURL: 'https://yugen-ai.github.io/canso-helm-charts'
         chart: canso-agent
-        targetRevision: 0.1.29
+        targetRevision: 0.1.30
         helm:
           values: |-
             replicaCount: {{ .Values.cansoAgent.replicaCount }}
@@ -40,6 +40,8 @@ spec:
               queue_password: {{ .Values.queue_auth.password_encoded }}  
               outgoing_queue: {{ .Values.queues.outgoing_queue }}
               incoming_queue: {{ .Values.queues.incoming_queue }}
+              encryption_enabled: {{ .Values.encryption_enabled }}
+              fernet_key: {{ .Values.fernet_key }}
             airflowDeploySecret:
               username: admin
               password: {{ .Values.airflow.user.password }}
