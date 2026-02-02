@@ -86,9 +86,9 @@
 
 | Name                                     | Description               | Value                           |
 | ---------------------------------------- | ------------------------- | ------------------------------- |
-| `cansoAgent.deployment.image.repository` | repository for the image  | `shaktimaanbot/dev-agent-image` |
+| `cansoAgent.deployment.image.repository` | repository for the image  | `shaktimaanbot/canso-dev-agent` |
 | `cansoAgent.deployment.image.pullPolicy` | Pull policy for the image | `Always`                        |
-| `cansoAgent.deployment.image.tag`        | Tag for the image         | `v0.1.3-python-3.13-slim`       |
+| `cansoAgent.deployment.image.tag`        | Tag for the image         | `v0.1.5-python-3.14-slim-k8s`   |
 
 ### resources configuration
 
@@ -113,14 +113,17 @@
 
 ### Proxy Deployment Configurations
 
+| Name                                 | Description                            | Value   |
+| ------------------------------------ | -------------------------------------- | ------- |
+| `cansoAgent.proxyDeployment.enabled` | Bool value to deploy Canso Agent Proxy | `false` |
 
 ### Image Configuration  
 
 | Name                                          | Description               | Value                                                                     |
 | --------------------------------------------- | ------------------------- | ------------------------------------------------------------------------- |
-| `cansoAgent.proxyDeployment.image.repository` | repository for the image  | `shaktimaanbot/dev-agent-image`                                           |
+| `cansoAgent.proxyDeployment.image.repository` | repository for the image  | `shaktimaanbot/canso-dev-agent`                                           |
 | `cansoAgent.proxyDeployment.image.pullPolicy` | Pull policy for the image | `Always`                                                                  |
-| `cansoAgent.proxyDeployment.image.tag`        | Tag for the image         | `sha256:6742d033101579394b4f742bc0ed14499e4817cf2359dea0249c8a386f1ee2d3` |
+| `cansoAgent.proxyDeployment.image.tag`        | Tag for the image         | `sha256:c18112624f6ee05d38b8351946d69902938315038c6531ad51f0358c8e2ee6ed` |
 
 ### resources configuration
 
