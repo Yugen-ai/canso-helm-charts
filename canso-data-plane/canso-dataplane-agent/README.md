@@ -3,8 +3,9 @@
 ### deployment configuration
 
 | Name                          | Description                                               | Value    |
-|-------------------------------| --------------------------------------------------------- | -------- |
-| `deployment.image`            | full image identifier                                     | `""`     |
+|-------------------------------|-----------------------------------------------------------|----------|
+| `deployment.image.repository` | Image Repository                                          | `""`     |
+| `deployment.image.tag`        | Image tag                                                 | `""`     |
 | `deployment.image.pullPolicy` | Image pull policy for the deployment                      | `Always` |
 | `deployment.replicas`         | Number of replicas for the canso-fraud-inv-job deployment | `1`      |
 | `podAnnotations`              | POD Annotations                                           | `{}`     |
