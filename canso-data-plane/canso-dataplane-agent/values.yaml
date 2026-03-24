@@ -4,7 +4,6 @@
 
 ## @section deployment configuration
 deployment:
-  ## @param deployment.image full image identifier
   image:
     ## @param deployment.image.repository repository for the image
     ##
