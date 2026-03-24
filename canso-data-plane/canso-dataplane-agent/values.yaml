@@ -15,7 +15,7 @@ deployment:
     ## @param deployment.image.tag Tag for the image
     ##
     tag: "python-3.13-slim-v0.0.1"
-  
+  ## @param deployment.replicas replicas for the deployment
   replicas: 1
 
 ## @skip nameOverride Name override
