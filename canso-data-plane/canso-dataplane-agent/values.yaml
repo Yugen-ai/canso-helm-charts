@@ -5,12 +5,17 @@
 ## @section deployment configuration
 deployment:
   ## @param deployment.image full image identifier
-  image: ""
-  ## @param deployment.imagePullPolicy Image pull policy for the deployment
-  ##
-  imagePullPolicy: Always
-  ## @param deployment.replicas Number of replicas for the canso-fraud-inv-job deployment
-  ##
+  image:
+    ## @param canso-dataplane-agent.deployment.image.repository repository for the image
+    ##
+    repository: shaktimaanbot/canso-dataplane-agent
+    ## @param canso-dataplane-agent.deployment.image.pullPolicy Pull policy for the image
+    ##
+    pullPolicy: Always
+    ## @param canso-dataplane-agent.deployment.image.tag Tag for the image
+    ##
+    tag: ""
+  
   replicas: 1
 
 ## @skip nameOverride Name override
