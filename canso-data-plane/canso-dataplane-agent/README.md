@@ -2,14 +2,14 @@
 
 ### deployment configuration
 
-| Name                          | Description                                               | Value    |
-|-------------------------------|-----------------------------------------------------------|----------|
-| `deployment.image.repository` | Image Repository                                          | `""`     |
-| `deployment.image.tag`        | Image tag                                                 | `""`     |
-| `deployment.image.pullPolicy` | Image pull policy for the deployment                      | `Always` |
-| `deployment.replicas`         | Number of replicas for the canso-fraud-inv-job deployment | `1`      |
-| `podAnnotations`              | POD Annotations                                           | `{}`     |
-| `podLabels`                   | POD Labels                                                | `{}`     |
+| Name                          | Description                 | Value                                 |
+| ----------------------------- | --------------------------- | ------------------------------------- |
+| `deployment.image.repository` | repository for the image    | `shaktimaanbot/canso-dataplane-agent` |
+| `deployment.image.pullPolicy` | Pull policy for the image   | `Always`                              |
+| `deployment.image.tag`        | Tag for the image           | `python-3.13-slim-v0.0.1`             |
+| `deployment.replicas`         | replicas for the deployment | `1`                                   |
+| `podAnnotations`              | POD Annotations             | `{}`                                  |
+| `podLabels`                   | POD Labels                  | `{}`                                  |
 
 ### service Service Configuration
 
