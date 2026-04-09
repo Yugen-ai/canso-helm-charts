@@ -669,6 +669,16 @@ entries:
   canso-dplane-workflows:
   - apiVersion: v2
     appVersion: v0.0.1
+    created: "2026-04-09T16:05:07.562855591Z"
+    description: A Helm chart for canso-dplane-workflows
+    digest: b4ed8abe89190d5110e0003b7622155ce86562acf5bbde6a95b58250921243ce
+    name: canso-dplane-workflows
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-dplane-workflows-0.0.2/canso-dplane-workflows-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    appVersion: v0.0.1
     created: "2026-04-09T15:49:45.244185474Z"
     description: A Helm chart for canso-dplane-workflows
     digest: 997d7b7b15bef5a94c8654984017f73394cd41904482e744a1e8806c3634a47e
@@ -1144,4 +1154,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2026-04-09T15:49:45.244449116Z"
+generated: "2026-04-09T16:05:07.563197398Z"
