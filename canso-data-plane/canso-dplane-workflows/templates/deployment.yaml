@@ -23,9 +23,6 @@ spec:
             - name: {{ $key }}
               value: {{ $value | quote }}
             {{- end }}
-          command: ["/bin/sh", "-c"]
-          args: 
-            - celery -A main worker --loglevel=info --concurrency {{ .Values.deployment.concurrencyPerReplica }}
           resources:
             {{- toYaml .Values.deployment.resources | nindent 12 }}
       imagePullSecrets:
