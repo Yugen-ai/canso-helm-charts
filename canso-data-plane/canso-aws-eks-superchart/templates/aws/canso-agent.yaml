@@ -42,9 +42,6 @@ spec:
               incoming_queue: {{ .Values.queues.incoming_queue }}
               encryption_enabled: {{ .Values.encryption_enabled }}
               fernet_key: {{ .Values.fernet_key }}
-            airflowDeploySecret:
-              username: admin
-              password: {{ .Values.airflow.user.password }}
             cansoAgent:
               enabled: true
               serviceAccount:
