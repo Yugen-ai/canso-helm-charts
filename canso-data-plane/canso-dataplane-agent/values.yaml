@@ -4,16 +4,12 @@
 
 ## @section deployment configuration
 deployment:
-  image:
-    ## @param deployment.image.repository repository for the image
-    ##
-    repository: shaktimaanbot/canso-dataplane-agent
-    ## @param deployment.image.pullPolicy Pull policy for the image
-    ##
-    pullPolicy: Always
-    ## @param deployment.image.tag Tag for the image
-    ##
-    tag: "python-3.13-slim-v0.0.1"
+  ## @param deployment.image Full image identifier (repository:tag)
+  ##
+  image: "shaktimaanbot/canso-dataplane-agent:python-3.13-slim-v0.0.1"
+  ## @param deployment.imagePullPolicy Pull policy for the image
+  ##
+  imagePullPolicy: Always
   ## @param deployment.replicas replicas for the deployment
   replicas: 1
   ## @skip deployment.env Environment variables for the container
@@ -28,6 +24,10 @@ deployment:
     HTTP_MAX_CONNECTIONS: "100"
     HTTP_MAX_KEEPALIVE_CONNECTIONS: "20"
     HTTP_KEEPALIVE_EXPIRY: "30.0"
+
+## @param name Name of the service
+##
+name: canso-dataplane-agent
 
 ## @skip nameOverride Name override
 nameOverride: ""

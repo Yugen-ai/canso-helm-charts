@@ -26,9 +26,9 @@ spec:
       imagePullSecrets:
         - name: {{ .Values.imagePullSecret.name }}
       containers:
-        - name: {{ .Chart.Name }}
-          image: {{ include "canso-dataplane-agent.image" (dict "repository" .Values.deployment.image.repository "tag" (default .Chart.AppVersion .Values.deployment.image.tag)) }}
-          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+        - name: {{ .Values.name }}
+          image: "{{ .Values.deployment.image }}"
+          imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
