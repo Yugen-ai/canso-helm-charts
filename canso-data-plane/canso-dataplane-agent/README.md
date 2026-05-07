@@ -2,14 +2,14 @@
 
 ### deployment configuration
 
-| Name                          | Description                 | Value                                 |
-| ----------------------------- | --------------------------- | ------------------------------------- |
-| `deployment.image.repository` | repository for the image    | `shaktimaanbot/canso-dataplane-agent` |
-| `deployment.image.pullPolicy` | Pull policy for the image   | `Always`                              |
-| `deployment.image.tag`        | Tag for the image           | `python-3.13-slim-v0.0.1`             |
-| `deployment.replicas`         | replicas for the deployment | `1`                                   |
-| `podAnnotations`              | POD Annotations             | `{}`                                  |
-| `podLabels`                   | POD Labels                  | `{}`                                  |
+| Name                         | Description                            | Value                                                         |
+| ---------------------------- | -------------------------------------- | ------------------------------------------------------------- |
+| `deployment.image`           | Full image identifier (repository:tag) | `shaktimaanbot/canso-dataplane-agent:python-3.13-slim-v0.0.1` |
+| `deployment.imagePullPolicy` | Pull policy for the image              | `Always`                                                      |
+| `deployment.replicas`        | replicas for the deployment            | `1`                                                           |
+| `name`                       | Name of the service                    | `canso-dataplane-agent`                                       |
+| `podAnnotations`             | POD Annotations                        | `{}`                                                          |
+| `podLabels`                  | POD Labels                             | `{}`                                                          |
 
 ### service Service Configuration
 
