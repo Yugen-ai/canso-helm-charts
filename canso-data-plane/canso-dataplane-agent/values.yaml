@@ -136,6 +136,55 @@ autoscaling:
   ##
   targetMemoryUtilizationPercentage: 90
 
+## @section Ingress Configuration
+##
+ingress:
+  ## @param ingress.enabled Enable the ingress
+  ##
+  enabled: false
+  ## @param ingress.host Hostname for the ingress rule
+  ##
+  host: "" # example: dataplane-agent.tenant.company.com
+  ## @param ingress.path Path for path-based routing
+  ##
+  path: /
+  ## @param ingress.pathType Path type for the ingress
+  ##
+  pathType: Prefix
+  ## @param ingress.ingressClassName Ingress class name
+  ##
+  ingressClassName: alb
+  ## @skip ingress.annotations Annotations for the AWS ALB ingress controller
+  ##
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80},{"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
+    alb.ingress.kubernetes.io/certificate-arn: '' # ACM certificate ARN for TLS
+    alb.ingress.kubernetes.io/group.name: '' # ALB group to share a single LB across services
+    alb.ingress.kubernetes.io/healthcheck-path: '/api/v1/health'
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: '30'
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '10'
+    alb.ingress.kubernetes.io/tags: ''
+
+## @section Network Policy Configuration
+##
+networkPolicy:
+  ## @param networkPolicy.enabled Enable the network policy
+  ##
+  enabled: false
+  ## @param networkPolicy.ingressVpcCidr VPC CIDR from which ALB sends traffic to pods (target-type: ip)
+  ##
+  ingressVpcCidr: "10.0.0.0/8"
+  ## @param networkPolicy.egressPorts List of TCP ports the agent is allowed to reach on upstream cluster services
+  ##
+  egressPorts:
+    - 80
+    - 443
+    - 8080
+    - 8090
+
 ## @section Image Pull secret configuration
 imagePullSecret:
   ## @param imagePullSecret.name Name of the Secret that will be created
