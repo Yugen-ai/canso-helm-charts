@@ -1,0 +1,6 @@
+apiVersion: v2
+name: canso-dplane-workflows
+description: A Helm chart for canso-dplane-workflows
+type: application
+version: 0.0.2
+appVersion: "v0.0.1"
