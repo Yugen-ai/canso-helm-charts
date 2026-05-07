@@ -68,20 +68,21 @@
 
 ### Ingress Configuration
 
-| Name                       | Description                   | Value    |
-| -------------------------- | ----------------------------- | -------- |
-| `ingress.enabled`          | Enable the ingress            | `false`  |
-| `ingress.host`             | Hostname for the ingress rule | `""`     |
-| `ingress.path`             | Path for path-based routing   | `/`      |
-| `ingress.pathType`         | Path type for the ingress     | `Prefix` |
-| `ingress.ingressClassName` | Ingress class name            | `alb`    |
+| Name                        | Description                                                              | Value           |
+| --------------------------- | ------------------------------------------------------------------------ | --------------- |
+| `ingress.enabled`           | Enable the ingress                                                       | `false`         |
+| `ingress.host`              | Hostname for the ingress rule (must match the nginx master ingress host) | `""`            |
+| `ingress.path`              | Path exposed externally — routed to the service without rewriting        | `/api/v1/relay` |
+| `ingress.pathType`          | Path type for the ingress                                                | `Prefix`        |
+| `ingress.ingressClassName`  | Ingress class name                                                       | `nginx`         |
+| `ingress.clientMaxBodySize` | Maximum allowed request body size                                        | `100m`          |
 
 ### Network Policy Configuration
 
-| Name                           | Description                                                     | Value        |
-| ------------------------------ | --------------------------------------------------------------- | ------------ |
-| `networkPolicy.enabled`        | Enable the network policy                                       | `false`      |
-| `networkPolicy.ingressVpcCidr` | VPC CIDR from which ALB sends traffic to pods (target-type: ip) | `10.0.0.0/8` |
+| Name                                  | Description                                       | Value           |
+| ------------------------------------- | ------------------------------------------------- | --------------- |
+| `networkPolicy.enabled`               | Enable the network policy                         | `true`          |
+| `networkPolicy.nginxIngressNamespace` | Namespace where the nginx ingress controller runs | `nginx-ingress` |
 
 ### Image Pull secret configuration
 
