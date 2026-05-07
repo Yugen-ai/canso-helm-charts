@@ -16,6 +16,18 @@ deployment:
     tag: "python-3.13-slim-v0.0.1"
   ## @param deployment.replicas replicas for the deployment
   replicas: 1
+  ## @skip deployment.env Environment variables for the container
+  env:
+    HOST: "0.0.0.0"
+    PORT: "8090"
+    WORKERS: "4"
+    HTTP_CONNECT_TIMEOUT: "10.0"
+    HTTP_READ_TIMEOUT: "120.0"
+    HTTP_WRITE_TIMEOUT: "120.0"
+    HTTP_POOL_TIMEOUT: "5.0"
+    HTTP_MAX_CONNECTIONS: "100"
+    HTTP_MAX_KEEPALIVE_CONNECTIONS: "20"
+    HTTP_KEEPALIVE_EXPIRY: "30.0"
 
 ## @skip nameOverride Name override
 nameOverride: ""
@@ -64,7 +76,6 @@ resources:
     memory: 768Mi
   
 ## @section Liveness Probe Configurations
-## @param livenessProbe.enabled Specifies if the liveness probe is enabled
 ##
 livenessProbe:
   ## @param livenessProbe.enabled Specifies if the liveness probe is enabled
@@ -177,8 +188,7 @@ networkPolicy:
   ## @param networkPolicy.ingressVpcCidr VPC CIDR from which ALB sends traffic to pods (target-type: ip)
   ##
   ingressVpcCidr: "10.0.0.0/8"
-  ## @param networkPolicy.egressPorts List of TCP ports the agent is allowed to reach on upstream cluster services
-  ##
+  ## @skip networkPolicy.egressPorts List of TCP ports the agent is allowed to reach on upstream cluster services
   egressPorts:
     - 80
     - 443
