@@ -40,7 +40,6 @@
 | Name                                | Description                                                                            | Value            |
 | ----------------------------------- | -------------------------------------------------------------------------------------- | ---------------- |
 | `livenessProbe.enabled`             | Specifies if the liveness probe is enabled                                             | `true`           |
-| `livenessProbe.enabled`             | Specifies if the liveness probe is enabled                                             | `true`           |
 | `livenessProbe.initialDelaySeconds` | Number of seconds after the container has started before liveness probes are initiated | `30`             |
 | `livenessProbe.periodSeconds`       | How often to perform the probe                                                         | `10`             |
 | `livenessProbe.timeoutSeconds`      | Number of seconds after which the probe times out                                      | `20`             |
@@ -66,6 +65,23 @@
 | `autoscaling.maxReplicas`                       | Minimum number of replicas                                                              | `5`              |
 | `autoscaling.targetCPUUtilizationPercentage`    | Target CPU utilization percentage                                                       | `80`             |
 | `autoscaling.targetMemoryUtilizationPercentage` | Target Memory utilization percentage                                                    | `90`             |
+
+### Ingress Configuration
+
+| Name                       | Description                   | Value    |
+| -------------------------- | ----------------------------- | -------- |
+| `ingress.enabled`          | Enable the ingress            | `false`  |
+| `ingress.host`             | Hostname for the ingress rule | `""`     |
+| `ingress.path`             | Path for path-based routing   | `/`      |
+| `ingress.pathType`         | Path type for the ingress     | `Prefix` |
+| `ingress.ingressClassName` | Ingress class name            | `alb`    |
+
+### Network Policy Configuration
+
+| Name                           | Description                                                     | Value        |
+| ------------------------------ | --------------------------------------------------------------- | ------------ |
+| `networkPolicy.enabled`        | Enable the network policy                                       | `false`      |
+| `networkPolicy.ingressVpcCidr` | VPC CIDR from which ALB sends traffic to pods (target-type: ip) | `10.0.0.0/8` |
 
 ### Image Pull secret configuration
 
