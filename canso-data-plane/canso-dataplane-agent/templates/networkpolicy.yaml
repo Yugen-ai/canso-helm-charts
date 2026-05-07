@@ -13,10 +13,11 @@ spec:
     - Ingress
     - Egress
   ingress:
-    # Accept traffic only from the ALB (which routes via VPC-internal IPs when target-type: ip)
+    # Accept traffic only from the nginx ingress controller pods
     - from:
-        - ipBlock:
-            cidr: {{ .Values.networkPolicy.ingressVpcCidr }}
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ .Values.networkPolicy.nginxIngressNamespace }}
       ports:
         - protocol: TCP
           port: {{ .Values.service.port }}

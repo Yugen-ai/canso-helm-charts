@@ -6,7 +6,11 @@ metadata:
   labels:
     {{- include "canso-dataplane-agent.labels" . | nindent 4 }}
   annotations:
-    {{- toYaml .Values.ingress.annotations | nindent 4 }}
+    nginx.org/mergeable-ingress-type: minion
+    nginx.org/client-max-body-size: {{ .Values.ingress.clientMaxBodySize | quote }}
+    {{- with .Values.ingress.extraAnnotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   ingressClassName: {{ .Values.ingress.ingressClassName }}
   rules:
