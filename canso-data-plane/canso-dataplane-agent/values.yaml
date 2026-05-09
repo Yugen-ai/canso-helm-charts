@@ -156,9 +156,9 @@ ingress:
   ## @param ingress.host Hostname for the ingress rule (must match the nginx master ingress host)
   ##
   host: ""
-  ## @param ingress.path Path exposed externally — routed to the service without rewriting
+  ## @param ingress.pathPrefix Path prefix exposed externally — routed to the service without rewriting
   ##
-  path: /api/v1/relay
+  pathPrefix: /api/v1/relay
   ## @param ingress.pathType Path type for the ingress
   ##
   pathType: Prefix
