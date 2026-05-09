@@ -72,7 +72,7 @@
 | --------------------------- | ------------------------------------------------------------------------ | --------------- |
 | `ingress.enabled`           | Enable the ingress                                                       | `false`         |
 | `ingress.host`              | Hostname for the ingress rule (must match the nginx master ingress host) | `""`            |
-| `ingress.path`              | Path exposed externally — routed to the service without rewriting        | `/api/v1/relay` |
+| `ingress.pathPrefix`        | Path prefix exposed externally — routed to the service without rewriting | `/api/v1/relay` |
 | `ingress.pathType`          | Path type for the ingress                                                | `Prefix`        |
 | `ingress.ingressClassName`  | Ingress class name                                                       | `nginx`         |
 | `ingress.clientMaxBodySize` | Maximum allowed request body size                                        | `100m`          |
