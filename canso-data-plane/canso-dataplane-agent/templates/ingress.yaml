@@ -21,7 +21,7 @@ spec:
             pathType: {{ .Values.ingress.pathType }}
             backend:
               service:
-                name: canso-dataplane-agent
+                name: {{ include "canso-dataplane-agent.fullname" . }}
                 port:
                   number: {{ .Values.service.port }}
 {{- end }}
