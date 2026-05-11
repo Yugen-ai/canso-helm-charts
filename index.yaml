@@ -666,6 +666,17 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-aws-eks-superchart-0.1.7/canso-aws-eks-superchart-0.1.7.tgz
     version: 0.1.7
+  canso-dataplane-agent:
+  - apiVersion: v2
+    appVersion: 0.0.1-python-3.13-slim
+    created: "2026-05-11T15:57:08.063845728Z"
+    description: A Helm chart to deploy the canso data plane agent
+    digest: bd1f140837136ada3c149a599b4989b1c5e84ab316e533886d9435bf4737a765
+    name: canso-dataplane-agent
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-dataplane-agent-0.0.1/canso-dataplane-agent-0.0.1.tgz
+    version: 0.0.1
   canso-dplane-workflows:
   - apiVersion: v2
     appVersion: v0.0.1
@@ -1154,4 +1165,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2026-04-09T16:05:07.563197398Z"
+generated: "2026-05-11T15:57:08.064006189Z"
