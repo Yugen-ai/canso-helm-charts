@@ -1,0 +1,200 @@
+# Default values for canso-dataplane-agent.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+## @section deployment configuration
+deployment:
+  ## @param deployment.image Full image identifier (repository:tag)
+  ##
+  image: "shaktimaanbot/canso-dataplane-agent:python-3.13-slim-v0.0.1"
+  ## @param deployment.imagePullPolicy Pull policy for the image
+  ##
+  imagePullPolicy: Always
+  ## @param deployment.replicas replicas for the deployment
+  replicas: 1
+  ## @skip deployment.env Environment variables for the container
+  env:
+    HOST: "0.0.0.0"
+    PORT: "8090"
+    WORKERS: "4"
+    HTTP_CONNECT_TIMEOUT: "10.0"
+    HTTP_READ_TIMEOUT: "120.0"
+    HTTP_WRITE_TIMEOUT: "120.0"
+    HTTP_POOL_TIMEOUT: "5.0"
+    HTTP_MAX_CONNECTIONS: "100"
+    HTTP_MAX_KEEPALIVE_CONNECTIONS: "20"
+    HTTP_KEEPALIVE_EXPIRY: "30.0"
+
+## @param name Name of the service
+##
+name: canso-dataplane-agent
+
+## @skip nameOverride Name override
+nameOverride: ""
+## @skip fullnameOverride Full name override
+fullnameOverride: ""
+
+
+## @param podAnnotations POD Annotations
+##
+podAnnotations: {}
+## @param podLabels POD Labels
+##
+podLabels: {}
+
+
+## @section service Service Configuration
+##
+service:
+  ## @param service.type Service Type (ClusterIP, NodePort, and LoadBalancer)
+  ##
+  type: ClusterIP
+  ## @param service.port Port used by clients to access the service
+  ##
+  port: 8090
+
+## @section resources Resource Configuration
+##
+resources:
+  ## @section resources.request Resource request Configuration
+  ##
+  requests:
+    ## @param resources.requests.cpu Resource request  cpu Configuration
+    ##
+    cpu: 400m
+    ## @param resources.requests.memory Resource request memory Configuration
+    ##
+    memory: 384Mi
+  ## @section resources.limits Resource limits Configuration
+  ##
+  limits:
+    ## @param resources.limits.cpu Resource limits cpu Configuration
+    ##
+    cpu: 750m
+    ## @param resources.limits.memory Resource limits memory Configuration
+    ##
+    memory: 768Mi
+  
+## @section Liveness Probe Configurations
+##
+livenessProbe:
+  ## @param livenessProbe.enabled Specifies if the liveness probe is enabled
+  ##
+  enabled: true
+  ## @param livenessProbe.initialDelaySeconds Number of seconds after the container has started before liveness probes are initiated
+  ##
+  initialDelaySeconds: 30
+  ## @param livenessProbe.periodSeconds How often to perform the probe
+  ##
+  periodSeconds: 10
+  ## @param livenessProbe.timeoutSeconds Number of seconds after which the probe times out
+  ##
+  timeoutSeconds: 20
+  ## @param livenessProbe.successThreshold Success threshold for liveness probe
+  ##
+  successThreshold: 1
+  ## @param livenessProbe.failureThreshold Minimum consecutive failures for the probe to be considered failed
+  ##
+  failureThreshold: 3
+  ## @param livenessProbe.path  The path for the liveness probe
+  ##
+  path: /api/v1/health
+  ## @param livenessProbe.port  The port to use for the probe
+  ##
+  port: http
+
+## @section Readiness Probe Configurations
+readinessProbe:
+  ## @param readinessProbe.enabled  Specifies if the readiness probe is enabled
+  ##
+  enabled: true
+  ## @param readinessProbe.initialDelaySeconds  Number of seconds after the container has started before readiness probes are initiated
+  ##
+  initialDelaySeconds: 30
+  ## @param readinessProbe.periodSeconds  How often to perform the probe
+  ##
+  periodSeconds: 10
+  ## @param readinessProbe.timeoutSeconds  Number of seconds after which the probe times out
+  ##
+  timeoutSeconds: 20
+  ## @param readinessProbe.successThreshold Success threshold for readiness probe
+  ##
+  successThreshold: 1
+  ## @param readinessProbe.failureThreshold  Minimum consecutive failures for the probe to be considered failed
+  ##
+  failureThreshold: 6
+  ## @param readinessProbe.path  The path for the readiness probe
+  ##
+  path: /api/v1/health
+  ## @param readinessProbe.port  The port to use for the probe
+  ##
+  port: http
+
+autoscaling:
+  ## @param autoscaling.enabled Enable autoscaling
+  ##
+  enabled: true
+  ## @param autoscaling.minReplicas Minimum number of replicas
+  ##
+  minReplicas: 1
+  ## @param autoscaling.maxReplicas Minimum number of replicas
+  ##
+  maxReplicas: 5
+  ## @param autoscaling.targetCPUUtilizationPercentage Target CPU utilization percentage
+  ##
+  targetCPUUtilizationPercentage: 80
+  ## @param autoscaling.targetMemoryUtilizationPercentage Target Memory utilization percentage
+  ##
+  targetMemoryUtilizationPercentage: 90
+
+## @section Ingress Configuration
+##
+ingress:
+  ## @param ingress.enabled Enable the ingress
+  ##
+  enabled: false
+  ## @param ingress.host Hostname for the ingress rule (must match the nginx master ingress host)
+  ##
+  host: ""
+  ## @param ingress.pathPrefix Path prefix exposed externally — routed to the service without rewriting
+  ##
+  pathPrefix: /api/v1/relay
+  ## @param ingress.pathType Path type for the ingress
+  ##
+  pathType: Prefix
+  ## @param ingress.ingressClassName Ingress class name
+  ##
+  ingressClassName: nginx
+  ## @param ingress.clientMaxBodySize Maximum allowed request body size
+  ##
+  clientMaxBodySize: "100m"
+  ## @skip ingress.extraAnnotations Additional nginx annotations to merge in
+  extraAnnotations: {}
+
+## @section Network Policy Configuration
+##
+networkPolicy:
+  ## @param networkPolicy.enabled Enable the network policy
+  ##
+  enabled: true
+  ## @param networkPolicy.nginxIngressNamespace Namespace where the nginx ingress controller runs
+  ##
+  nginxIngressNamespace: "nginx-ingress"
+  ## @skip networkPolicy.egressPorts List of TCP ports the agent is allowed to reach on upstream cluster services
+  egressPorts:
+    - 8085
+
+## @section Image Pull secret configuration
+imagePullSecret:
+  ## @param imagePullSecret.name Name of the Secret that will be created
+  ##
+  name: docker-secret-cred-canso-dataplane-agent
+  ## @param imagePullSecret.key Specific key inside the secret that will be created
+  ##
+  key: .dockerconfigjson
+  ## @param imagePullSecret.cloudProviderSecretName Name of the secret from the cloudprovider (AWS / GCP / AZURE)
+  ##
+  cloudProviderSecretName: canso-dockerhub-credentials
+  ## @param imagePullSecret.cloudProviderSecretKey Specific key inside the secret from cloud provider
+  ##
+  cloudProviderSecretKey: dockerhub
