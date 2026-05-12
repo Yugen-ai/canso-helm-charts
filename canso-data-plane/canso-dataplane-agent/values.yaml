@@ -32,7 +32,7 @@ name: canso-dataplane-agent
 ## @skip nameOverride Name override
 nameOverride: ""
 ## @skip fullnameOverride Full name override
-fullnameOverride: ""
+fullnameOverride: "canso-dataplane-agent"
 
 
 ## @param podAnnotations POD Annotations
