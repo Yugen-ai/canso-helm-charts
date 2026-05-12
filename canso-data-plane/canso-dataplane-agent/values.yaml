@@ -155,10 +155,10 @@ ingress:
   enabled: false
   ## @param ingress.host Hostname for the ingress rule (must match the nginx master ingress host)
   ##
-  host: ""
-  ## @param ingress.pathPrefix Path prefix exposed externally — routed to the service without rewriting
+  host: "*.com"
+  ## @param ingress.pathPrefix Path prefix exposed externally — rewritten to / before forwarding to the service
   ##
-  pathPrefix: /api/v1/relay
+  pathPrefix: /dplane-agent
   ## @param ingress.pathType Path type for the ingress
   ##
   pathType: Prefix
