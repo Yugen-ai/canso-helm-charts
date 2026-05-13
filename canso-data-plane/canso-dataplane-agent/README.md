@@ -68,14 +68,14 @@
 
 ### Ingress Configuration
 
-| Name                        | Description                                                                      | Value           |
-| --------------------------- | -------------------------------------------------------------------------------- | --------------- |
-| `ingress.enabled`           | Enable the ingress                                                               | `false`         |
-| `ingress.host`              | Hostname for the ingress rule (must match the nginx master ingress host)         | `*.com`         |
-| `ingress.pathPrefix`        | Path prefix exposed externally — rewritten to / before forwarding to the service | `/dplane-agent` |
-| `ingress.pathType`          | Path type for the ingress                                                        | `Prefix`        |
-| `ingress.ingressClassName`  | Ingress class name                                                               | `nginx`         |
-| `ingress.clientMaxBodySize` | Maximum allowed request body size                                                | `100m`          |
+| Name                        | Description                                                                      | Value            |
+| --------------------------- | -------------------------------------------------------------------------------- | ---------------- |
+| `ingress.enabled`           | Enable the ingress                                                               | `false`          |
+| `ingress.host`              | Hostname for the ingress rule (must match the nginx master ingress host)         | `*.com`          |
+| `ingress.pathPrefix`        | Path prefix exposed externally — rewritten to / before forwarding to the service | `/dplane-agent/` |
+| `ingress.pathType`          | Path type for the ingress                                                        | `Prefix`         |
+| `ingress.ingressClassName`  | Ingress class name                                                               | `nginx`          |
+| `ingress.clientMaxBodySize` | Maximum allowed request body size                                                | `100m`           |
 
 ### Network Policy Configuration
 
