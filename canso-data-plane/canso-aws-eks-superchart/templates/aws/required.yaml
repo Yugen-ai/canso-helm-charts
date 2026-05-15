@@ -4,9 +4,6 @@
 ## all values mandatorily needed by the Helm.
 
 
-{{- $_ := required "roleArn is a required value" .Values.airflow.roleArn}}
-{{- $_ := required "pvc.Name is a required value" .Values.airflow.pvc.name}}
-{{- $_ := required "password is a required value" .Values.airflow.user.password}}
 {{- $_ := required "queue_auth_username is a required value" .Values.queue_auth.username}}
 {{- $_ := required "queue_auth_password_encoded is a required value" .Values.queue_auth.password_encoded}}
 {{- $_ := required "incoming_queue is a required value" .Values.queues.incoming_queue}}
