@@ -100,21 +100,6 @@ opentelemetry-collector:
         routing:
           exchange: "${env:RABBITMQ_EXCHANGE}"
           routing_key: "otlp.logs"
-
-      rabbitmq/profiles:
-        connection:
-          endpoint: "${env:RABBITMQ_URL}"
-          auth:
-            plain:
-              username: "${env:RABBITMQ_USERNAME}"
-              password: "${env:RABBITMQ_PASSWORD}"
-          tls:
-            insecure: false 
-            insecure_skip_verify: true
-        encoding_extension: otlp_encoding
-        routing:
-          exchange: "${env:RABBITMQ_EXCHANGE}"
-          routing_key: "otlp.profiles"
       
     service:
       extensions:
@@ -132,7 +117,3 @@ opentelemetry-collector:
           receivers: [otlp]
           processors: [batch]
           exporters: [rabbitmq/logs]
-        profiles:
-          receivers: [otlp]
-          processors: [batch]
-          exporters: [rabbitmq/profiles]
