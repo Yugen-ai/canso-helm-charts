@@ -6,7 +6,6 @@ imagePullSecret:
   cloudProviderSecretKey: ""
 
 
-
 opentelemetry-collector:
   image:
     repository: "otel/opentelemetry-collector-contrib"
@@ -59,6 +58,10 @@ opentelemetry-collector:
             plain:
               username: "${env:RABBITMQ_USERNAME}"
               password: "${env:RABBITMQ_PASSWORD}"
+          tls:
+            insecure: false 
+            insecure_skip_verify: true
+        encoding: otlp_json
         routing:
           exchange: "${env:RABBITMQ_EXCHANGE}"
           routing_key: "otlp.traces"
@@ -70,6 +73,10 @@ opentelemetry-collector:
             plain:
               username: "${env:RABBITMQ_USERNAME}"
               password: "${env:RABBITMQ_PASSWORD}"
+          tls:
+            insecure: false 
+            insecure_skip_verify: true
+        encoding: otlp_json
         routing:
           exchange: "${env:RABBITMQ_EXCHANGE}"
           routing_key: "otlp.metrics"
@@ -81,6 +88,10 @@ opentelemetry-collector:
             plain:
               username: "${env:RABBITMQ_USERNAME}"
               password: "${env:RABBITMQ_PASSWORD}"
+          tls:
+            insecure: false 
+            insecure_skip_verify: true
+        encoding: otlp_json
         routing:
           exchange: "${env:RABBITMQ_EXCHANGE}"
           routing_key: "otlp.logs"
@@ -92,6 +103,10 @@ opentelemetry-collector:
             plain:
               username: "${env:RABBITMQ_USERNAME}"
               password: "${env:RABBITMQ_PASSWORD}"
+          tls:
+            insecure: false 
+            insecure_skip_verify: true
+        encoding: otlp_json
         routing:
           exchange: "${env:RABBITMQ_EXCHANGE}"
           routing_key: "otlp.profiles"
