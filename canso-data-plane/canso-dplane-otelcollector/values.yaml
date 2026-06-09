@@ -13,7 +13,9 @@ opentelemetry-collector:
   imagePullSecrets:
     - name: "otelcollector-image-pull-secret"
   
-  mode: daemonset
+  mode: deployment
+
+  replicaCount: 2
 
   extraEnvs:
     - name: RABBITMQ_USERNAME
@@ -38,6 +40,9 @@ opentelemetry-collector:
           key: exchange
 
   config:
+    extensions:
+      otlp_encoding:
+        protocol: otlp_json
     receivers:
       otlp:
         protocols:
@@ -61,7 +66,7 @@ opentelemetry-collector:
           tls:
             insecure: false 
             insecure_skip_verify: true
-        encoding: otlp_json
+        encoding_extension: otlp_encoding
         routing:
           exchange: "${env:RABBITMQ_EXCHANGE}"
           routing_key: "otlp.traces"
@@ -76,7 +81,7 @@ opentelemetry-collector:
           tls:
             insecure: false 
             insecure_skip_verify: true
-        encoding: otlp_json
+        encoding_extension: otlp_encoding
         routing:
           exchange: "${env:RABBITMQ_EXCHANGE}"
           routing_key: "otlp.metrics"
@@ -91,7 +96,7 @@ opentelemetry-collector:
           tls:
             insecure: false 
             insecure_skip_verify: true
-        encoding: otlp_json
+        encoding_extension: otlp_encoding
         routing:
           exchange: "${env:RABBITMQ_EXCHANGE}"
           routing_key: "otlp.logs"
@@ -106,12 +111,14 @@ opentelemetry-collector:
           tls:
             insecure: false 
             insecure_skip_verify: true
-        encoding: otlp_json
+        encoding_extension: otlp_encoding
         routing:
           exchange: "${env:RABBITMQ_EXCHANGE}"
           routing_key: "otlp.profiles"
       
     service:
+      extensions:
+        - otlp_encoding
       pipelines:
         traces:
           receivers: [otlp]
