@@ -690,6 +690,20 @@ entries:
   canso-dplane-otelcollector:
   - apiVersion: v2
     appVersion: 0.0.1
+    created: "2026-06-09T09:53:40.679284774Z"
+    dependencies:
+    - name: opentelemetry-collector
+      repository: https://open-telemetry.github.io/opentelemetry-helm-charts
+      version: 0.158.1
+    description: A Helm chart for deploying otelcollector in data plane
+    digest: b680f3e5b5d5589611cd16a0d41eb79150a326d212f598ac202457a69127fa74
+    name: canso-dplane-otelcollector
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-dplane-otelcollector-0.0.2/canso-dplane-otelcollector-0.0.2.tgz
+    version: 0.0.2
+  - apiVersion: v2
+    appVersion: 0.0.1
     created: "2026-06-09T09:29:41.657223449Z"
     dependencies:
     - name: opentelemetry-collector
@@ -1190,4 +1204,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2026-06-09T09:29:41.657502691Z"
+generated: "2026-06-09T09:53:40.679476488Z"
