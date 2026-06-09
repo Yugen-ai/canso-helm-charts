@@ -5,6 +5,8 @@ imagePullSecret:
   cloudProviderSecretName: ""
   cloudProviderSecretKey: ""
 
+
+
 opentelemetry-collector:
   image:
     repository: "otel/opentelemetry-collector-contrib"
