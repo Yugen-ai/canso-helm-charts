@@ -1,0 +1,114 @@
+rabbitmq:
+  cloudProviderSecretName: ""
+
+imagePullSecret:
+  cloudProviderSecretName: ""
+  cloudProviderSecretKey: ""
+
+opentelemetry-collector:
+  image:
+    repository: "otel/opentelemetry-collector-contrib"
+
+  imagePullSecrets:
+    - name: "otelcollector-image-pull-secret"
+  
+  mode: daemonset
+
+  extraEnvs:
+    - name: RABBITMQ_USERNAME
+      valueFrom:
+        secretKeyRef:
+          name: 'otelcollector-rabbitmq-credentials'
+          key: username
+    - name: RABBITMQ_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: 'otelcollector-rabbitmq-credentials'
+          key: password
+    - name: RABBITMQ_URL
+      valueFrom:
+        secretKeyRef:
+          name: 'otelcollector-rabbitmq-credentials'
+          key: url
+    - name: RABBITMQ_EXCHANGE
+      valueFrom:
+        secretKeyRef:
+          name: 'otelcollector-rabbitmq-credentials'
+          key: exchange
+
+  config:
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+            endpoint: "0.0.0.0:4317"
+          http:
+            endpoint: "0.0.0.0:4318"
+
+    processors:
+      batch:
+        send_batch_size: 250
+
+    exporters:
+      rabbitmq/traces:
+        connection:
+          endpoint: "${env:RABBITMQ_URL}"
+          auth:
+            plain:
+              username: "${env:RABBITMQ_USERNAME}"
+              password: "${env:RABBITMQ_PASSWORD}"
+        routing:
+          exchange: "${env:RABBITMQ_EXCHANGE}"
+          routing_key: "otlp.traces"
+      
+      rabbitmq/metrics:
+        connection:
+          endpoint: "${env:RABBITMQ_URL}"
+          auth:
+            plain:
+              username: "${env:RABBITMQ_USERNAME}"
+              password: "${env:RABBITMQ_PASSWORD}"
+        routing:
+          exchange: "${env:RABBITMQ_EXCHANGE}"
+          routing_key: "otlp.metrics"
+
+      rabbitmq/logs:
+        connection:
+          endpoint: "${env:RABBITMQ_URL}"
+          auth:
+            plain:
+              username: "${env:RABBITMQ_USERNAME}"
+              password: "${env:RABBITMQ_PASSWORD}"
+        routing:
+          exchange: "${env:RABBITMQ_EXCHANGE}"
+          routing_key: "otlp.logs"
+
+      rabbitmq/profiles:
+        connection:
+          endpoint: "${env:RABBITMQ_URL}"
+          auth:
+            plain:
+              username: "${env:RABBITMQ_USERNAME}"
+              password: "${env:RABBITMQ_PASSWORD}"
+        routing:
+          exchange: "${env:RABBITMQ_EXCHANGE}"
+          routing_key: "otlp.profiles"
+      
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [rabbitmq/traces] 
+        metrics:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [rabbitmq/metrics]
+        logs:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [rabbitmq/logs]
+        profiles:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [rabbitmq/profiles]
