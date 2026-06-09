@@ -2,7 +2,7 @@ apiVersion: v2
 name: canso-dplane-otelcollector
 description: A Helm chart for deploying otelcollector in data plane
 type: application
-version: 0.0.4
+version: 0.0.5
 appVersion: "0.0.1"
 
 dependencies:
