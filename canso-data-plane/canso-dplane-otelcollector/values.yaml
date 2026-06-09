@@ -33,6 +33,11 @@ opentelemetry-collector:
         secretKeyRef:
           name: 'otelcollector-rabbitmq-credentials'
           key: url
+    - name: RABBITMQ_VHOST
+      valueFrom:
+        secretKeyRef:
+          name: 'otelcollector-rabbitmq-credentials'
+          key: vhost
     - name: RABBITMQ_EXCHANGE
       valueFrom:
         secretKeyRef:
@@ -43,6 +48,9 @@ opentelemetry-collector:
     extensions:
       otlp_encoding:
         protocol: otlp_json
+      health_check:
+        endpoint: 0.0.0.0:13133
+
     receivers:
       otlp:
         protocols:
@@ -59,6 +67,7 @@ opentelemetry-collector:
       rabbitmq/traces:
         connection:
           endpoint: "${env:RABBITMQ_URL}"
+          vhost: "${env:RABBITMQ_VHOST}"
           auth:
             plain:
               username: "${env:RABBITMQ_USERNAME}"
@@ -74,6 +83,7 @@ opentelemetry-collector:
       rabbitmq/metrics:
         connection:
           endpoint: "${env:RABBITMQ_URL}"
+          vhost: "${env:RABBITMQ_VHOST}"
           auth:
             plain:
               username: "${env:RABBITMQ_USERNAME}"
@@ -89,6 +99,7 @@ opentelemetry-collector:
       rabbitmq/logs:
         connection:
           endpoint: "${env:RABBITMQ_URL}"
+          vhost: "${env:RABBITMQ_VHOST}"
           auth:
             plain:
               username: "${env:RABBITMQ_USERNAME}"
@@ -104,6 +115,7 @@ opentelemetry-collector:
     service:
       extensions:
         - otlp_encoding
+        - health_check
       pipelines:
         traces:
           receivers: [otlp]
