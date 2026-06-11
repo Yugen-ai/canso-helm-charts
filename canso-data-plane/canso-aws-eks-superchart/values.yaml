@@ -56,6 +56,13 @@ encryption_enabled: ""
 ##
 fernet_key: "" # THIS VALUE IS MANDATORY
 
+## @param otel_enabled Enable opentelemetry instrumentation
+##
+otel_enabled: "false"
+## @param otel_enabled otlp export url
+##
+otlp_export_url: ""
+
 ####################################################
 ############### Queue Configs
 ####################################################
