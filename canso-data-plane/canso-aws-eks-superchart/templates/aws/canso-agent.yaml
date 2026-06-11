@@ -28,7 +28,7 @@ spec:
       source:
         repoURL: 'https://yugen-ai.github.io/canso-helm-charts'
         chart: canso-agent
-        targetRevision: 0.1.34
+        targetRevision: 0.1.35
         helm:
           values: |-
             replicaCount: {{ .Values.cansoAgent.replicaCount }}
