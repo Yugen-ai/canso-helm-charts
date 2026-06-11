@@ -43,6 +43,13 @@ config:
   ## @param config.fernet_key Fernet Key
   ##
   fernet_key: ""
+  ## @param config.otel_enabled Enable Opentelemetry instrumentation
+  ##
+  otel_enabled: "false"
+  ## @param config.otlp_export_url Opentelemetry export url
+  ##
+  otlp_export_url: ""
+
 
 ####################################################
 ### Secrets (Dependencies to carry out Deploys)
@@ -191,7 +198,7 @@ cansoAgent:
       pullPolicy: Always
       ## @param cansoAgent.deployment.image.tag Tag for the image
       ##
-      tag: "v0.1.5-python-3.14-slim-k8s"
+      tag: "v0.1.6-python-3.14-slim-k8s"
     ## @section resources configuration
     resources:
       ## @section resources limits configuration

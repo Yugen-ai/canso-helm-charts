@@ -32,6 +32,8 @@
 | `awsRegion`          | AWS Region of the cluster                         | `""`                     |
 | `encryption_enabled` | Enable Encryption                                 | `""`                     |
 | `fernet_key`         | Fernet decryption for encrypted RabbitMQ messages | `""`                     |
+| `otel_enabled`       | Enable opentelemetry instrumentation              | `false`                  |
+| `otlp_export_url`    | otlp export url                                   | `""`                     |
 | `queue_hostname`     | hostname for queue server                         | `rabbitmq-amqp.canso.ai` |
 | `tolerations`        | Tolerations for the deployment.                   | `{}`                     |
 | `affinity`           | Affinity for the deployment.                      | `{}`                     |

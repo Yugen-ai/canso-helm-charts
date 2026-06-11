@@ -61,6 +61,10 @@ spec:
             value: "{{ .Values.config.encryption_enabled }}"
           - name: FERNET_KEY
             value: {{ .Values.config.fernet_key }}
+          - name: OTEL_ENABLED
+            value: {{ .Values.config.otel_enabled }}
+          - name: OTLP_EXPORT_URL
+            value: {{ .Value.config.otlp_export_url }}
 
           {{- range .Values.cansoAgent.deployment.env }}
           - name: {{ .name }}
