@@ -64,7 +64,7 @@ spec:
           - name: OTEL_ENABLED
             value: "{{ .Values.config.otel_enabled }}"
           - name: OTLP_EXPORT_URL
-            value: "{{ .Values.config.otlp_export_url }}""
+            value: "{{ .Values.config.otlp_export_url }}"
 
           {{- range .Values.cansoAgent.deployment.env }}
           - name: {{ .name }}
