@@ -398,6 +398,16 @@ entries:
   canso-aws-eks-superchart:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2026-06-25T15:24:36.957475974Z"
+    description: A Helm chart to deploy all Canso K8s components in AWS EKS.
+    digest: 319a29c9b42954e228c5ca3e674840b256003565f5ec9ebeb64fcdc57266d8bd
+    name: canso-aws-eks-superchart
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-aws-eks-superchart-0.1.41/canso-aws-eks-superchart-0.1.41.tgz
+    version: 0.1.41
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2026-06-11T14:47:50.385068613Z"
     description: A Helm chart to deploy all Canso K8s components in AWS EKS.
     digest: 4480fe2ff370ddceaa0c00c2af7dc7a0cd1e22f0acc09caf38b5f340a100138b
@@ -1368,4 +1378,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2026-06-11T14:54:08.837696284Z"
+generated: "2026-06-25T15:24:36.957934963Z"
