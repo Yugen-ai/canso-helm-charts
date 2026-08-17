@@ -16,7 +16,7 @@ deployment:
   env:
     HOST: "0.0.0.0"
     PORT: "8090"
-    WORKERS: "4"
+    WORKERS: "1"
     HTTP_CONNECT_TIMEOUT: "10.0"
     HTTP_READ_TIMEOUT: "120.0"
     HTTP_WRITE_TIMEOUT: "120.0"
@@ -133,7 +133,7 @@ readinessProbe:
 autoscaling:
   ## @param autoscaling.enabled Enable autoscaling
   ##
-  enabled: true
+  enabled: false
   ## @param autoscaling.minReplicas Minimum number of replicas
   ##
   minReplicas: 1
@@ -146,43 +146,6 @@ autoscaling:
   ## @param autoscaling.targetMemoryUtilizationPercentage Target Memory utilization percentage
   ##
   targetMemoryUtilizationPercentage: 90
-
-## @section Ingress Configuration
-##
-ingress:
-  ## @param ingress.enabled Enable the ingress
-  ##
-  enabled: false
-  ## @param ingress.host Hostname for the ingress rule (must match the nginx master ingress host)
-  ##
-  host: "*.com"
-  ## @param ingress.pathPrefix Path prefix exposed externally — rewritten to / before forwarding to the service
-  ##
-  pathPrefix: /dplane-agent
-  ## @param ingress.pathType Path type for the ingress
-  ##
-  pathType: Prefix
-  ## @param ingress.ingressClassName Ingress class name
-  ##
-  ingressClassName: nginx
-  ## @param ingress.clientMaxBodySize Maximum allowed request body size
-  ##
-  clientMaxBodySize: "100m"
-  ## @skip ingress.extraAnnotations Additional nginx annotations to merge in
-  extraAnnotations: {}
-
-## @section Network Policy Configuration
-##
-networkPolicy:
-  ## @param networkPolicy.enabled Enable the network policy
-  ##
-  enabled: true
-  ## @param networkPolicy.nginxIngressNamespace Namespace where the nginx ingress controller runs
-  ##
-  nginxIngressNamespace: "nginx-ingress"
-  ## @skip networkPolicy.egressPorts List of TCP ports the agent is allowed to reach on upstream cluster services
-  egressPorts:
-    - 8085
 
 ## @section Image Pull secret configuration
 imagePullSecret:
@@ -198,3 +161,20 @@ imagePullSecret:
   ## @param imagePullSecret.cloudProviderSecretKey Specific key inside the secret from cloud provider
   ##
   cloudProviderSecretKey: dockerhub
+
+openziti:
+  enabled: true
+  serviceName: "" # To be provided during runtime
+
+## @section Openziti identity secret configuration
+openzitiIdentitySecret:
+  ## @param openzitiIdentitySecret.name Name of the Secret that will be created
+  ##
+  name: dplane-agent-openziti-identity
+  ## @param openzitiIdentitySecret.key Specific key inside the secret that will be created
+  ##
+  key: openziti-identity.yaml
+  ## @param openzitiIdentitySecret.cloudProviderSecretName Name of the secret from the cloudprovider (AWS / GCP / AZURE). To be provided during installation.
+  cloudProviderSecretName: ""
+
+
