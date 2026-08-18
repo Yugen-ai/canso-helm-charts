@@ -33,11 +33,11 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          {{- if .Values.deployment.env }}
           volumeMounts:
             - name: openzity-identity
               mountPath: "/etc/opentziti"
               readOnly: true
+          {{- if .Values.deployment.env }}
           env:
             {{- range $key, $value := .Values.deployment.env }}
             - name: {{ $key }}
@@ -45,7 +45,7 @@ spec:
             {{- end }}
             - name: OPENZITI_ENABLED
               value: "{{ .Values.openziti.enabled }}"
-            {{- if .values.openziti.enabled }}
+            {{- if .Values.openziti.enabled }}
             - name: OPENZITI_SERVICE_NAME
               value: "{{ .Values.openziti.serviceName }}"
             - name: OPENZITI_IDENTITY_FILE_PATH
