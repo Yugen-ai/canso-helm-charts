@@ -35,7 +35,7 @@ spec:
               protocol: TCP
           volumeMounts:
             - name: openzity-identity
-              mountPath: "/etc/opentziti"
+              mountPath: "/etc/openziti"
               readOnly: true
           {{- if .Values.deployment.env }}
           env:
