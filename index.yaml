@@ -749,6 +749,16 @@ entries:
   canso-dataplane-agent:
   - apiVersion: v2
     appVersion: 0.0.1-python-3.13-slim
+    created: "2026-08-18T16:32:39.074117127Z"
+    description: A Helm chart to deploy the canso data plane agent
+    digest: 60828675c5210edcde176df8e693679ac7a6e44fa594f34f4de0c8059b3d3173
+    name: canso-dataplane-agent
+    type: application
+    urls:
+    - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-dataplane-agent-0.0.3/canso-dataplane-agent-0.0.3.tgz
+    version: 0.0.3
+  - apiVersion: v2
+    appVersion: 0.0.1-python-3.13-slim
     created: "2026-05-12T12:21:12.218003751Z"
     description: A Helm chart to deploy the canso data plane agent
     digest: b3fdce02044d17dc6cef80f040504e8c428cca79ced93431089306814e36e123
@@ -1378,4 +1388,4 @@ entries:
     urls:
     - https://github.com/Yugen-ai/canso-helm-charts/releases/download/canso-workflow-orchestrator-0.0.5/canso-workflow-orchestrator-0.0.5.tgz
     version: 0.0.5
-generated: "2026-06-25T15:24:36.957934963Z"
+generated: "2026-08-18T16:32:39.074337119Z"
