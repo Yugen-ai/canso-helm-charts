@@ -162,8 +162,14 @@ imagePullSecret:
   ##
   cloudProviderSecretKey: dockerhub
 
+
+## @section Openziti configuration
 openziti:
+  ## @param openziti.enabled Is openziti enabled
+  ##
   enabled: true
+  ## @param openziti.serviceName Openziti service name
+  ##
   serviceName: "" # To be provided during runtime
 
 ## @section Openziti identity secret configuration
