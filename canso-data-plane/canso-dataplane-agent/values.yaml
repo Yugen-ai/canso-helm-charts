@@ -133,7 +133,7 @@ readinessProbe:
 autoscaling:
   ## @param autoscaling.enabled Enable autoscaling
   ##
-  enabled: true
+  enabled: false
   ## @param autoscaling.minReplicas Minimum number of replicas
   ##
   minReplicas: 1
@@ -146,43 +146,6 @@ autoscaling:
   ## @param autoscaling.targetMemoryUtilizationPercentage Target Memory utilization percentage
   ##
   targetMemoryUtilizationPercentage: 90
-
-## @section Ingress Configuration
-##
-ingress:
-  ## @param ingress.enabled Enable the ingress
-  ##
-  enabled: false
-  ## @param ingress.host Hostname for the ingress rule (must match the nginx master ingress host)
-  ##
-  host: "*.com"
-  ## @param ingress.pathPrefix Path prefix exposed externally — rewritten to / before forwarding to the service
-  ##
-  pathPrefix: /dplane-agent
-  ## @param ingress.pathType Path type for the ingress
-  ##
-  pathType: Prefix
-  ## @param ingress.ingressClassName Ingress class name
-  ##
-  ingressClassName: nginx
-  ## @param ingress.clientMaxBodySize Maximum allowed request body size
-  ##
-  clientMaxBodySize: "100m"
-  ## @skip ingress.extraAnnotations Additional nginx annotations to merge in
-  extraAnnotations: {}
-
-## @section Network Policy Configuration
-##
-networkPolicy:
-  ## @param networkPolicy.enabled Enable the network policy
-  ##
-  enabled: true
-  ## @param networkPolicy.nginxIngressNamespace Namespace where the nginx ingress controller runs
-  ##
-  nginxIngressNamespace: "nginx-ingress"
-  ## @skip networkPolicy.egressPorts List of TCP ports the agent is allowed to reach on upstream cluster services
-  egressPorts:
-    - 8085
 
 ## @section Image Pull secret configuration
 imagePullSecret:
