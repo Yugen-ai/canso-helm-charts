@@ -60,29 +60,11 @@
 | `readinessProbe.failureThreshold`               | Minimum consecutive failures for the probe to be considered failed                      | `6`              |
 | `readinessProbe.path`                           | The path for the readiness probe                                                        | `/api/v1/health` |
 | `readinessProbe.port`                           | The port to use for the probe                                                           | `http`           |
-| `autoscaling.enabled`                           | Enable autoscaling                                                                      | `true`           |
+| `autoscaling.enabled`                           | Enable autoscaling                                                                      | `false`          |
 | `autoscaling.minReplicas`                       | Minimum number of replicas                                                              | `1`              |
 | `autoscaling.maxReplicas`                       | Minimum number of replicas                                                              | `5`              |
 | `autoscaling.targetCPUUtilizationPercentage`    | Target CPU utilization percentage                                                       | `80`             |
 | `autoscaling.targetMemoryUtilizationPercentage` | Target Memory utilization percentage                                                    | `90`             |
-
-### Ingress Configuration
-
-| Name                        | Description                                                                      | Value           |
-| --------------------------- | -------------------------------------------------------------------------------- | --------------- |
-| `ingress.enabled`           | Enable the ingress                                                               | `false`         |
-| `ingress.host`              | Hostname for the ingress rule (must match the nginx master ingress host)         | `*.com`         |
-| `ingress.pathPrefix`        | Path prefix exposed externally — rewritten to / before forwarding to the service | `/dplane-agent` |
-| `ingress.pathType`          | Path type for the ingress                                                        | `Prefix`        |
-| `ingress.ingressClassName`  | Ingress class name                                                               | `nginx`         |
-| `ingress.clientMaxBodySize` | Maximum allowed request body size                                                | `100m`          |
-
-### Network Policy Configuration
-
-| Name                                  | Description                                       | Value           |
-| ------------------------------------- | ------------------------------------------------- | --------------- |
-| `networkPolicy.enabled`               | Enable the network policy                         | `true`          |
-| `networkPolicy.nginxIngressNamespace` | Namespace where the nginx ingress controller runs | `nginx-ingress` |
 
 ### Image Pull secret configuration
 
