@@ -74,18 +74,3 @@
 | `imagePullSecret.key`                     | Specific key inside the secret that will be created           | `.dockerconfigjson`                        |
 | `imagePullSecret.cloudProviderSecretName` | Name of the secret from the cloudprovider (AWS / GCP / AZURE) | `canso-dockerhub-credentials`              |
 | `imagePullSecret.cloudProviderSecretKey`  | Specific key inside the secret from cloud provider            | `dockerhub`                                |
-
-### Openziti configuration
-
-| Name                   | Description           | Value  |
-| ---------------------- | --------------------- | ------ |
-| `openziti.enabled`     | Is openziti enabled   | `true` |
-| `openziti.serviceName` | Openziti service name | `""`   |
-
-### Openziti identity secret configuration
-
-| Name                                             | Description                                                                                        | Value                            |
-| ------------------------------------------------ | -------------------------------------------------------------------------------------------------- | -------------------------------- |
-| `openzitiIdentitySecret.name`                    | Name of the Secret that will be created                                                            | `dplane-agent-openziti-identity` |
-| `openzitiIdentitySecret.key`                     | Specific key inside the secret that will be created                                                | `openziti-identity.yaml`         |
-| `openzitiIdentitySecret.cloudProviderSecretName` | Name of the secret from the cloudprovider (AWS / GCP / AZURE). To be provided during installation. | `""`                             |
